@@ -1,0 +1,166 @@
+::ng-deep {
+  .p-fileupload {
+    .p-fileupload-content {
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background-color: transparent;
+
+      p-progressbar,
+      .p-fileupload-files {
+        display: none;
+      }
+    }
+  }
+
+  .p-fileupload-buttonbar {
+    --size: 4.5rem;
+    --radius: 5px;
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+
+    .choose-holder {
+      position: relative;
+      width: var(--size);
+      height: var(--size);
+      background-color: #f9f9f9;
+      border: 1px solid #bebebe;
+      margin-top: 0.8rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+
+      &:not(.is-selected) {
+        &:hover {
+          background-color: #efefef;
+        }
+      }
+
+      &.is-selected {
+        .overlay,
+        .choose-icon {
+          display: none;
+        }
+        &:hover {
+          .overlay,
+          .choose-icon {
+            display: block;
+          }
+          .uploaded-image {
+            filter: blur(2px);
+          }
+        }
+      }
+
+      .uploaded-image {
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+      }
+
+      .choose-btn {
+        position: relative;
+        z-index: 5;
+        width: var(--size);
+        height: var(--size);
+        border: 0;
+        padding: 0;
+        background-color: transparent;
+        box-shadow: none;
+      }
+
+      .overlay {
+        position: absolute;
+        z-index: 2;
+        inset: 0;
+        background-color: rgba(#000, 0.2);
+        pointer-events: none;
+      }
+
+      .choose-icon {
+        position: absolute;
+        z-index: 3;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        font-size: 0;
+      }
+
+      .loading-icon {
+        position: absolute;
+        z-index: 3;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(#000, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+      }
+
+      .success-mark {
+        position: absolute;
+        z-index: 15;
+        inset: 0;
+        opacity: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+        animation: passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);
+
+        path {
+          fill: #02e8e8;
+        }
+
+        @keyframes passing-through {
+          0% {
+            opacity: 0;
+            transform: translateY(40px);
+          }
+          30%,
+          70% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-40px);
+          }
+        }
+      }
+    }
+
+    .remove-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      z-index: 10;
+      top: -11px;
+      inset-inline-end: -11px;
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      color: inherit;
+      background-color: #fff;
+      box-shadow: 0 3px 15px rgba(#000, 0.1);
+      border: 0;
+      border-radius: 50%;
+
+      &:hover {
+        color: var(--primary-color);
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+@if (LeadFields$ | async; as leadFields) {
+  <app-type-lead-fields [leadFields]="leadFields"></app-type-lead-fields>
+} @else {
+  <app-type-lead-fields> </app-type-lead-fields>
+}

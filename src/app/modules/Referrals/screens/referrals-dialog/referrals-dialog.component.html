@@ -1,0 +1,21 @@
+<div class="flex align-items-center justify-content-between gap-3 surface-ground p-3">
+  <h3 class="font-semibold text-lg m-0">{{ "view_referral" | translate }}</h3>
+  <button
+    pButton
+    class="text-sm px-3 py-2"
+    class="p-button-text p-button-plain p-button-rounded w-2rem h-2rem"
+    (click)="dialogRef.close()"
+    icon="pi pi-times"
+  ></button>
+</div>
+
+<div class="p-3">
+  <div class="flex flex-wrap align-items-center justify-content-between">
+    <h4 class="m-0 font-semibold">{{ "referral" | translate }}</h4>
+    <p class="text-sm text-gray-400">{{ editData.referral }}</p>
+  </div>
+  <div class="flex flex-wrap align-items-center justify-content-between">
+    <h4 class="m-0 font-semibold">{{ "description" | translate }}</h4>
+    <p class="text-sm text-gray-400">{{ editData.description }}</p>
+  </div>
+</div>

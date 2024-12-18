@@ -1,0 +1,75 @@
+:host ::ng-deep {
+  .dropzone.dz-wrapper {
+    background-color: #e9f3ff;
+    border: 1px dashed #1b84ff;
+    padding: 1rem;
+    border-radius: 8px;
+
+    .dz-message {
+      display: none !important;
+    }
+
+    .dz-preview {
+      z-index: 5;
+
+      &.dz-image-preview {
+        background-color: transparent;
+      }
+
+      .dz-image {
+        border-radius: 8px;
+      }
+
+      .dz-filename {
+        max-width: 120px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .dz-success-mark {
+        svg path {
+          fill: #02e8e8;
+        }
+      }
+
+      .dz-remove {
+        position: absolute;
+        z-index: 20;
+        top: -11px;
+        right: -11px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 22px;
+        height: 22px;
+        text-indent: -9999px;
+        background-color: #fff;
+        box-shadow: 0 3px 15px rgba(#000, 0.1);
+        border-radius: 50%;
+
+        &:hover::after {
+          background-color: var(--primary-color);
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-color: var(--gray-600);
+          mask-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='var%28--bs-gray-600%29'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e");
+          mask-size: 40%;
+          mask-repeat: no-repeat;
+          mask-position: center;
+        }
+      }
+    }
+  }
+}
+
+.file-name {
+  max-width: 200px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

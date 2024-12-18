@@ -1,0 +1,310 @@
+<p-tabView styleClass="special-tabview">
+  <p-tabPanel [header]="'overview' | translate">
+    <div class="grid mt-0">
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-lead-interests [(lead)]="lead"></app-lead-interests>
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-lead-tags [(lead)]="lead"></app-lead-tags>
+      </div>
+      @if (checkPermission("update-??-assignment")) {
+        <div class="col-12 lg:col-3 md:col-4 py-3">
+          <app-lead-assignees [(lead)]="lead" />
+        </div>
+      }
+    </div>
+
+    @if (checkPermission("update-??")) {
+      <div class="my-3">
+        <span class="item-label"> {{ "description" | translate }}</span>
+
+        <app-inplace-input
+          [(entity)]="lead"
+          [endpoint]="constants.API_ENDPOINTS.updateCustomData"
+          (onUpdateUi)="leadsService.updateLeadInList($event)"
+        />
+      </div>
+    }
+
+    <div class="grid mt-0">
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'first_name' | translate" [item]="lead().first_name || '—'" />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item
+          [label]="'middle_name' | translate"
+          [item]="lead().middle_name || '—'"
+        />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'last_name' | translate" [item]="lead().last_name || '—'" />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-entity-select
+          [(entity)]="lead"
+          [endpoint]="constants.API_ENDPOINTS.updateCustomDataNoPermission"
+          apiVersion="v2"
+          styleClass="lead-rating-select"
+          listModule="dynamic_list"
+          listName="ratings"
+          updateType="rating_id"
+          label="rating"
+          placeholder="update"
+          (onChange)="leadsService.updateLeadInList($event)"
+        />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-entity-select
+          [(entity)]="lead"
+          [endpoint]="constants.API_ENDPOINTS.updateCustomData"
+          apiVersion="v2"
+          [disabled]="!checkPermission('update-??')"
+          listModule="dynamic_list"
+          listName="wallets"
+          updateType="wallet_id"
+          label="wallet"
+          [placeholder]="checkPermission('update-??') ? 'update' : '-'"
+          (onChange)="leadsService.updateLeadInList($event)"
+        />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-entity-select
+          [(entity)]="lead"
+          [endpoint]="constants.API_ENDPOINTS.updateCustomDataNoPermission"
+          apiVersion="v2"
+          listModule="dynamic_list"
+          listName="lead_lists"
+          updateType="lead_list_id"
+          label="list"
+          placeholder="update"
+          (onChange)="leadsService.updateLeadInList($event)"
+        />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-entity-select
+          [(entity)]="lead"
+          [endpoint]="constants.API_ENDPOINTS.updateCustomDataNoPermission"
+          apiVersion="v2"
+          listModule="dynamic_list"
+          listName="lead_qualities"
+          updateType="lead_quality_id"
+          label="lead_quality"
+          placeholder="update"
+          (onChange)="leadsService.updateLeadInList($event)"
+        />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-entity-select
+          [(entity)]="lead"
+          [endpoint]="constants.API_ENDPOINTS.updateCustomDataNoPermission"
+          apiVersion="v2"
+          listModule="dynamic_list"
+          listName="lead_classifications"
+          updateType="lead_classification_id"
+          label="classification"
+          placeholder="update"
+          (onChange)="leadsService.updateLeadInList($event)"
+        />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'organization' | translate">
+          @if (lead().organization_id) {
+            @if (organization()) {
+              <a
+                pButton
+                routerLink="/organizations/{{ lead().organization_id }}"
+                class="p-button-link p-0 shadow-none text-primary text-sm font-semibold"
+              >
+                {{ organization() }}
+              </a>
+            } @else {
+              <i class="pi pi-spin pi-spinner"></i>
+            }
+          } @else {
+            —
+          }
+        </app-list-info-item>
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'campaign' | translate">
+          @if (lead().campaign_id) {
+            @if (campaign()) {
+              <div class="flex align-items-center gap-2">
+                <span class="text-sm font-semibold">
+                  {{ campaign() }}
+                </span>
+                <!-- <button
+                  pButton
+                  (click)="onTabClicked.emit('campaign-tab')"
+                  icon="fas fa-info-circle text-sm"
+                  class="p-button-link w-auto py-0 px-1 text-primary shadow-none font-semibold"
+                ></button> -->
+              </div>
+            } @else {
+              <i class="pi pi-spin pi-spinner"></i>
+            }
+          } @else {
+            —
+          }
+        </app-list-info-item>
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-entity-select
+          [(entity)]="lead"
+          [endpoint]="constants.API_ENDPOINTS.updateCustomData"
+          apiVersion="v2"
+          [disabled]="!checkPermission('update-??')"
+          listModule="dynamic_list"
+          listName="contact_methods"
+          updateType="contact_method_id"
+          label="contact_method"
+          [placeholder]="checkPermission('update-??') ? 'update' : '-'"
+          (onChange)="leadsService.updateLeadInList($event)"
+        />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-entity-select
+          [(entity)]="lead"
+          [endpoint]="constants.API_ENDPOINTS.updateCustomData"
+          apiVersion="v2"
+          [disabled]="!checkPermission('update-??')"
+          listModule="dynamic_list"
+          listName="account_types"
+          updateType="account_type_id"
+          label="account_type"
+          [placeholder]="checkPermission('update-??') ? 'update' : '-'"
+          (onChange)="leadsService.updateLeadInList($event)"
+        />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'id' | translate">
+          <span class="flex align-items-center gap-1">
+            <span class="font-semibold text-sm">{{ lead().id }}</span>
+            <app-copy-button [text]="lead().id + ''" />
+          </span>
+        </app-list-info-item>
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'source' | translate">
+          @if (lead().source_id) {
+            <div class="flex align-items-center gap-2">
+              <span class="text-sm font-semibold">
+                {{ leadSource() || "—" }}
+              </span>
+              <button
+                pButton
+                (click)="onTabClicked.emit('source-tab')"
+                icon="fas fa-info-circle text-sm"
+                class="p-button-link w-auto py-0 px-1 text-primary shadow-none font-semibold"
+              ></button>
+            </div>
+          } @else {
+            —
+          }
+        </app-list-info-item>
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'created_by' | translate" [item]="leadCreator()" />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'created_at' | translate" [item]="lead().created_at" />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-entity-select
+          [(entity)]="lead"
+          [endpoint]="constants.API_ENDPOINTS.updateCustomData"
+          apiVersion="v2"
+          [disabled]="!checkPermission('update-??')"
+          listModule="leads"
+          listName="types"
+          updateType="lead_type_id"
+          label="type"
+          [placeholder]="checkPermission('update-??') ? 'Update' : '-'"
+          (onChange)="leadsService.updateLeadInList($event)"
+        />
+      </div>
+    </div>
+
+    <h2 class="section-title">{{ "more_details" | translate }}</h2>
+    <div class="grid mt-0">
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item
+          [label]="'gender' | translate"
+          [item]="lead().gender === 1 ? 'Male' : lead().gender === 0 ? 'Female' : '_'"
+        />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'birthdate' | translate" [item]="lead().birthdate ?? '—'" />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'national_id' | translate">
+          @if (lead().national_id) {
+            <app-mask-toggler [data]="lead().national_id" />
+          } @else {
+            _
+          }
+        </app-list-info-item>
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'passport_number' | translate">
+          @if (lead().passport_number) {
+            <app-mask-toggler [data]="lead().passport_number" />
+          } @else {
+            _
+          }
+        </app-list-info-item>
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'industry' | translate" [item]="leadIndustry() || '—'" />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-entity-select
+          [(entity)]="lead"
+          [endpoint]="constants.API_ENDPOINTS.updateCustomData"
+          apiVersion="v2"
+          [disabled]="!checkPermission('update-??')"
+          listModule="dynamic_list"
+          listName="company_sizes"
+          updateType="company_size_id"
+          label="company_size"
+          [placeholder]="checkPermission('update-??') ? 'update' : '-'"
+          (onChange)="leadsService.updateLeadInList($event)"
+        />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'job' | translate" [item]="leadJob() || '—'" />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'department' | translate" [item]="leadDepartment() || '—'" />
+      </div>
+    </div>
+
+    <h2 class="section-title">{{ "address_details" | translate }}</h2>
+    <div class="grid mt-0">
+      <div class="col-12 py-3">
+        <app-list-info-item [label]="'address' | translate" [item]="lead().address || '—'" />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'country' | translate" [item]="leadCountry() || '—'" />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'region' | translate" [item]="leadRegion() || '—'" />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'city' | translate" [item]="leadCity() || '—'" />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'area_place' | translate" [item]="leadArea() || '—'" />
+      </div>
+      <div class="col-12 lg:col-3 md:col-4 py-3">
+        <app-list-info-item [label]="'zip_code' | translate" [item]="lead().zip_code || '—'" />
+      </div>
+    </div>
+  </p-tabPanel>
+
+  <p-tabPanel [header]="'timeline' | translate">
+    <ng-template pTemplate="content">
+      <app-lead-timeline [lead]="lead()" />
+    </ng-template>
+  </p-tabPanel>
+</p-tabView>

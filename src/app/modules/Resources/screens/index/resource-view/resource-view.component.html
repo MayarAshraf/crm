@@ -1,0 +1,119 @@
+<div class="relative bg-white" #viewWrapper>
+  <div class="dialog-profile-sidebar">
+    <div class="inner-sidebar">
+      @for (item of tabsItems(); track $index) {
+        <button
+          [pTooltip]="item.tooltip"
+          class="sidebar-item"
+          [class.active]="activeIndex() === item.index"
+          (click)="activeIndex.set(item.index)"
+        >
+          @if (item.badgeNumber) {
+            <span class="badge">{{ item.badgeNumber }}</span>
+          }
+          <i class="{{ item.icon }}"></i>
+        </button>
+      }
+    </div>
+  </div>
+
+  <div [style.margin-inline-start]="'var(--sidebar-width)'">
+    <div class="bg-white md:sticky top-0 z-10 p-3 border-bottom-1 border-200">
+      <div class="flex justify-content-between align-items-center gap-3">
+        <h2 class="font-semibold capitalize text-black text-lg line-height-2 my-0">
+          {{ resource().title }}
+        </h2>
+
+        <div class="flex align-items-center gap-1">
+          <button
+            pButton
+            class="flex-shrink-0 p-button-text p-button-plain p-button-rounded w-2rem h-2rem"
+            (click)="closeDialog()"
+            icon="pi pi-times"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-3">
+      <p-tabView [(activeIndex)]="activeIndex" styleClass="sidebar-tabview">
+        <p-tabPanel>
+          @if (resource().description) {
+            <div>
+              <h2 class="mt-0 mb-2 section-title">Description</h2>
+              <p class="m-0 text-500">
+                {{ resource().description }}
+              </p>
+            </div>
+            <p-divider></p-divider>
+          }
+
+          @if (resource().resource_type_id) {
+            <div>
+              <h2 class="mt-0 mb-2 section-title">Resource type</h2>
+              <p class="m-0 text-500">
+                {{ getLabelById("resources:resource_types", resource().resource_type_id) }}
+              </p>
+            </div>
+            <p-divider></p-divider>
+          }
+
+          @if (resource().external_link) {
+            <div>
+              <h2 class="mt-0 mb-2 section-title">External link</h2>
+              <a
+                href="{{ resource().external_link }}"
+                target="_blank"
+                class="text-500 text-primary"
+              >
+                {{ resource().external_link }}
+              </a>
+            </div>
+            <p-divider></p-divider>
+          }
+
+          @if (resource().featured_image) {
+            <div>
+              <h2 class="mt-0 mb-2 section-title">Featured Image</h2>
+              <p-image
+                [preview]="true"
+                [src]="resource().featured_image"
+                loading="lazy"
+                [alt]="resource().title"
+                width="50"
+                height="50"
+              />
+            </div>
+            <p-divider></p-divider>
+          }
+
+          <ul class="m-0 p-0 list-none flex flex-wrap row-gap-2 column-gap-5">
+            <li class="flex align-items-center gap-1">
+              <i
+                class="pi pi-check-circle mr-2"
+                [class.text-green-500]="resource().is_active"
+                [class.text-red-500]="!resource().is_active"
+              ></i>
+              Active
+            </li>
+            <li class="flex align-items-center gap-1">
+              <i
+                class="pi pi-check-circle mr-2"
+                [class.text-green-500]="resource().is_private"
+                [class.text-red-500]="!resource().is_private"
+              ></i>
+              Private
+            </li>
+          </ul>
+        </p-tabPanel>
+
+        <p-tabPanel>
+          <ng-template pTemplate="content">
+            <h2 class="mt-0 mb-3 section-title">{{ "attachments" | translate }}</h2>
+            <app-media-list [(dataSource)]="resource" [target]="viewWrapper" />
+          </ng-template>
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+</div>

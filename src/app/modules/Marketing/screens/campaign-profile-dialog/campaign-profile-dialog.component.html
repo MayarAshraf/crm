@@ -1,0 +1,25 @@
+@if (!(dialogData$ | async)) {
+  <div class="text-right p-3 border-bottom-1 border-200">
+    <button
+      pButton
+      icon="pi pi-times"
+      class="p-button-text p-button-plain p-button-rounded w-2rem h-2rem"
+      (click)="closeDialog()"
+    ></button>
+  </div>
+}
+
+<app-dynamic-dialog [dialogData$]="dialogData$" [showDialogHeader]="false" [withPadding]="false">
+  <ng-container ngProjectAs="[bodyContent]">
+    <div class="bg-white md:sticky top-0 z-10 pb-2 border-bottom-1 border-200">
+      <app-campaign-profile-header-dialog
+        (closeDialog)="closeDialog()"
+        [campaign]="campaign()"
+        [editData]="editData"
+      ></app-campaign-profile-header-dialog>
+    </div>
+    <div class="p-3">
+      <app-campaign-profile-tabs [(campaign)]="campaign" />
+    </div>
+  </ng-container>
+</app-dynamic-dialog>

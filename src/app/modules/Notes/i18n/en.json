@@ -1,0 +1,23 @@
+{
+	"enter_subject": "Enter Subject",
+	"edit_subject": "Edit Subject",
+	"delete": "Delete",
+	"new_note": "New Note",
+	"write_note": "Write A Note",
+	"enter_description": "Enter description",
+	"subject": "Subject",
+	"subject_max_is_191_characters_long": "Subject max is 191 characters long",
+	"subject_is_required": "Subject is required",
+	"edit_description": "Edit description",
+	"description_max_is_16777215_characters_long": "Description max is 16777215 characters long",
+	"cancel": "Cancel",
+	"edit": "Edit",
+	"log_it": "Log It",
+	"note": "Note",
+	"notes": "Notes",
+	"store_note_documentation": "Store Note Documentation",
+	"new_note_desc": "Just note",
+	"save": "Save",
+	"add_note": "Add Note",
+	"no_notes_yet": "No notes yet"
+}

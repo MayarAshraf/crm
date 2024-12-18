@@ -1,0 +1,53 @@
+<div
+  [ngClass]="{ 'py-4': !isListLayout() }"
+  (mouseenter)="isExpanded.set(true)"
+  (mouseleave)="isExpanded.set(false)"
+>
+  <div class="flex align-items-center gap-3">
+    @if (withSelection()) {
+      <p-tableCheckbox [value]="rowData()" class="font-size-0" />
+    }
+
+    <div class="flex-auto">
+      <div
+        class="flex align-items-center flex-wrap gap-3 base-row"
+        [class.move]="!isExpanded() && isListLayout()"
+      >
+        <ng-content select="[additional-content]" />
+
+        @if (displayActions()) {
+          <div [ngClass]="{ 'ml-auto': isListLayout() }">
+            <app-lead-actions [(lead)]="rowData" />
+          </div>
+        }
+
+        @if (displayStatusSelect()) {
+          <app-entity-select
+            [(entity)]="rowData"
+            [endpoint]="constants.API_ENDPOINTS.updateCustomDataNoPermission"
+            apiVersion="v2"
+            styleClass="primary-status-select"
+            listModule="dynamic_list"
+            listName="statuses"
+            updateType="status_id"
+            placeholder="select_stage"
+            (onChange)="leadsService.updateLeadInList($event)"
+          />
+        }
+      </div>
+
+      @if (isListLayout()) {
+        <div class="pt-2 lead-table-info" [class.is-expanded]="isExpanded()">
+          <div class="flex align-items-center gap-3">
+            <app-lead-table-info
+              [(lead)]="rowData"
+              [(isListLayout)]="isListLayout"
+              [settings]="settings()"
+            />
+            <ng-content select="[additional-info]" />
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

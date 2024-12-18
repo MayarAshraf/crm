@@ -1,0 +1,63 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [focusOnShow]="false"
+  position="right"
+  appendTo="body"
+  styleClass="m-0 max-w-full max-h-none h-full"
+  [style]="{ width: '450px' }"
+>
+  <ng-template pTemplate="header">
+    <h3 class="m-0 flex align-items-center gap-2 text-lg font-semibold">
+      <i class="fas fa-upload"></i>
+      {{ dialogTitle() | translate }}
+    </h3>
+  </ng-template>
+
+  <p class="mt-0 text-xs">
+    Before uploading your file, we recommend downloading and using our template to ensure a smooth
+    and error-free process. The template is designed to match the required structure, making it
+    easier for you to organize your data accurately.
+  </p>
+
+  <ul class="list-none p-0 mt-0 text-xs">
+    <li class="font-semibold mb-2">Please follow these simple steps:</li>
+    <li>
+      <ol class="pl-4">
+        <li>Download the template.</li>
+        <li>Populate the template with your data.</li>
+        <li>Save the file in the specified format.</li>
+        <li>Upload the saved file using the upload sheet button.</li>
+      </ol>
+    </li>
+  </ul>
+
+  <p class="text-xs font-semibold mt-0">You can download the template here:</p>
+
+  <a
+    pButton
+    [href]="template()"
+    download
+    role="button"
+    class="text-sm py-2 mb-2 md:w-17rem p-button-outlined p-button-success text-left"
+    icon="fas fa-download"
+    label="Download Sample template"
+  ></a>
+
+  <form [formGroup]="form">
+    <formly-form [model]="model" [fields]="fields" [form]="form" />
+  </form>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      label="Import"
+      icon="pi pi-upload"
+      class="p-button-success py-2"
+      [disabled]="!model.file"
+      (click)="onSubmit()"
+    ></button>
+  </ng-template>
+</p-dialog>

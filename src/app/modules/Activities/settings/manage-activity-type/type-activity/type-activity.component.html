@@ -1,0 +1,84 @@
+<app-table-wrapper
+  [headerTitle]="indexMeta.indexTitle"
+  [titleIcon]="indexMeta.indexIcon"
+  [displayHeaderButton]="false"
+  [withActionsColumn]="false"
+  [withAdditionalContent]="true"
+  [columns]="indexMeta.columns"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  [paginator]="false"
+  [lazy]="false"
+  paginatorPosition="both"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterFields]="['name']"
+>
+  <ng-template #additionalContentTemplate>
+    @if (activityTypes().length) {
+      <p-tabMenu [model]="menuItems" [activeItem]="activeItem()"> </p-tabMenu>
+    } @else {
+      <div class="flex gap-2">
+        @for (i of [] | range: 3; track $index) {
+          <p-skeleton height="7px" width="60px" borderRadius="0" />
+        }
+      </div>
+    }
+  </ng-template>
+
+  <ng-template #notesShown let-activityType>
+    <ng-container
+      *ngTemplateOutlet="
+        inputSwitchTemplate;
+        context: {
+          $implicit: {
+            checked: activityType.is_notes_shown ?? activityType.is_type_notes_shown,
+            disabled: activityType.is_notes_required ?? activityType.is_type_notes_required,
+            type: activityType.hasOwnProperty('is_notes_shown')
+              ? 'is_notes_shown'
+              : 'is_type_notes_shown',
+            id: activityType.id,
+            typeValue: {
+              trueValue: handleTypeValue(activityType, 'is_notes_shown', 'trueValue'),
+              falseValue: handleTypeValue(activityType, 'is_notes_shown', 'falseValue')
+            }
+          }
+        }
+      "
+    />
+  </ng-template>
+
+  <ng-template #notesRequired let-activityType>
+    <ng-container
+      *ngTemplateOutlet="
+        inputSwitchTemplate;
+        context: {
+          $implicit: {
+            checked: activityType.is_notes_required ?? activityType.is_type_notes_required,
+            type: activityType.hasOwnProperty('is_notes_required')
+              ? 'is_notes_required'
+              : 'is_type_notes_required',
+            id: activityType.id,
+            typeValue: {
+              trueValue: handleTypeValue(activityType, 'is_notes_required', 'trueValue'),
+              falseValue: handleTypeValue(activityType, 'is_notes_required', 'falseValue')
+            }
+          }
+        }
+      "
+    />
+  </ng-template>
+</app-table-wrapper>
+
+<ng-template #inputSwitchTemplate let-switchData>
+  <p-inputSwitch
+    [(ngModel)]="switchData.checked"
+    [disabled]="switchData.disabled"
+    [trueValue]="switchData.typeValue.trueValue"
+    [falseValue]="switchData.typeValue.falseValue"
+    (onChange)="update(switchData.id, switchData.checked, switchData.type)"
+  />
+</ng-template>

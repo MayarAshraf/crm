@@ -1,0 +1,41 @@
+@if (!item().url) {
+  <button class="profile-item" (click)="onClick.emit($event)">
+    <span class="flex align-items-center gap-3">
+      <span class="flex-shrink-0 icon-wrapper w-3rem h-3rem">
+        <i [class]="'text-xl' + ' ' + item().icon"></i>
+      </span>
+      <span>
+        <span class="block font-semibold text-sm">
+          {{ item().label }}
+        </span>
+        <small class="block text-xs">
+          {{ item().subtitle }}
+        </small>
+      </span>
+    </span>
+  </button>
+}
+
+@if (item().url) {
+  <a
+    [routerLink]="item().url"
+    routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: true }"
+    (click)="onClick.emit($event)"
+    class="profile-item"
+  >
+    <span class="flex align-items-center gap-3">
+      <span class="flex-shrink-0 icon-wrapper w-3rem h-3rem">
+        <i [class]="'text-xl' + ' ' + item().icon"></i>
+      </span>
+      <span>
+        <span class="block font-semibold text-sm">
+          {{ item().label }}
+        </span>
+        <small class="block text-xs">
+          {{ item().subtitle }}
+        </small>
+      </span>
+    </span>
+  </a>
+}

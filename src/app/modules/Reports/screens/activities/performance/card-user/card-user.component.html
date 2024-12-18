@@ -1,0 +1,29 @@
+<a
+  class="block"
+  [routerLink]="'/reports/activities/performance/' + id()"
+  [queryParams]="{
+    srcImage: srcImage(),
+    fullName: fullName(),
+    jobTitle: jobTitle(),
+    joinData: joinData(),
+    lastLogin: lastLogin(),
+    group: group(),
+  }"
+>
+  <p-card>
+    <div class="flex align-items-center gap-3">
+      <div class="flex justify-content-center align-items-center">
+        <p-avatar
+          [image]="srcImage()"
+          size="large"
+          shape="circle"
+          styleClass="swirl-in-fwd"
+        ></p-avatar>
+      </div>
+      <div class="flex-1 flex flex-column">
+        <h4 class="captalize text-500 text-base m-0">{{ fullName() }}</h4>
+        <span class="captalize text-xs block">{{ jobTitle() }}</span>
+      </div>
+    </div>
+  </p-card>
+</a>

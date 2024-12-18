@@ -1,0 +1,75 @@
+:host ::ng-deep {
+  .p-card.custom-style-card {
+    border-radius: 6px;
+    border-bottom: 3px solid var(--primary-color);
+
+    &> {
+      .p-card-body {
+        background-color: rgba(241, 241, 241, .15);
+        padding-block: 15px;
+        padding-inline: 10px;
+        display: flex;
+        flex-direction: column;
+
+        .p-card-content {
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  .p-tabview {
+    &-nav {
+      gap: 1rem;
+      background-color: transparent;
+      padding-inline: 1.25rem;
+      margin-block: .75rem;
+
+      li .p-tabview-nav-link {
+        background-color: transparent;
+        padding: 0.5rem 15px;
+        font-size: 14px;
+      }
+    }
+
+    &-panels {
+      background-color: transparent;
+    }
+  }
+
+  .swirl-in-fwd {
+    img {
+      -webkit-animation: swirl-in-fwd 0.7s ease-out both;
+      animation: swirl-in-fwd 0.7s ease-out both;
+    }
+  }
+}
+
+
+@-webkit-keyframes swirl-in-fwd {
+  0% {
+    -webkit-transform: rotate(-540deg) scale(0);
+    transform: rotate(-540deg) scale(0);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: rotate(0) scale(1);
+    transform: rotate(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes swirl-in-fwd {
+  0% {
+    -webkit-transform: rotate(-540deg) scale(0);
+    transform: rotate(-540deg) scale(0);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: rotate(0) scale(1);
+    transform: rotate(0) scale(1);
+    opacity: 1;
+  }
+}

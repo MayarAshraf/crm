@@ -1,0 +1,101 @@
+<ng-container *appModuleVisibility="settingsModule">
+  <p-card styleClass="border-bottom-3 border-primary">
+    <app-default-screen-header
+      [title]="'settings' | translate"
+      [titleIcon]="constants.icons.gears"
+      [displayButton]="false"
+      [headerContent]="headerContentTemplate"
+    />
+
+    <ng-template #headerContentTemplate>
+      <app-menu-search-items
+        [menuItemsGroups]="settingsGroups()"
+        [placeholder]="'search_settings' | translate"
+      />
+    </ng-template>
+
+    <div class="grid mt-5 justify-content-center md:mx-auto">
+      <div class="col-12 md:col-8">
+        <div class="grid">
+          <!-- General -->
+          <div class="col-12 md:col-6">
+            <div class="mb-3">
+              <i [class]="constants.icons.gear + ' text-3xl text-primary'"></i>
+              <h2 class="text-lg font-semibold mb-1">{{ settingsLabels().general }}</h2>
+              <span class="text-500 text-sm font-medium capitalize">
+                {{ "configure_core_settings" | translate }}
+              </span>
+            </div>
+            <p-panelMenu styleClass="settings-panel-menu" [model]="general()"></p-panelMenu>
+          </div>
+
+          <!-- Automations -->
+          <div class="col-12 md:col-6">
+            <div class="mb-3">
+              <i [class]="constants.icons.robot + ' text-3xl text-primary'"></i>
+              <h2 class="text-lg font-semibold mb-1">{{ settingsLabels().automations }}</h2>
+              <span class="text-500 text-sm font-medium capitalize">
+                {{ "create_rules_for_automatic_alerts" | translate }}
+              </span>
+            </div>
+            <p-panelMenu styleClass="settings-panel-menu" [model]="automations()"></p-panelMenu>
+          </div>
+        </div>
+
+        <div class="grid mt-5">
+          <!-- Inventory -->
+          <div class="col-12 md:col-6" *appModuleVisibility="inventoryModule">
+            <div class="mb-3">
+              <i [class]="constants.icons.building + ' text-3xl text-primary'"></i>
+              <h2 class="text-lg font-semibold mb-1">{{ settingsLabels().inventory }}</h2>
+              <span class="text-500 text-sm font-medium capitalize">
+                {{ "manage_products_track_inventory" | translate }}
+              </span>
+            </div>
+            <p-panelMenu
+              styleClass="settings-panel-menu"
+              [model]="inventorySettings()"
+            ></p-panelMenu>
+          </div>
+
+          <!-- Modules -->
+          <div class="col-12 md:col-6">
+            <div class="mb-3">
+              <i [class]="constants.icons.thLarge + ' text-3xl text-primary'"></i>
+              <h2 class="text-lg font-semibold mb-1">{{ settingsLabels().modules }}</h2>
+              <span class="text-500 text-sm font-medium capitalize">
+                {{ "adjust_functionality_components" | translate }}
+              </span>
+            </div>
+            <p-panelMenu
+              styleClass="settings-panel-menu"
+              [model]="modulesAndMoreSettings()"
+            ></p-panelMenu>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lookups -->
+      <div class="col-12 md:col-4" *appModuleVisibility="lookupsModule">
+        <div class="mb-3">
+          <i [class]="constants.icons.heart + ' text-3xl text-primary'"></i>
+          <h2 class="text-lg font-semibold mb-1">{{ settingsLabels().lookups }}</h2>
+          <span class="text-500 text-sm font-medium capitalize">
+            {{ "customize_dropdown_menus" | translate }}
+          </span>
+        </div>
+        <p-panelMenu styleClass="settings-panel-menu" [model]="lookupsSettings()"></p-panelMenu>
+
+        @if (dynamicItems()[0].items?.length) {
+          <p-panelMenu styleClass="settings-panel-menu" [model]="dynamicItems()"></p-panelMenu>
+        } @else {
+          <div class="flex flex-column gap-3">
+            @for (i of [] | range: 5; track $index) {
+              <p-skeleton styleClass="w-8rem" height="7px" borderRadius="0" />
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </p-card>
+</ng-container>

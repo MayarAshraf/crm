@@ -1,0 +1,74 @@
+<div class="layout-header">
+  <div class="flex flex-wrap gap-1 align-items-center">
+    <div class="block lg:hidden">
+      <app-menu-sidebar />
+    </div>
+
+    <div class="block lg:hidden font-size-0">
+      <a routerLink="/home" class="flex-shrink-0 font-size-0">
+        <img
+          class="md:w-3rem w-2rem"
+          src="assets/media/logo/white-portrait-logo.png"
+          alt="8X CRM Logo"
+        />
+      </a>
+    </div>
+
+    @if (startHeaderItems().length) {
+      <div class="lg:block hidden">
+        <p-menubar [model]="startHeaderItems()" styleClass="left-header-items" />
+      </div>
+    }
+
+    <div class="flex-order-2 ml-auto flex align-items-center gap-2">
+      @if (isDesktopActive()) {
+        <div class="desktop-search-holder" [class.is-expanded]="isSearchExpanded()">
+          <app-global-search
+            #globalSearch
+            [withSpecialCloseBtn]="true"
+            (closeSearch)="isSearchExpanded.set(false)"
+          />
+        </div>
+      } @else {
+        <p-dialog
+          [(visible)]="searchDialogVisible"
+          appendTo="body"
+          position="top"
+          [style]="{ width: 'auto' }"
+          [showHeader]="false"
+          [modal]="true"
+          [resizable]="false"
+          [focusOnShow]="true"
+          [draggable]="false"
+          [dismissableMask]="true"
+          styleClass="shadow-none w-full h-full"
+          maskStyleClass="bg-white"
+          contentStyleClass="p-0 bg-transparent border-noround overflow-visible"
+        >
+          <app-global-search
+            #globalSearch
+            [(searchDialogVisible)]="searchDialogVisible"
+            (closeSearch)="searchDialogVisible.set(false)"
+          />
+        </p-dialog>
+      }
+      <button
+        pButton
+        class="w-2rem h-2rem shadow-none"
+        icon="fas fa-search text-lg"
+        [class.is-expanded]="isSearchExpanded()"
+        [class.open-search-btn]="isDesktopActive()"
+        (click)="openSearch()"
+      ></button>
+    </div>
+
+    <div class="flex gap-3 align-items-center flex-order-3">
+      <app-add-new></app-add-new>
+      <div class="lg:block hidden">
+        <app-top-header-menu />
+      </div>
+      <!-- <app-notifications-menu /> -->
+      <app-user-profile />
+    </div>
+  </div>
+</div>

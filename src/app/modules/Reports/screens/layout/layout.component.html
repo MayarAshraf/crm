@@ -1,0 +1,43 @@
+<app-sidebar [(showSidebar)]="showSidebar">
+  <ng-template #sidebarContentTemplete>
+    <p-panelMenu
+      styleClass="menu-panel-style"
+      [model]="filterMenuItemsGroups()"
+      [multiple]="true"
+    ></p-panelMenu>
+  </ng-template>
+
+  <ng-template #contentTemplete>
+    <div class="px-4 py-2">
+      <div class="flex flex-wrap justify-content-between align-items-center py-2 mb-2 gap-4">
+        <h1 class="m-0 text-900 text-lg font-semibold">
+          <i [class]="isReportPage() ? 'fas fa-chart-line mr-1' : icon() + ' ' + 'mr-1'"></i>
+          <span class="mr-2">{{ isReportPage() ? "Reports" : title() }}</span>
+          <!-- <small>
+            <span class="text-primary text-sm"> ({{ endDate() | relativeTime }})</span>
+          </small> -->
+        </h1>
+        <div class="flex align-items-center gap-3">
+          <app-date-range
+            [withForm]="false"
+            placeholder="Select Date Range"
+            (onClose)="setDateRange($event)"
+            (onClear)="setDateRange($event)"
+          />
+
+          <button
+            pButton
+            icon="pi pi pi-print"
+            class="custom-style-button hover:bg-gray-100"
+            severity="secondary"
+          ></button>
+        </div>
+      </div>
+      @if (isReportPage()) {
+        <ng-container *ngTemplateOutlet="reportTemplate() || null"></ng-container>
+      } @else {
+        <ng-container *ngTemplateOutlet="routerOutletTemplate() || null"></ng-container>
+      }
+    </div>
+  </ng-template>
+</app-sidebar>

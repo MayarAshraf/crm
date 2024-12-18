@@ -1,0 +1,69 @@
+<div class="flex gap-4 mb-4">
+  <div class="p-field">
+    <input
+      pInputText
+      class="field-height text-sm w-20rem"
+      type="'text'"
+      placeholder="Search For Name"
+      [(ngModel)]="valueInput"
+      (ngModelChange)="onInputChange($event)"
+    />
+  </div>
+
+  <p-multiSelect
+    [options]="groupUsers()"
+    [showHeader]="true"
+    [filter]="true"
+    [(ngModel)]="selectedGroupUsers"
+    styleClass="w-20rem"
+    (onChange)="filterRecords($event)"
+    [displaySelectedLabel]="false"
+    placeholder="Select groups"
+  >
+  </p-multiSelect>
+</div>
+
+<p-dataView
+  [value]="records()"
+  layout="grid"
+  [lazy]="true"
+  [loading]="isLoading()"
+  (onLazyLoad)="loadRecords($event)"
+  [paginator]="true"
+  [rows]="16"
+  [totalRecords]="totalRecords()"
+  [pageLinks]="3"
+  [alwaysShowPaginator]="false"
+  [showFirstLastIcon]="true"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="{first} - {last} {totalRecords}"
+  [showJumpToPageDropdown]="false"
+>
+  <ng-template pTemplate="grid" let-users>
+    <div class="grid">
+      @for (user of users; track $index) {
+        <div class="col-12 sm:col-6 lg:col-4" [ngClass]="user.styleClass">
+          <app-card-user
+            [fullName]="user.full_name"
+            [srcImage]="user.imageUrl"
+            [jobTitle]="user.job_title"
+            [id]="user.id"
+            [joinData]="user.created_at"
+            [lastLogin]="user.last_login_at"
+            [group]="user.group.name"
+          ></app-card-user>
+        </div>
+      }
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="loadingicon">
+    <div class="grid w-full">
+      @for (i of [] | range: 30; track $index) {
+        <div class="col-12 sm:col-6 lg:col-4 scale-in-center">
+          <p-skeleton height="60px" />
+        </div>
+      }
+    </div>
+  </ng-template>
+</p-dataView>

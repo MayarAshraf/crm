@@ -1,0 +1,17 @@
+{
+	"new_contact_method": "إضافة وسيلة إتصال أخرى",
+	"account_type": "نوع الحساب",
+	"select_account_type": "اختر نوع الوسيلة",
+	"contact_method": "طريقة تواصل",
+	"new_social_account": "حساب تواصل اجتماعى جديد",
+	"enter_social_account": "ادخل حساب التواصال الاجتماعى",
+	"social_account": "حساب تواصل اجتماعى",
+	"log_it": "حفظ",
+	"save": "حفظ",
+	"cancel": "إلغاء",
+	"add_new_social_account": "إضافة حساب اجتماعى جديد",
+	"social_account_is_required": "الحساب اجتماعى مطلوب",
+	"enter_contact_method": "أدخل وسيلة التواصل",
+	"add_new_contact_method": "إضافة وسيلة تواصل",
+	"contact_method_is_required": "وسيلة التواصل مطلوبة"
+}

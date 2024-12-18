@@ -1,0 +1,60 @@
+<div
+  class="bulk-actions-holder"
+  [style.left]="coordinates().left"
+  [style.right]="coordinates().right"
+  [ngClass]="{ 'is-displayed': displayBulkActionsBar() }"
+>
+  <span class="text-white white-space-nowrap font-semibold pr-3">
+    {{ selection().length }}
+    {{ "selected" | translate }}
+  </span>
+
+  <ul class="list-none p-0 m-0 w-full">
+    <li>
+      <button
+        type="button"
+        (click)="clearAll()"
+        [pTooltip]="'clear_all_selection' | translate"
+        tooltipPosition="top"
+        class="flex-shrink-0 bulk-button bulk-item"
+      >
+        <i class="fas fa-eraser"></i>
+      </button>
+    </li>
+    @for (item of bulkActions().slice(0, 7); track item) {
+      @if (item?.visible) {
+        <li [class.ml-auto]="$first">
+          <button type="button" class="bulk-item" (click)="addBulkAction(item)">
+            <i [class]="item.icon"></i>
+            <span>{{ item.label }}</span>
+          </button>
+        </li>
+        @if (!$last) {
+          <li class="separator"></li>
+        }
+      }
+    }
+    @if (bulkActions().length > 7) {
+      <li>
+        <button
+          type="button"
+          (click)="menu.toggle($event)"
+          [pTooltip]="'more' | translate"
+          tooltipPosition="top"
+          class="flex-shrink-0 bulk-button bulk-item"
+        >
+          <i class="fas fa-ellipsis-v"></i>
+        </button>
+      </li>
+    }
+  </ul>
+</div>
+
+<p-menu #menu appendTo="body" [model]="bulkActions().slice(7)" [popup]="true">
+  <ng-template pTemplate="item" let-item>
+    <a class="p-menuitem-link" (click)="addBulkAction(item)">
+      <i [class]="item.icon + ' p-menuitem-icon'"></i>
+      <span class="p-menuitem-text"> {{ item.label }}</span>
+    </a>
+  </ng-template>
+</p-menu>

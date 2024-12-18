@@ -1,0 +1,11 @@
+:host ::ng-deep {
+
+  .login-input input.p-inputtext {
+    border-radius: 1.5rem;
+  }
+
+  eyeicon.p-icon-wrapper,
+  eyeslashicon.p-icon-wrapper {
+    cursor: pointer;
+  }
+}

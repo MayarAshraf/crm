@@ -1,0 +1,180 @@
+@use "src/assets/styles/_utilities.scss";
+
+:host ::ng-deep {
+  .search-holder {
+    position: relative;
+    --radius: 25px;
+
+    .ng-select.global-search-input {
+      width: 100%;
+      @media (width >=768px) {
+        width: 300px;
+      }
+
+      .ng-select-container {
+        padding-inline-end: 10px;
+        border-color: var(--body-bg);
+        box-shadow: none;
+        width: 100%;
+        height: var(--field-height);
+        min-height: auto;
+        border-start-end-radius: 0;
+        border-end-end-radius: 0;
+        border-start-start-radius: var(--radius);
+        border-end-start-radius: var(--radius);
+
+        .ng-value-container {
+          padding: 0;
+
+          .ng-value {
+            font-size: 14px;
+          }
+
+          .ng-placeholder {
+            font-size: 14px;
+          }
+
+          .ng-input {
+            left: auto;
+            inset-inline-start: 40px;
+            padding: 0;
+            max-width: 120px;
+            @media (width >=768px) {
+              max-width: 220px;
+            }
+
+            & > input {
+              cursor: text;
+            }
+          }
+        }
+
+        span.ng-arrow-wrapper {
+          width: auto;
+          padding-inline: 12px;
+          order: -3;
+
+          .ng-arrow {
+            display: none;
+          }
+
+          &::before {
+            content: "\f002";
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            color: var(--gray-500);
+          }
+        }
+
+        .ng-clear-wrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 1rem;
+          height: 1rem;
+          border-radius: 50%;
+          background-color: var(--gray-300);
+          color: var(--gray-50);
+          &:hover {
+            background-color: var(--gray-400);
+            .ng-clear {
+              color: inherit;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .search-result-container {
+    position: absolute;
+    top: 100%;
+    inset-inline: 0;
+    width: 100%;
+    z-index: 5;
+
+    .recent-items-holder {
+      max-height: 350px;
+      @extend %scrollable-content;
+      overflow: hidden;
+      overflow-y: auto;
+    }
+
+    .ng-dropdown-panel {
+      position: static;
+      min-width: auto !important;
+      border: 0;
+      box-shadow: none;
+      border-radius: 0;
+      margin: 0;
+
+      .ng-dropdown-panel-items {
+        max-height: 350px;
+        @extend %scrollable-content;
+
+        .ng-option {
+          cursor: default;
+          &:empty {
+            display: none;
+          }
+          &.ng-option-disabled {
+            font-size: 14px;
+          }
+          &:not(.ng-option-disabled) {
+            padding: 5px 1.5rem;
+            margin-block: 5px;
+
+            &:hover,
+            &.ng-option-marked {
+              background-color: var(--gray-50);
+            }
+            &.ng-option-selected {
+              background-color: var(--gray-100);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .special-close-btn {
+    background-color: var(--body-bg);
+    color: var(--gray-600);
+    border-start-end-radius: var(--radius);
+    border-end-end-radius: var(--radius);
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+
+  .search-by-menu {
+    width: auto;
+    border-color: var(--body-bg);
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    border-start-end-radius: var(--radius);
+    border-end-end-radius: var(--radius);
+    border-inline-start: 0;
+    @media (width >=768px) {
+      width: 185px;
+    }
+
+    &.search-by-menu-with-close-btn {
+      border-inline-end: 0;
+      border-start-end-radius: 0;
+      border-end-end-radius: 0;
+    }
+
+    .p-dropdown-label {
+      padding-inline-end: 0;
+      @media (width < 767px) {
+        display: none;
+      }
+    }
+    .p-dropdown-label,
+    .p-dropdown-trigger {
+      color: inherit;
+    }
+  }
+}

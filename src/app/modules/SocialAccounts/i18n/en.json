@@ -1,0 +1,18 @@
+{
+	"new_contact_method": "New Contact Method",
+	"account_type": "Account Type",
+	"select_account_type": "Select Account Type",
+	"contact_method": "Contact Method",
+	"new_social_account": "New Social Account",
+	"enter_social_account": "Enter Social Account",
+	"social_account": "Social Account",
+	"log_it": "Log It",
+	"save": "Save",
+	"cancel": "Cancel",
+	"add_new_social_account": "Add New Social Account",
+	"social_account_is_required": "Social Account is Required",
+	"enter_contact_method": "Enter contact method",
+	"add_new_contact_method": "Add new contact method",
+	"contact_method_is_required": "Contact method is required",
+	"new_contact_method_desc": "Additional contacts"
+}

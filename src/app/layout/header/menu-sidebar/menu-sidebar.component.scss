@@ -1,0 +1,171 @@
+::ng-deep {
+  // sidebar style
+  .p-sidebar.layout-sidebar {
+    left: auto;
+    right: auto;
+    inset-inline-start: 0;
+    background-color: var(--surface-overlay);
+    box-shadow: none;
+    border: 1px solid #dcdcdc;
+
+    .p-sidebar-header {
+      padding: 10px 5px;
+    }
+
+    .p-sidebar-content,
+    .p-sidebar-footer {
+      padding: 0;
+    }
+
+    @media (width >=992px) {
+      width: var(--sidebar-width);
+
+      .p-sidebar-header {
+        justify-content: center;
+      }
+    }
+  }
+
+  //  panel menu style
+  .p-panelmenu.menu-sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    @media (width >=992px) {
+      padding: 0.5rem 0;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    .p-panelmenu-panel {
+      width: 100%;
+      margin-bottom: 0;
+
+      @media (width >=992px) {
+        &:has(> .control-position-item) {
+          margin-top: auto;
+        }
+
+        &:hover {
+          .p-panelmenu-header:not(.p-highlight):not(.p-disabled) > .p-panelmenu-header-content {
+            color: var(--primary-color);
+          }
+
+          .p-toggleable-content:has(.p-panelmenu-content) {
+            padding-top: 2rem;
+            display: block;
+          }
+        }
+      }
+
+      .p-panelmenu-header {
+        &:not(.p-highlight):not(.p-disabled):hover .p-panelmenu-header-content {
+          color: var(--gray-800);
+        }
+
+        .p-panelmenu-header-content {
+          border: none;
+          color: var(--gray-500);
+          background-color: transparent !important;
+          border-radius: 0;
+          box-shadow: none;
+          transition: none;
+
+          a.p-panelmenu-header-action {
+            gap: 5px;
+            color: inherit;
+            padding: 0.75rem 1.25rem;
+            font-weight: 600;
+
+            &.p-menuitem-link-active {
+              color: var(--primary-color);
+            }
+
+            chevronrighticon.p-icon-wrapper,
+            chevrondownicon.p-icon-wrapper {
+              order: 3;
+              margin-inline-start: auto;
+            }
+
+            @media (width >=992px) {
+              justify-content: center;
+              font-size: 1.2rem;
+
+              .p-menuitem-icon {
+                margin: 0;
+              }
+
+              .p-menuitem-text,
+              .p-submenu-icon {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+
+      .p-toggleable-content:has(.p-panelmenu-content) {
+        .p-panelmenu-content {
+          border: 0;
+          margin-bottom: 0;
+          background-color: transparent;
+          border-radius: 0;
+        }
+      }
+
+      @media (width >=992px) {
+        .p-toggleable-content:has(.p-panelmenu-content) {
+          display: none;
+          position: fixed;
+          margin-inline-start: calc((var(--scrollbar-width) + 1.5px) * -1);
+          top: 0;
+          inset-inline-start: var(--sidebar-width);
+          width: 300px;
+          height: 100% !important;
+          overflow-y: auto !important;
+          background-color: #f7f7fa;
+          box-shadow: none;
+          border-inline-end: 1px solid var(--surface-border);
+
+          .p-panelmenu-content {
+            .p-submenu-list:not(.p-panelmenu-root-submenu) {
+              padding: 0;
+            }
+
+            .p-menuitem {
+              color: var(--gray-600);
+
+              &:not(.p-disabled):hover {
+                color: var(--gray-800);
+              }
+            }
+
+            .p-menuitem-content {
+              background-color: transparent;
+              color: inherit;
+
+              .p-menuitem-link {
+                color: inherit;
+                padding: 0.65rem 1.25rem;
+                font-weight: 500;
+                transition: none;
+
+                .p-menuitem-text,
+                .p-menuitem-icon {
+                  color: inherit;
+                }
+
+                anglerighticon.p-icon-wrapper,
+                angledownicon.p-icon-wrapper {
+                  order: 3;
+                  margin-inline-start: auto;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

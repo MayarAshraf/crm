@@ -1,0 +1,19 @@
+::ng-deep {
+  @media print {
+    .system-logs-page {
+
+      .p-datatable-header,
+      .p-paginator,
+      .p-sidebar-left,
+      .p-toast,
+      .layout-header,
+      app-breadcrumb {
+        display: none;
+      }
+
+      .header-print {
+        display: block !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,322 @@
+<app-sidebar [(showSidebar)]="showFilterSidebar">
+  <ng-template #sidebarContentTemplete>
+    @if (!showSettings()) {
+      @if (displayFiltersHint()) {
+        <p class="filters-hint">
+          <i class="fas fa-info-circle text-primary"></i>
+          {{ "remember_to_press" | translate }} <strong>{{ "apply" | translate }}</strong>
+          {{ "at_the_bottom_after_filter_changes" | translate }}
+          <button class="remove-hint-btn" (click)="displayFiltersHint.set(false)">
+            <i class="fas fa-times"></i>
+          </button>
+        </p>
+      }
+      <form [formGroup]="filtersForm()">
+        @for (filter of basicFilters(); track $index) {
+          <ng-container
+            *ngTemplateOutlet="filterRef; context: { $implicit: filter }"
+          ></ng-container>
+        }
+
+        <div #advancedFiltersRef>
+          @if (isAdvancedFilter()) {
+            @for (filter of advancedFilters(); track $index) {
+              <ng-container
+                *ngTemplateOutlet="filterRef; context: { $implicit: filter }"
+              ></ng-container>
+            }
+          }
+        </div>
+
+        <ng-template #filterRef let-filter>
+          @switch (filter.type) {
+            @case ("text") {
+              <div class="p-field" [ngClass]="{ hidden: filter.is_hidden }">
+                <input
+                  type="text"
+                  pInputText
+                  [placeholder]="filter.label"
+                  [formControlName]="filter.name"
+                  class="bg-transparent w-full"
+                />
+              </div>
+            }
+            @case ("number") {
+              <div class="p-field" [ngClass]="{ hidden: filter.is_hidden }">
+                <input
+                  type="number"
+                  pInputText
+                  [placeholder]="filter.label"
+                  [formControlName]="filter.name"
+                  class="bg-transparent w-full"
+                />
+              </div>
+            }
+            @case ("radio") {
+              <div [ngClass]="{ hidden: filter.is_hidden }">
+                <p-accordion [multiple]="true">
+                  <p-accordionTab [selected]="true">
+                    <ng-template pTemplate="header">
+                      <span class="flex align-items-center gap-2 w-full">
+                        <span class="mb-3 white-space-nowrap text-sm font-medium">
+                          {{ filter.label }}</span
+                        >
+                      </span>
+                    </ng-template>
+
+                    @if (filter.options.length) {
+                      @for (item of filter.options; track $index) {
+                        <div [ngClass]="{ 'mb-3': !$last }">
+                          <p-radioButton
+                            [value]="item.value"
+                            label="{{ item.label }}"
+                            [formControlName]="filter.name"
+                            [inputId]="item.label"
+                            labelStyleClass="cursor-pointer text-sm"
+                          />
+                        </div>
+                      }
+                    }
+                  </p-accordionTab>
+                </p-accordion>
+              </div>
+            }
+
+            @case ("select") {
+              <div [ngClass]="{ hidden: filter.is_hidden }">
+                <p-accordion [multiple]="true">
+                  <p-accordionTab [selected]="true">
+                    <ng-template pTemplate="header">
+                      <span class="flex align-items-center gap-2 w-full">
+                        <span class="white-space-nowrap text-sm font-medium">
+                          {{ filter.label }}</span
+                        >
+                        @if (filter.is_multiple) {
+                          <p-badge
+                            [value]="filtersForm().get(filter.name)?.value?.length || 0"
+                            class="ml-auto"
+                          />
+                        }
+                      </span>
+                    </ng-template>
+
+                    <ng-container
+                      *ngTemplateOutlet="error; context: { $implicit: filter }"
+                    ></ng-container>
+
+                    @if (filter.options.length) {
+                      <p-listbox
+                        styleClass="filter-list"
+                        [filter]="filter.search ?? true"
+                        [group]="filter.group"
+                        [filterPlaceHolder]="'searching' | translate"
+                        optionLabel="label"
+                        optionValue="value"
+                        [multiple]="filter.is_multiple ? true : false"
+                        [options]="filter.showAllOptions ? filter.options : visibleOptions(filter)"
+                        [formControlName]="filter.name"
+                        (onChange)="filter.onChange && filter.onChange($event, filtersForm())"
+                        (onFilter)="filter.showAllOptions = !!$event.filter"
+                      >
+                        <ng-template let-option pTemplate="item">
+                          <div class="inner-item">
+                            <span>{{ option.label }}</span>
+                            <i class="reset-option pi pi-times text-xs"></i>
+                          </div>
+                        </ng-template>
+                      </p-listbox>
+
+                      @if (filter.options.length > 4 && !filter.showAllOptions) {
+                        <button
+                          pButton
+                          type="button"
+                          (click)="toggleExpansion(filter)"
+                          class="p-button-link text-700 text-sm p-0 font-semibold shadow-none select-none"
+                        >
+                          {{
+                            filter.expanded ? ("show_less" | translate) : ("show_more" | translate)
+                          }}
+                        </button>
+                      }
+                    } @else {
+                      <div class="flex flex-column align-items-center gap-2 mt-3">
+                        @for (i of [] | range: 3; track $index) {
+                          <p-skeleton styleClass="w-10rem" height="7px" borderRadius="0" />
+                        }
+                      </div>
+                    }
+                  </p-accordionTab>
+                </p-accordion>
+              </div>
+            }
+
+            @case ("switcher") {
+              <div class="p-field" [ngClass]="{ hidden: filter.is_hidden }">
+                <div class="flex gap-2 justify-content-between align-items-center">
+                  <label class="text-sm font-medium">{{ filter.label }}</label>
+                  <p-inputSwitch
+                    class="line-height-1"
+                    [formControlName]="filter.name"
+                    (onChange)="filter.onChange && filter.onChange($event, filtersForm())"
+                  />
+                </div>
+              </div>
+            }
+
+            @case ("autocomplete") {
+              <div class="p-field" [ngClass]="{ hidden: filter.is_hidden }">
+                <p-autoComplete
+                  styleClass="w-full"
+                  appendTo="body"
+                  [formControlName]="filter.name"
+                  [forceSelection]="true"
+                  [delay]="1000"
+                  inputStyleClass="w-full text-sm"
+                  [dropdown]="false"
+                  [multiple]="filter.is_multiple"
+                  [placeholder]="filter.label"
+                  [suggestions]="filter.suggestions ?? []"
+                  (completeMethod)="onComplete($event, filter)"
+                />
+              </div>
+            }
+
+            @case ("daterange") {
+              <div [ngClass]="{ hidden: filter.is_hidden }">
+                <app-date-range
+                  [controlName]="filter.name"
+                  [form]="filtersForm()"
+                  [placeholder]="filter.label"
+                  [title]="filter.label"
+                />
+              </div>
+            }
+          }
+        </ng-template>
+      </form>
+    } @else {
+      <form [formGroup]="settingsForm()">
+        @for (setting of settings(); track $index) {
+          <div class="p-field">
+            <div class="flex gap-2 justify-content-between align-items-center">
+              <label class="text-sm font-medium capitalize">{{ setting.label }}</label>
+              <p-inputSwitch
+                class="line-height-1"
+                [formControlName]="setting.name"
+                (onChange)="updateSetting(setting.name, $event)"
+              ></p-inputSwitch>
+            </div>
+          </div>
+        }
+      </form>
+    }
+
+    <ng-template #error let-filter>
+      @if (
+        filter.is_required &&
+        filtersForm().controls[filter.name].invalid &&
+        filtersForm().controls[filter.name].touched
+      ) {
+        <span class="p-error text-xs" role="alert">{{ "shared.required" | translate }}</span>
+      }
+    </ng-template>
+  </ng-template>
+
+  <ng-template #footerTemplete>
+    @if (!showSettings()) {
+      @if (!isAdvancedFilter() && displayMoreFilter()) {
+        <button
+          pButton
+          type="button"
+          (click)="showAdvancedFilters()"
+          class="p-button-link shadow-none p-0 mb-3 text-sm"
+          [label]="'more_filters' | translate"
+        ></button>
+      }
+      <div class="flex align-items-center gap-2">
+        @if (displaySettings()) {
+          <button
+            pButton
+            type="button"
+            [pTooltip]="'settings' | translate"
+            tooltipPosition="top"
+            (click)="showSettings.set(true)"
+            class="p-button-link shadow-none text-500 hover:text-900 w-auto p-0 mr-auto"
+            icon="fas fa-gear"
+          ></button>
+        }
+        @if (chips() && chips()?.length) {
+          <button
+            pButton
+            type="button"
+            [pTooltip]="'clear_fiters' | translate"
+            tooltipPosition="top"
+            (click)="clearAllChips()"
+            class="p-button-link shadow-none text-500 hover:text-900 w-auto p-0"
+            icon="fas fa-eraser"
+          ></button>
+        }
+        <button
+          pButton
+          type="button"
+          (click)="onSubmit()"
+          class="text-xs py-1 border-round-3xl"
+          icon="pi pi-check text-xs"
+          [label]="'apply' | translate"
+        ></button>
+      </div>
+    } @else {
+      <div class="flex align-items-center gap-2">
+        <button
+          pButton
+          type="button"
+          [pTooltip]="'back_to_filters' | translate"
+          (click)="showSettings.set(false)"
+          tooltipPosition="top"
+          class="p-button-link shadow-none text-500 hover:text-900 w-auto p-0 mr-auto"
+          icon="pi pi-filter-fill"
+        ></button>
+
+        <p-button
+          type="button"
+          [outlined]="true"
+          [label]="'cancel' | translate"
+          styleClass="text-xs py-1 px-3 border-round-3xl"
+          (click)="showSettings.set(false)"
+        ></p-button>
+
+        <p-button
+          type="button"
+          [label]="'apply' | translate"
+          styleClass="text-xs py-1 px-3 border-round-3xl"
+          (click)="onSubmitSetting()"
+        ></p-button>
+      </div>
+    }
+  </ng-template>
+
+  <ng-template #contentTemplete>
+    <div class="flex flex-wrap align-items-center gap-3 bg-white pt-3 md:px-4 px-2">
+      <p-button
+        type="button"
+        (onClick)="showFilterSidebar.set(true)"
+        [badge]="chips()?.length?.toString()"
+        badgeClass="flex align-items-center justify-content-center w-1.5rem h-1.5rem bg-gray-200 text-500 font-medium"
+        icon="fas fa-sliders"
+        [label]="'all_filters' | translate"
+        severity="secondary"
+        [outlined]="true"
+        styleClass="p-2 border-300 text-sm shadow-none"
+      />
+
+      <app-filters-chips
+        [chips]="chips()"
+        [filters]="filters()"
+        (removeChip)="removeChip($event)"
+        (clearAllChips)="clearAllChips()"
+      />
+    </div>
+
+    <ng-content select="[filtered-data]"></ng-content>
+  </ng-template>
+</app-sidebar>

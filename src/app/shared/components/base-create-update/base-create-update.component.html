@@ -1,0 +1,27 @@
+<app-dynamic-dialog
+  [showDialogHeader]="dialogMeta.showDialogHeader"
+  [dialogData$]="dialogMeta.dialogData$"
+  [isTitleRenderedAsBtn]="dialogMeta.isTitleRenderedAsBtn"
+  [dialogTitle]="dialogMeta.dialogTitle"
+  [titleClass]="dialogMeta.dialogTitleClass"
+  [subtitle]="dialogMeta.dialogSubtitle"
+  [titleIcon]="dialogMeta.titleIcon"
+  [isHeaderSticky]="dialogMeta.isHeaderSticky"
+  (onTitleBtnClicked)="onTitleBtnClicked()"
+>
+  <ng-container ngProjectAs="[bodyContent]">
+    <app-form
+      [form]="createUpdateForm"
+      [model]="model"
+      [fields]="fields"
+      [options]="options"
+      [showFormActions]="dialogMeta.showFormActions"
+      [showSubmitButton]="dialogMeta.showSubmitButton"
+      [showResetButton]="dialogMeta.showResetButton"
+      [buttonLabel]="dialogMeta.submitButtonLabel"
+      [submitBtnLoading]="isLoading()"
+      [isDisabled]="isDisabled()"
+      (onSubmit)="createUpdateRecord(dialogMeta.endpoints, $event)"
+    />
+  </ng-container>
+</app-dynamic-dialog>

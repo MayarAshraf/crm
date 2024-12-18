@@ -1,0 +1,19 @@
+<app-layout>
+  <ng-template #routerOutlet>
+    <router-outlet />
+  </ng-template>
+  <ng-template #reportContent>
+    <div class="grid">
+      @for (item of activitiesItems(); track $index) {
+        <div class="md:col-4 col-12 flex flex-column justify-content-center">
+          <app-view-report-card
+            [icon]="item.icon + ' text-4xl mb-2'"
+            [label]="item.label"
+            [link]="item.routerLink"
+            [styleCard]="item.styleCard"
+          />
+        </div>
+      }
+    </div>
+  </ng-template>
+</app-layout>

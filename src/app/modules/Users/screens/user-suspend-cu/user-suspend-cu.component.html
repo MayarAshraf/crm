@@ -1,0 +1,30 @@
+<app-dynamic-dialog
+  [showDialogHeader]="dialogMeta.showDialogHeader"
+  [dialogData$]="dialogMeta.dialogData$"
+  [isTitleRenderedAsBtn]="dialogMeta.isTitleRenderedAsBtn"
+  [dialogTitle]="dialogMeta.dialogTitle"
+  [titleClass]="dialogMeta.dialogTitleClass"
+  [subtitle]="dialogMeta.dialogSubtitle"
+  [titleIcon]="dialogMeta.titleIcon"
+  [isHeaderSticky]="dialogMeta.isHeaderSticky"
+  (onTitleBtnClicked)="onTitleBtnClicked()"
+>
+  <ng-container ngProjectAs="[bodyContent]">
+    @if (assignedLeadsCount$ | async; as count) {
+      <p>
+        {{ "reassigned" | translate }} <strong>{{ count }}</strong> {{ "leads" | translate }}
+      </p>
+    }
+
+    <app-form
+      [form]="createUpdateForm"
+      [model]="model"
+      [options]="options"
+      [showResetButton]="dialogMeta.showResetButton"
+      [fields]="fields"
+      [buttonLabel]="dialogMeta.submitButtonLabel"
+      [submitBtnLoading]="isLoading()"
+      (onSubmit)="createUpdateRecord(dialogMeta.endpoints, $event)"
+    />
+  </ng-container>
+</app-dynamic-dialog>

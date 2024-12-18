@@ -1,0 +1,187 @@
+<app-filters-panel
+  [filters]="todosFilters()"
+  [displaySettings]="false"
+  [displayMoreFilter]="false"
+  [(showFilterSidebar)]="showBasicFilters"
+  (onRemoveChip)="refreshTodos($event)"
+  (onClearAllChips)="refreshTodos($event)"
+  (onSubmitFilters)="refreshTodos($event)"
+>
+  <ng-container ngProjectAs="[filtered-data]">
+    <!--
+      ngProjectAs is useful if we want to project an ng-container with a certain selector.
+     -->
+    <div #targetElement>
+      <app-table-wrapper
+        [moduleName]="moduleName"
+        [(isListLayout)]="isListLayout"
+        [withMultiLayout]="withMultiLayout()"
+        [showScrollHint]="false"
+        [showGridlines]="false"
+        [showStriped]="true"
+        [withScreenHeader]="false"
+        [columns]="indexMeta.columns"
+        [dataSource]="recordsList()"
+        [loading]="isLoading()"
+        [totalRecords]="totalTodos()"
+        [recordsFiltered]="todosFiltered()"
+        paginatorPosition="both"
+        [indexPermissions]="permissions().index"
+        [updateBtnPermissions]="permissions().update"
+        [createBtnPermissions]="permissions().create"
+        [deleteBtnPermissions]="permissions().delete"
+        [stateKey]="indexMeta.indexTableKey"
+        [globalFilterValue]="globalFilterValue"
+        (onLoadData)="loadRecords($event)"
+        styleClass="is-no-table-style"
+      >
+        <ng-template #bodyTemplate let-rowData>
+          <tr>
+            <td>
+              <app-lead-table-row
+                [isListLayout]="isListLayout()"
+                [rowData]="getLead(rowData)"
+                [withSelection]="false"
+              >
+                <ng-container additional-content>
+                  <div
+                    [ngClass]="{
+                      'w-full flex gap-1 align-items-center justify-content-between':
+                        !isListLayout()
+                    }"
+                  >
+                    <app-lead-name
+                      [checkPermission]="checkPermission(getLead(rowData), 'view-??')"
+                      [lead]="getLead(rowData)"
+                      (nameClicked)="openLeadDialog($event)"
+                    >
+                      <ng-container additional-info>
+                        <ng-container *ngTemplateOutlet="additionalInfo"></ng-container>
+                      </ng-container>
+                    </app-lead-name>
+
+                    @if (!isListLayout()) {
+                      <app-lead-id [leadId]="rowData.id" />
+                    }
+
+                    <app-lead-more-toggler
+                      [lead]="getLead(rowData)"
+                      [isListLayout]="isListLayout()"
+                    />
+                  </div>
+
+                  @if (checkPermission(getLead(rowData), "access-??-contact-details")) {
+                    <app-phones
+                      layout="vertical"
+                      [withCreateBtn]="false"
+                      [phones]="getLead(rowData).phones"
+                    />
+                  }
+
+                  <div [ngClass]="{ 'ml-auto': isListLayout() }">
+                    <ul
+                      class="p-reset text-400 flex row-gap-2 column-gap-3"
+                      [ngClass]="{
+                        'flex-row flex-wrap align-items-center': isListLayout(),
+                        'flex-row flex-wrap gap-3': !isListLayout()
+                      }"
+                    >
+                      <li
+                        class="font-medium text-xs"
+                        [pTooltip]="'subject' | translate"
+                        tooltipPosition="top"
+                      >
+                        {{ rowData.subject }}
+                      </li>
+
+                      <li
+                        class="font-medium text-xs"
+                        [pTooltip]="
+                          rowData.class === ITEM_CLASS_TASK
+                            ? ('due_date' | translate)
+                            : ('start_date' | translate)
+                        "
+                        tooltipPosition="top"
+                      >
+                        {{
+                          rowData.class === ITEM_CLASS_TASK ? rowData.due_date : rowData.start_date
+                        }}
+                      </li>
+                    </ul>
+
+                    <ul class="p-reset flex row-gap-2 column-gap-3">
+                      <li
+                        class="font-medium text-sm"
+                        [pTooltip]="'status' | translate"
+                        tooltipPosition="top"
+                      >
+                        {{ getStatus(rowData) }}
+                      </li>
+
+                      @if (rowData?.description) {
+                        <li
+                          class="text-sm font-medium"
+                          [pTooltip]="'description' | translate"
+                          tooltipPosition="top"
+                        >
+                          {{ rowData.description }}
+                        </li>
+                      }
+
+                      @if (rowData.class === ITEM_CLASS_EVENT) {
+                        <li
+                          class="font-medium text-sm"
+                          [pTooltip]="'end_date' | translate"
+                          tooltipPosition="top"
+                        >
+                          {{ rowData.end_date }}
+                        </li>
+                      }
+                    </ul>
+                  </div>
+                </ng-container>
+
+                <ng-container additional-info>
+                  <ng-container *ngTemplateOutlet="additionalInfo"></ng-container>
+                </ng-container>
+
+                <ng-template #additionalInfo>
+                  <ul class="p-reset flex row-gap-2 column-gap-3">
+                    @if (getAssignees(rowData).length) {
+                      <li class="flex gap-1 align-items-center">
+                        <i class="fas fa fa-user text-xs"></i>
+                        <app-comma-separated-labels
+                          [items]="getAssignees(rowData)"
+                          [tooltip]="'assignees' | translate"
+                        />
+                      </li>
+                    }
+                    @if (getAttendees(rowData).length) {
+                      <li class="flex gap-1 align-items-center">
+                        <i class="fas fa fa-user text-xs"></i>
+                        <app-comma-separated-labels
+                          [items]="getAttendees(rowData)"
+                          [tooltip]="'attendees' | translate"
+                        />
+                      </li>
+                    }
+                  </ul>
+                </ng-template>
+              </app-lead-table-row>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template #loadingBodyTemplate>
+          @for (i of [] | range: (isListLayout() ? 10 : 12); track $index) {
+            <tr>
+              <td class="bg-white p-1">
+                <app-custom-layout-skeleton [isListLayout]="isListLayout()" />
+              </td>
+            </tr>
+          }
+        </ng-template>
+      </app-table-wrapper>
+    </div>
+  </ng-container>
+</app-filters-panel>

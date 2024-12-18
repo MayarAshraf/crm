@@ -1,0 +1,59 @@
+<div class="flex flex-column justify-content-center align-items-center mb-4">
+  <h2 class="mb-1 text-900">Welcome to <span class="text-primary"> Day Work</span></h2>
+  <small> Check all activities' details over each agent in one place.</small>
+</div>
+
+<app-table-wrapper
+  titleClass="hidden"
+  [titleIcon]="indexMeta.indexIcon"
+  [withScreenHeader]="true"
+  [displayHeaderButton]="false"
+  [withActionsColumn]="false"
+  [withAdditionalContent]="true"
+  [withCustomFilters]="true"
+  [columns]="indexMeta.columns"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  paginatorPosition="both"
+  [totalRecords]="totalRecords()"
+  [recordsFiltered]="recordsFiltered()"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterValue]="globalFilterValue"
+  (onLoadData)="loadRecords($event)"
+>
+  <div moreActions>
+    <div class="flex gap-2">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-file-excel text-xs"
+        class="text-xs py-1 px-3"
+        label="Excel"
+        pTooltip="Export As Excel"
+        tooltipPosition="top"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-file-pdf text-xs"
+        class="text-xs bg-pink-color border-pink-color py-1 px-3"
+        label="PDF"
+        pTooltip="Export As PDF"
+        tooltipPosition="top"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-print text-xs"
+        class="text-xs bg-purple-color border-purple-color py-1 px-3"
+        label="Print"
+        pTooltip="Print"
+        tooltipPosition="top"
+      ></button>
+    </div>
+  </div>
+</app-table-wrapper>

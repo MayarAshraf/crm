@@ -1,0 +1,44 @@
+<p-dialog
+  #dialog
+  [visible]="!!selectedAction()"
+  (visibleChange)="selectedAction.set(null)"
+  appendTo="body"
+  position="bottom"
+  [closeOnEscape]="true"
+  [focusOnShow]="false"
+  [modal]="true"
+  [resizable]="false"
+  [draggable]="false"
+  styleClass="bulk-dialog"
+  [style]="{ left: coordinates().left, right: coordinates().right }"
+>
+  <ng-template pTemplate="header">
+    <p class="m-0 flex align-items-center gap-2">
+      <i [class]="headerIcon()"></i>
+      <span class="font-semibold">{{ headerTitle() }}</span>
+    </p>
+  </ng-template>
+
+  <ng-template pTemplate="content">
+    <app-form [form]="form" [model]="model()" [fields]="fields()" [showFormActions]="false" />
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="inner-footer">
+      <p class="m-0 text-white">
+        <span class="font-light">{{ "bulk_action_for" | translate }}</span> &nbsp;
+        <span class="font-semibold">{{ selection().length }} {{ "selected" | translate }}</span>
+      </p>
+      @if (selectedAction()?.withSubmitAction) {
+        <button
+          pButton
+          class="bg-transparent hover:bg-black-alpha-10 text-white shadow-none border-round-3xl transition-none border-none py-1 m-0"
+          [label]="'apply' | translate"
+          icon="pi pi-check"
+          (click)="submit()"
+          [loading]="isLoading()"
+        ></button>
+      }
+    </div>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,20 @@
+<app-filters-panel
+  [filters]="dealFilters()"
+  [(settings)]="dealSettings"
+  [(showFilterSidebar)]="showBasicFilters"
+  [(isAdvancedFilter)]="showAdvancedFilters"
+  (onRemoveChip)="refreshTodos($event)"
+  (onClearAllChips)="refreshTodos($event)"
+  (onSubmitFilters)="refreshTodos($event)"
+>
+  <ng-container ngProjectAs="[filtered-data]">
+    <!--
+      ngProjectAs is useful if we want to project an ng-container with a certain selector.
+     -->
+    <app-opportunities-table
+      [(filtersData)]="filtersData"
+      [(settings)]="dealSettings"
+      indexTableKey="OPPORTUNITIES_KEY"
+    />
+  </ng-container>
+</app-filters-panel>

@@ -1,0 +1,49 @@
+<div class="relative" #target>
+  <p-button
+    (onClick)="op.toggle($event)"
+    icon="fas fa-bell"
+    pTooltip="Notifications"
+    tooltipPosition="bottom"
+    styleClass="with-dot-badge w-2rem h-2rem transition-none shadow-none p-0 text-lg"
+  ></p-button>
+</div>
+
+<p-overlayPanel #op [appendTo]="target" styleClass="notifications-panel">
+  <ng-template pTemplate="content">
+    <header
+      class="header mb-3 pb-3 flex justify-content-between align-items-center gap-2 border-bottom-1 border-300"
+    >
+      <h2 class="text-base font-medium my-0">
+        Notifications
+        <span class="bg-primary text-xs px-2 py-1 border-round">{{ notificationsCount }}</span>
+      </h2>
+      <a routerLink="/" class="text-500 text-xl hover:text-800">
+        <i [class]="constants.icons.gear"></i>
+      </a>
+    </header>
+
+    <ul class="content">
+      @for (item of notifications; track $index; let l = $last) {
+        <li [ngClass]="{ 'border-bottom-1 border-300': !l }">
+          <a routerLink="/" class="flex gap-2 p-3 hover:surface-100">
+            <span
+              class="flex-shrink-0 w-2rem h-2rem border-1 border-700 border-circle flex justify-content-center align-items-center"
+            >
+              <i class="far fa-bell text-xl"></i>
+            </span>
+            <span>
+              <span class="block text-xs font-medium">{{ item.label }}</span>
+              <span class="block text-xs font-medium text-primary">{{ item.created_since }}</span>
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+
+    <footer class="footer mt-3 text-center">
+      <a routerLink="/" class="block text-sm text-primary p-2 surface-50 hover:surface-100">
+        View All
+      </a>
+    </footer>
+  </ng-template>
+</p-overlayPanel>

@@ -1,0 +1,64 @@
+<p-card styleClass="shadow-none">
+  <div class="phone-holder">
+    <span class="inline-flex align-items-center gap-1 flex-auto">
+      <small>{{ phone().country_code }}</small>
+
+      <a
+        (click)="makeCall(phone().format_international)"
+        class="root-phone-link text-sm font-semibold"
+      >
+        {{
+          showFullNumber()
+            ? (phone().format_international | phoneNumberFormatter)
+            : (phone().format_international | phoneMask | phoneNumberFormatter)
+        }}
+      </a>
+    </span>
+
+    <ul class="list-none m-0 p-0 inline-flex align-items-center">
+      <li class="contact-item flex-shrink-0">
+        <a
+          [href]="phone().format_RFC3966"
+          role="button"
+          pButton
+          class="contact-link phone-link w-auto text-sm p-button-link"
+          [icon]="constants.icons.call"
+          [pTooltip]="'Call:' + ' ' + phone().format_international"
+          tooltipPosition="top"
+        >
+        </a>
+      </li>
+      <li class="contact-item flex-shrink-0">
+        <a
+          [href]="'https://web.whatsapp.com/send?phone=' + phone().format_E164?.replace('+', '')"
+          role="button"
+          pButton
+          class="contact-link whatsapp-link w-auto text-sm p-button-link"
+          target="_blank"
+          icon="fab fa-whatsapp"
+          [pTooltip]="'Whatsapp:' + ' ' + phone().format_international"
+          tooltipPosition="top"
+        >
+        </a>
+      </li>
+      <li class="contact-item flex-shrink-0">
+        <a
+          [href]="
+            'https://www.truecaller.com/search/' +
+            (phone().country_code | lowercase) +
+            '/' +
+            phone().format_E164?.replace('+', '')
+          "
+          pButton
+          role="button"
+          class="contact-link truecaller-link w-auto text-sm p-button-link"
+          target="_blank"
+          icon="fas fa-question-circle"
+          [pTooltip]="'Truecaller:' + ' ' + phone().format_international"
+          tooltipPosition="top"
+        >
+        </a>
+      </li>
+    </ul>
+  </div>
+</p-card>

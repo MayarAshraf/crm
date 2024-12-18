@@ -1,0 +1,86 @@
+<app-table-wrapper
+  [moduleName]="moduleName"
+  [(isListLayout)]="isListLayout"
+  [withMultiLayout]="withMultiLayout()"
+  [showScrollHint]="false"
+  [showGridlines]="false"
+  [showStriped]="true"
+  [withSelection]="withSelection()"
+  [(selection)]="selection"
+  (selectionChange)="onSelectionChange($event)"
+  [withScreenHeader]="false"
+  [columns]="indexMeta.columns"
+  [dataSource]="leadList()"
+  [loading]="isLoading()"
+  [totalRecords]="totalLeads()"
+  [recordsFiltered]="leadsFiltered()"
+  paginatorPosition="both"
+  [indexPermissions]="permissions().index"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterValue]="globalFilterValue"
+  (onLoadData)="loadRecords($event)"
+  styleClass="is-no-table-style"
+>
+  <ng-template #bodyTemplate let-rowData>
+    <tr>
+      <td>
+        <app-lead-table-row
+          [isListLayout]="isListLayout()"
+          [withSelection]="withSelection()"
+          [rowData]="rowData"
+          [settings]="settings()"
+        >
+          <ng-container additional-content>
+            <div
+              [ngClass]="{
+                'w-full flex align-items-center gap-1 justify-content-between': !isListLayout()
+              }"
+            >
+              <app-lead-name
+                [checkPermission]="checkPermission(rowData, 'view-??')"
+                [lead]="rowData"
+                (nameClicked)="openLeadDialog($event)"
+              />
+
+              @if (!isListLayout()) {
+                <app-lead-id [leadId]="rowData?.id" />
+              }
+
+              <app-lead-more-toggler
+                [lead]="rowData"
+                [settings]="settings()"
+                [isListLayout]="isListLayout()"
+              />
+            </div>
+
+            @if (checkPermission(rowData, "access-??-contact-details") && rowData.phones.length) {
+              <app-phones layout="vertical" [withCreateBtn]="false" [phones]="rowData.phones" />
+            }
+
+            @if (rowData?.last_activity?.notes) {
+              <p
+                class="my-0 flex align-items-center gap-2 text-500"
+                [ngClass]="{ 'ml-auto': isListLayout() }"
+              >
+                <i class="fas fa-user-clock text-xs"></i>
+                <span [pTooltip]="rowData.last_activity.notes" tooltipPosition="bottom">
+                  {{ rowData.last_activity.notes | truncateText: 30 }}
+                </span>
+              </p>
+            }
+          </ng-container>
+        </app-lead-table-row>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #loadingBodyTemplate>
+    @for (i of [] | range: (isListLayout() ? 10 : 12); track $index) {
+      <tr>
+        <td class="bg-white p-2">
+          <app-custom-layout-skeleton [isListLayout]="isListLayout()" [isSelection]="true" />
+        </td>
+      </tr>
+    }
+  </ng-template>
+</app-table-wrapper>

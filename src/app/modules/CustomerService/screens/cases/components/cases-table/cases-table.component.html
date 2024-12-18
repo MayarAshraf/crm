@@ -1,0 +1,76 @@
+<app-table-wrapper
+  [moduleName]="moduleName"
+  [headerTitle]="indexMeta.indexTitle"
+  [titleIcon]="indexMeta.indexIcon"
+  [headerSubTitle]="'make_happy_customers' | translate"
+  [headerBtnLabel]="indexMeta.createBtnLabel"
+  [columns]="indexMeta.columns"
+  [withScreenHeader]="withScreenHeader()"
+  [withActionsColumn]="withActionsColumn()"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  [totalRecords]="totalRecords()"
+  [recordsFiltered]="recordsFiltered()"
+  paginatorPosition="both"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterValue]="globalFilterValue"
+  (updateBtnClicked)="openUpdateRecordDialog($event)"
+  (createBtnClicked)="openCreateRecordDialog()"
+  (deleteBtnClicked)="deleteRecord($event)"
+  (onLoadData)="loadRecords($event)"
+>
+  <ng-template #name let-rowData>
+    <a
+      class="table-link-title"
+      role="button"
+      (click)="openViewRecordDialog(rowData)"
+      *appHasPermission="permissions().view"
+    >
+      {{ "#" + rowData.id + " - " + rowData.subject }}
+      <br />
+      <span class="text-color text-sm">{{ rowData.ticketable.full_name }}</span>
+    </a>
+  </ng-template>
+
+  <ng-template #typePriority let-rowData>
+    <span class="font-semibold">
+      {{ getLabelById("customer_service:case_types", rowData.case_type_id) }}
+    </span>
+    <br />
+    <span>
+      {{ getLabelById("customer_service:case_priorities", rowData.case_priority_id) }}
+    </span>
+  </ng-template>
+
+  <ng-template #stage let-rowData>
+    <span class="font-semibold">
+      {{ getStage(rowData.pipeline_id, rowData.pipeline_stage_id) }}
+    </span>
+    <br />
+    <span>
+      {{ getLabelById("pipelines:ticket_pipelines", rowData.pipeline_id) }}
+    </span>
+  </ng-template>
+
+  <ng-template #assignees let-rowData>
+    <div class="flex flex-column">
+      <app-comma-separated-labels
+        styleClass="text-sm font-semibold"
+        [items]="getLabelsByIds('assignments:all_users_info', rowData.assignees_ids)"
+        [tooltip]="'assignees' | translate"
+      />
+      <div class="flex gap-1 flex-wrap">
+        <span>{{ "by" | translate }}</span>
+        <b class="font-semibold">
+          {{ getLabelById("assignments:all_users_info", rowData.created_by) }}
+        </b>
+        <span>{{ "at" | translate }}</span>
+        <b class="font-semibold">{{ rowData.created_at | dateFormatter: "absolute" }}</b>
+      </div>
+    </div>
+  </ng-template>
+</app-table-wrapper>

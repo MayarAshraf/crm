@@ -1,0 +1,102 @@
+<app-filters-panel
+  [filters]="organizationsFilters()"
+  [(showFilterSidebar)]="showBasicFilters"
+  [(isAdvancedFilter)]="showAdvancedFilters"
+  [displaySettings]="false"
+  (onRemoveChip)="refreshOrganizations($event)"
+  (onClearAllChips)="refreshOrganizations($event)"
+  (onSubmitFilters)="refreshOrganizations($event)"
+>
+  <ng-container ngProjectAs="[filtered-data]">
+    <!--
+        ngProjectAs is useful if we want to project an ng-container with a certain selector.
+       -->
+    <div #targetElement>
+      <app-table-wrapper
+        [moduleName]="moduleName"
+        [headerTitle]="indexMeta.indexTitle"
+        [titleIcon]="indexMeta.indexIcon"
+        [headerBtnLabel]="indexMeta.createBtnLabel"
+        [showGridlines]="false"
+        [columns]="indexMeta.columns"
+        [dataSource]="records()"
+        [withMultiLayout]="true"
+        [(isListLayout)]="isListLayout"
+        [rows]="indexMeta.rows"
+        [loading]="isLoading()"
+        [totalRecords]="totalRecords()"
+        [recordsFiltered]="recordsFiltered()"
+        paginatorPosition="both"
+        [indexPermissions]="permissions().index"
+        [createBtnPermissions]="permissions().create"
+        [stateKey]="indexMeta.indexTableKey"
+        [globalFilterValue]="globalFilterValue"
+        (createBtnClicked)="openCreateRecordDialog()"
+        (onLoadData)="loadRecords($event)"
+        styleClass="is-no-table-style cards-view-200"
+      >
+        <ng-template #bodyTemplate let-rowData>
+          <tr>
+            <td class="p-0 h-full">
+              <app-table-card
+                [isListLayout]="isListLayout()"
+                [imgSrc]="rowData.logo"
+                [title]="rowData.organization"
+                [isClickable]="permissions().view"
+                [hint]="rowData.created_at | dateFormatter: 'absolute'"
+                [subtitle]="getLabelById('assignments:all_users_info', rowData.created_by)"
+                subtitleTooltip="Creator"
+                hintTooltip="Created At"
+                [isEditable]="permissions().update"
+                [isDeletable]="permissions().delete"
+                (titleBtnClicked)="openOrganizationView(rowData)"
+                (updateBtnClicked)="openUpdateRecordDialog(rowData)"
+                (deleteBtnClicked)="deleteRecord(rowData)"
+              >
+                <app-comma-separated-labels
+                  styleClass="text-sm font-semibold"
+                  [items]="getLabelsByIds('assignments:all_users_info', rowData.assignees_ids)"
+                  tooltip="Assignees"
+                />
+              </app-table-card>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template #loadingBodyTemplate>
+          @if (isListLayout()) {
+            @for (i of [] | range: 10; track $index) {
+              <tr>
+                <td>
+                  <div class="flex gap-3 align-items-center">
+                    <p-skeleton shape="circle" size="70px" />
+                    <p-skeleton width="150px" height="15px" />
+                    <p-skeleton width="130px" height="10px" />
+                    <p-skeleton width="130px" height="10px" />
+                    <div class="ml-auto flex gap-1 align-items-center">
+                      <p-skeleton width="130px" height="10px" />
+                      <p-skeleton shape="circle" size="2.5rem" />
+                      <p-skeleton shape="circle" size="2.5rem" />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            }
+          } @else {
+            @for (i of [] | range: 12; track $index) {
+              <tr>
+                <td>
+                  <div>
+                    <p-skeleton shape="circle" size="140px" styleClass="mb-2 mx-auto" />
+                    <p-skeleton width="170px" height="15px" styleClass="mb-1 mx-auto" />
+                    <p-skeleton width="150px" height="10px" styleClass="mx-auto" />
+                  </div>
+                </td>
+              </tr>
+            }
+          }
+        </ng-template>
+      </app-table-wrapper>
+    </div>
+  </ng-container>
+</app-filters-panel>

@@ -1,0 +1,40 @@
+.scale-out-center {
+  animation: scale-out-center 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+
+.scale-in-center {
+  animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes scale-out-center {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0);
+    display: none;
+  }
+}
+
+@keyframes scale-in-center {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+:host ::ng-deep {
+  .p-dataview {
+    &-loading-overlay {
+      position: static;
+      background-color: transparent;
+    }
+    .p-component-overlay {
+      position: static;
+    }
+  }
+}

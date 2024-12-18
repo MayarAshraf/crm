@@ -1,0 +1,57 @@
+@if (currentUser()) {
+  <button
+    (click)="dialogVisible.set(true)"
+    [pTooltip]="'settings' | translate"
+    tooltipPosition="bottom"
+    class="avatar-button"
+  >
+    <img [src]="currentUser()?.image || 'assets/media/icons/avatar.jpg'" alt="User avatar" />
+  </button>
+
+  <p-dialog
+    [position]="currentLang() === 'ar' ? 'left' : 'right'"
+    appendTo="body"
+    [(visible)]="dialogVisible"
+    styleClass="m-0 max-h-none h-full"
+    [contentStyle]="{ width: dialogWidth() }"
+    contentStyleClass="transition-duration-200 border-noround p-0"
+    [showHeader]="false"
+    [focusOnShow]="false"
+    [dismissableMask]="true"
+    [modal]="true"
+  >
+    <div class="p-3 bg-white border-bottom-1 border-300 sticky top-0 z-10">
+      <app-default-screen-header
+        [isTitleRenderedAsBtn]="!!selectedItem()"
+        [title]="(selectedItem() ? selectedItem()?.label : ('welcome' | translate)) ?? ''"
+        titleClass="shadow-none"
+        [titleIcon]="selectedItem() ? 'fas fa-arrow-left' : ''"
+        subtitle="{{ currentUser()?.full_name ?? '' | truncateText: 20 }}"
+        buttonClass="p-button-text p-button-plain p-button-rounded w-2rem h-2rem"
+        buttonIcon="pi pi-times"
+        (onClick)="dialogVisible.set(false); back()"
+        (onTitleBtnClicked)="back()"
+      />
+    </div>
+
+    <ng-container #dynamicDialog></ng-container>
+
+    @if (!selectedItem()) {
+      <ul class="list-none p-0 m-0">
+        @for (item of profileItems(); track $index; let l = $last) {
+          <li [ngClass]="{ 'border-bottom-1 border-300': !l }">
+            @if (item.url) {
+              <app-profile-item [item]="item"></app-profile-item>
+            }
+            @if (item.component) {
+              <app-profile-item [item]="item" (onClick)="displayItem(item)"></app-profile-item>
+            }
+            @if (item?.id === "logout-item") {
+              <app-profile-item [item]="item" (onClick)="logout()"></app-profile-item>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </p-dialog>
+}

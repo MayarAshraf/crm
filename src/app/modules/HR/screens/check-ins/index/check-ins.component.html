@@ -1,0 +1,89 @@
+<app-filters-panel
+  #filtersPanel
+  [filters]="checkinFilters()"
+  [(showFilterSidebar)]="showBasicFilters"
+  [(isAdvancedFilter)]="showAdvancedFilters"
+  [displaySettings]="false"
+  (onRemoveChip)="refreshCheckIn($event)"
+  (onClearAllChips)="refreshCheckIn($event)"
+  (onSubmitFilters)="refreshCheckIn($event)"
+>
+  <ng-container ngProjectAs="[filtered-data]">
+    <!--
+      ngProjectAs is useful if we want to project an ng-container with a certain selector.
+     -->
+    <div #targetElement>
+      <app-table-wrapper
+        [moduleName]="moduleName"
+        [headerTitle]="indexMeta.indexTitle"
+        [titleIcon]="indexMeta.indexIcon"
+        [columns]="indexMeta.columns"
+        [dataSource]="records()"
+        [loading]="isLoading()"
+        [totalRecords]="totalRecords()"
+        [recordsFiltered]="recordsFiltered()"
+        paginatorPosition="both"
+        [indexPermissions]="permissions().index"
+        [stateKey]="indexMeta.indexTableKey"
+        [globalFilterValue]="globalFilterValue"
+        (onLoadData)="loadRecords($event)"
+      >
+        <ng-template #creator let-rowData>
+          <a role="link" (click)="openDialogDetails(rowData)" class="table-link-title">
+            {{ getLabelById("assignments:all_users_info", rowData.created_by) }}
+          </a>
+        </ng-template>
+
+        <ng-template #operation let-rowData>
+          {{ getLabelById("hr:operation_types", rowData.operation_type_id) }}
+        </ng-template>
+
+        <ng-template #createdAt let-rowData>
+          {{ rowData.created_at | dateFormatter: "absolute" }}
+        </ng-template>
+
+        <ng-template #location let-rowData>
+          <a
+            role="link"
+            [href]="'https://maps.google.com/?q=' + rowData.latitude + ',' + rowData.longitude"
+            target="_blank"
+            class="table-link-title"
+          >
+            {{ "view_location" | translate }}
+          </a>
+        </ng-template>
+
+        <ng-template #image let-rowData>
+          <div class="text-center">
+            <p-image
+              [preview]="true"
+              [src]="rowData.image"
+              loading="lazy"
+              [alt]="getLabelById('assignments:all_users_info', rowData.created_by)"
+              width="50"
+              height="50"
+            />
+          </div>
+        </ng-template>
+
+        <ng-template #actionsTemplate let-rowData>
+          <div class="flex justify-content-center align-items-center gap-1">
+            <button
+              pButton
+              type="button"
+              *appHasPermission="permissions().delete"
+              icon="fas fa-trash text-xs"
+              class="w-2rem h-2rem p-0 p-button-rounded p-button-text p-button-danger"
+              [pTooltip]="'delete' | translate"
+              tooltipPosition="top"
+              (click)="confirmDelete(rowData)"
+            ></button>
+            <app-copy-button
+              [text]="'https://maps.google.com/?q=' + rowData.latitude + ',' + rowData.longitude"
+            />
+          </div>
+        </ng-template>
+      </app-table-wrapper>
+    </div>
+  </ng-container>
+</app-filters-panel>

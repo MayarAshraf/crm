@@ -1,0 +1,211 @@
+<div class="grid border-bottom-1 border-200">
+  @if (campaign().insights && campaign().insights.leads) {
+    <div class="col-12 md:col-6">
+      <app-campaign-profile-progress-info
+        title="leads"
+        expected="Expected Leads"
+        [actual]="campaign().insights.leads.total"
+        [actualPercentage]="campaign().insights.leads.expected_response_percentage"
+        [expectedTotal]="campaign().insights.leads.expected_response"
+        colorProgress="#d53677"
+      />
+    </div>
+  }
+  @if (campaign().insights && campaign().insights.cost) {
+    <div class="col-12 md:col-6">
+      <app-campaign-profile-progress-info
+        [title]="'actual_cost' | translate"
+        expected="Budgeted cost"
+        [campaignCurrency]="campaign().currency_code"
+        [actual]="campaign().insights.cost.actual_cost"
+        [actualPercentage]="campaign().insights.cost.budgeted_percentage"
+        [expectedTotal]="campaign().insights.cost.budgeted_cost"
+        colorProgress="#4399ef"
+      />
+    </div>
+  }
+  @if (campaign().insights && campaign().insights.won_deals) {
+    <div class="col-12 md:col-6">
+      <app-campaign-profile-progress-info
+        [title]="'revenues' | translate"
+        [expected]="campaign().insights.won_deals.count + ' ' + 'wom Deals Expected revenue'"
+        [actualGroup]="campaign().insights.won_deals.totals"
+        [actualPercentage]="campaign().insights.won_deals.won_deals_percentage"
+        [campaignCurrency]="campaign().currency_code"
+        [expectedTotal]="campaign().expected_revenue"
+        type="meterGroup"
+      />
+    </div>
+  }
+  @if (campaign().insights && campaign().insights.open_deals) {
+    <div class="col-12 md:col-6">
+      <app-campaign-profile-progress-info
+        [title]="'open_deals' | translate"
+        [expected]="campaign().insights.open_deals.count + ' ' + 'Open Deals'"
+        [actualGroup]="campaign().insights.open_deals.totals"
+        [actualPercentage]="campaign().insights.open_deals.open_deals_percentage"
+        type="meterGroup"
+      />
+    </div>
+  }
+</div>
+<div class="grid mt-3 border-bottom-1 border-200">
+  @if (campaign().insights) {
+    <div class="col-12 sm:col-6 md:col-4 lg:col-3">
+      <app-box-card
+        [title]="'roi' | translate"
+        [isLoading]="false"
+        [rate]="campaign().insights.roi"
+        type="normal"
+      >
+        <ng-container ngProjectAs="[icon]">
+          <i class="far fa-eye text-xl line-height-3"></i>
+        </ng-container>
+      </app-box-card>
+    </div>
+  }
+  @if (campaign().insights) {
+    <div class="col-12 sm:col-6 md:col-4 lg:col-3">
+      <app-box-card
+        [title]="'total_deals' | translate"
+        [isLoading]="false"
+        [total]="campaign().insights.total_deals"
+        type="normal"
+      >
+        <ng-container ngProjectAs="[icon]">
+          <i class="pi pi-money-bill text-xl line-height-3"></i>
+        </ng-container>
+      </app-box-card>
+    </div>
+  }
+  @if (campaign().insights) {
+    <div class="col-12 sm:col-6 md:col-4 lg:col-3">
+      <app-box-card
+        [title]="'cost_per_lead' | translate"
+        [isLoading]="false"
+        [total]="campaign().insights.cost_per_lead"
+        [currency]="campaign().currency_code"
+        type="normal"
+      >
+        <ng-container ngProjectAs="[icon]">
+          <i class="pi pi-wallet text-xl line-height-3"></i>
+        </ng-container>
+      </app-box-card>
+    </div>
+  }
+  @if (campaign().insights) {
+    <div class="col-12 sm:col-6 md:col-4 lg:col-3">
+      <app-box-card
+        [title]="'won_deals' | translate"
+        [isLoading]="false"
+        [total]="campaign().insights.won_deals.count"
+        type="normal"
+      >
+        <ng-container ngProjectAs="[icon]">
+          <i class="pi pi-money-bill text-xl line-height-3"></i>
+        </ng-container>
+      </app-box-card>
+    </div>
+  }
+  @if (campaign().insights) {
+    <div class="col-12 sm:col-6 md:col-4 lg:col-3">
+      <app-box-card
+        [title]="'cost_per_won_deal' | translate"
+        [isLoading]="false"
+        [total]="campaign().insights.cost_per_won_deal"
+        [currency]="campaign().currency_code"
+        type="normal"
+      >
+        <ng-container ngProjectAs="[icon]">
+          <i class="pi pi-wallet text-xl line-height-3"></i>
+        </ng-container>
+      </app-box-card>
+    </div>
+  }
+  @if (campaign().insights) {
+    <div class="col-12 sm:col-6 md:col-4 lg:col-3">
+      <app-box-card
+        [title]="'cost_per_won_deal' | translate"
+        [isLoading]="false"
+        [total]="campaign().insights.cost_per_won_deal"
+        [currency]="campaign().currency_code"
+        type="normal"
+      >
+        <ng-container ngProjectAs="[icon]">
+          <i class="pi pi-wallet text-xl line-height-3"></i>
+        </ng-container>
+      </app-box-card>
+    </div>
+  }
+  @if (campaign().insights && campaign().insights.cost_per_lost_deal) {
+    <div class="col-12 sm:col-6 md:col-4 lg:col-3">
+      <app-box-card
+        [title]="'cost_per_lost_deal' | translate"
+        [isLoading]="false"
+        [total]="campaign().insights.cost_per_lost_deal"
+        [currency]="campaign().currency_code"
+        type="normal"
+      >
+        <ng-container ngProjectAs="[icon]">
+          <i class="pi pi-wallet text-xl line-height-3"></i>
+        </ng-container>
+      </app-box-card>
+    </div>
+  }
+  @if (campaign().insights && campaign().insights.cost_per_deal) {
+    <div class="col-12 sm:col-6 md:col-4 lg:col-3">
+      <app-box-card
+        [title]="'cost_per_deal' | translate"
+        [isLoading]="false"
+        [total]="campaign().insights.cost_per_deal"
+        [currency]="campaign().currency_code"
+        type="normal"
+      >
+        <ng-container ngProjectAs="[icon]">
+          <i class="pi pi-wallet text-xl line-height-3"></i>
+        </ng-container>
+      </app-box-card>
+    </div>
+  }
+</div>
+<div class="grid mt-3 border-bottom-1 border-200">
+  @if (campaign().insights && campaign().insights.leads_over_stages.length) {
+    <div class="col-12 md:col-6">
+      <h3 class="text-center">Leads Over Stages</h3>
+      <app-chart-bar [labels]="leadOverStages().labels" [datasets]="leadOverStages().datasets">
+      </app-chart-bar>
+    </div>
+  }
+
+  @if (campaign().tables_data && campaign().tables_data.assignees.length) {
+    <div class="col-12 md:col-6">
+      <h3 class="text-center">Leads Over Agents</h3>
+      <app-pie-chrat
+        [data]="leadOverAgents().data"
+        [labels]="leadOverAgents().labels"
+        [isLoading]="false"
+      />
+    </div>
+  }
+</div>
+@if (
+  campaign().insights &&
+  campaign().insights.leads_over_stages &&
+  campaign().insights.leads_over_stages.length
+) {
+  <div class="grid mt-3">
+    @for (item of campaign().insights.leads_over_stages; track $index) {
+      <div class="col-12 sm:col-6 md:col-4 lg:col-3">
+        <app-box-card
+          [title]="getStatuses(item.status_id)"
+          [cost]="item.cost"
+          [isLoading]="false"
+          [rate]="item.percentage ? item.percentage : '0'"
+          [total]="item.count"
+          [currency]="campaign().currency_code"
+          type="withoutIcon"
+        />
+      </div>
+    }
+  </div>
+}

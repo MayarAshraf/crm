@@ -1,0 +1,19 @@
+<app-filters-panel
+  #filtersPanel
+  [filters]="casesFilters()"
+  [(showFilterSidebar)]="showBasicFilters"
+  [(isAdvancedFilter)]="showAdvancedFilters"
+  [displaySettings]="false"
+  (onRemoveChip)="refreshCases($event)"
+  (onClearAllChips)="refreshCases($event)"
+  (onSubmitFilters)="refreshCases($event)"
+>
+  <ng-container ngProjectAs="[filtered-data]">
+    <!--
+        ngProjectAs is useful if we want to project an ng-container with a certain selector.
+       -->
+    <div #targetElement>
+      <app-cases-table indexTableKey="CASES_KEY" [(filtersData)]="filtersData" />
+    </div>
+  </ng-container>
+</app-filters-panel>

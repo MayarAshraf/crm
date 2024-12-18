@@ -1,0 +1,72 @@
+<div class="p-field">
+  <p-floatLabel>
+    <ng-select
+      #select
+      [items]="options$ | async"
+      [class]="'custom-ng-select' + ' ' + props.styleClass"
+      [required]="props.required ?? false"
+      [multiple]="props.multiple"
+      [bindLabel]="props.optionLabel"
+      [bindValue]="props.optionValue"
+      [appendTo]="props.appendTo ?? 'body'"
+      [searchable]="false"
+      [inputAttrs]="props.inputAttrs"
+      [clearable]="props.showClear"
+      [placeholder]="props.placeholder ?? ''"
+      [closeOnSelect]="props.multiple ? false : true"
+      [class.ng-dirty]="showError"
+      [formlyAttributes]="field"
+      [formControl]="formControl"
+      (change)="props.change && props.change(field, $event)"
+      (search)="props.search && props.search(field, $event)"
+      (scroll)="props.scroll && props.scroll(field, $event)"
+      (scrollToEnd)="props.scrollToEnd && props.scrollToEnd(field, $event)"
+    >
+      @if (props.filter) {
+        <ng-template ng-header-tmp>
+          <span class="p-input-icon-right">
+            <input
+              #filterInput
+              pInputText
+              pAutoFocus
+              [autofocus]="true"
+              class="p-2"
+              [ngStyle]="{ height: '30px' }"
+              type="text"
+              (input)="select.filter(filterInput.value)"
+            />
+            <i class="pi pi-search text-sm"></i>
+          </span>
+        </ng-template>
+      }
+
+      @if (props.multiple) {
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+          <input id="item-{{ index }}" type="checkbox" [ngModel]="item$.selected" />
+          {{ item[props.optionLabel] }}
+        </ng-template>
+      }
+    </ng-select>
+
+    @if (props.label) {
+      <label [ngClass]="props.labelClass">
+        {{ props.label }}
+        @if (props.required && props.hideRequiredMarker !== true) {
+          <span class="text-red-500">*</span>
+        }
+      </label>
+    }
+  </p-floatLabel>
+
+  @if (props.description) {
+    <p class="mt-1 font-medium text-xs text-primary">
+      {{ props.description }} <i class="fas fa-circle-info text-sm"></i>
+    </p>
+  }
+
+  @if (showError && formControl.errors) {
+    <small class="p-error" role="alert">
+      <formly-validation-message [field]="field"></formly-validation-message>
+    </small>
+  }
+</div>

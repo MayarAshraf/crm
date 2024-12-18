@@ -1,0 +1,32 @@
+<app-table-wrapper
+  [headerTitle]="indexMeta.indexTitle"
+  [titleIcon]="indexMeta.indexIcon"
+  [headerBtnLabel]="indexMeta.createBtnLabel"
+  [withScreenHeader]="true"
+  [columns]="indexMeta.columns"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [totalRecords]="totalRecords()"
+  [recordsFiltered]="recordsFiltered()"
+  paginatorPosition="both"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterValue]="globalFilterValue"
+  (createBtnClicked)="openCreateRecordDialog()"
+  (updateBtnClicked)="openUpdateRecordDialog($event)"
+  (deleteBtnClicked)="deleteRecord($event)"
+  (onLoadData)="loadRecords($event)"
+>
+  <ng-template #pipelineName let-pipeLine>
+    <a
+      role="link"
+      [routerLink]="'./pipeline-stages/' + pipeLine.id + '/' + (pipeLine.name | lowercase)"
+      class="table-link-title"
+    >
+      {{ pipeLine.name }}
+    </a>
+  </ng-template>
+</app-table-wrapper>

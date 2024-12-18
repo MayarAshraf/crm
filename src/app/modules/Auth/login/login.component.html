@@ -1,0 +1,36 @@
+<ng-container #splashContainer></ng-container>
+
+<div>
+  <div class="flex align-items-center justify-content-between gap-2 mb-3">
+    <h2 class="m-0 font-semibold">{{ "login" | translate }}</h2>
+    <img width="100" src="assets/media/logo/colored-portrait-logo.png" alt="8X Logo" />
+  </div>
+
+  @if (isError()) {
+    <app-alert type="error" message="{{ 'incorrect_credentials' | translate }}"></app-alert>
+  }
+
+  @if (timedOut()) {
+    <app-alert type="warn" message="{{ 'session_timed_out' | translate }}"></app-alert>
+  }
+
+  <app-form
+    [form]="loginForm"
+    [model]="model"
+    [fields]="fields"
+    [buttonLabel]="'sign_in' | translate"
+    submitButtonClass="border-round-3xl uppercase text-base w-full letter-spacing-2"
+    (onSubmit)="login($event)"
+  >
+  </app-form>
+
+  <div class="mt-3">
+    <p-checkbox
+      labelStyleClass="text-xs font-medium cursor-pointer"
+      [(ngModel)]="idleChecked"
+      [binary]="true"
+      [label]="'keep_me_logged_in_for_week' | translate"
+      (onChange)="updateIdleTime($event)"
+    />
+  </div>
+</div>

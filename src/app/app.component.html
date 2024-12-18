@@ -1,0 +1,44 @@
+<ngx-loading-bar
+  color="var(--highlight-text-color)"
+  ref="http"
+  height="5px"
+  diameter="18px"
+  [includeSpinner]="false"
+/>
+
+<p-toast position="top-right" />
+
+<app-confetti />
+
+<p-confirmPopup #confirmPopup>
+  <ng-template pTemplate="headless" let-message>
+    <div class="border-round p-3">
+      <span class="flex align-items-center gap-2">
+        <i class="pi pi-exclamation-circle text-yellow-500"></i>
+        <span class="font-semibold">{{ message.header }}</span>
+      </span>
+      <div class="w-full flex align-items-center gap-2 mt-3">
+        <button
+          pButton
+          class="flex-1 py-1"
+          [label]="'yes' | translate"
+          (click)="confirmPopup.accept()"
+        ></button>
+        <button
+          pButton
+          class="p-button-outlined flex-1 py-1"
+          [label]="'no' | translate"
+          (click)="confirmPopup.reject()"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-confirmPopup>
+
+<app-confirm-dialog />
+
+@if (isLoggedIn() && isEnabledModules().length) {
+  <app-idle />
+}
+
+<router-outlet />

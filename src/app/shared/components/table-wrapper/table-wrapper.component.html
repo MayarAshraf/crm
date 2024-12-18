@@ -1,0 +1,376 @@
+<ng-container *appModuleVisibility="moduleName()">
+  <div (touchend)="removeScrollHint()" class="table-holder" *appHasPermission="indexPermissions()">
+    <p-card styleClass="table-card">
+      <p-table
+        #primengTable
+        [responsiveLayout]="responsiveLayout()"
+        [breakpoint]="breakpoint()"
+        [value]="dataSource()"
+        [columns]="columns()"
+        [reorderableColumns]="reorderableColumns()"
+        (onRowReorder)="onRowReorder.emit($event)"
+        (onSort)="columnSortChange.emit($event)"
+        [rowHover]="rowHover()"
+        [(selection)]="selection"
+        [selectionMode]="selectionMode()"
+        [selectionPageOnly]="selectionPageOnly()"
+        (selectionChange)="selectionChange.emit($event)"
+        (selectAllChange)="selectAllChange.emit($event)"
+        [rowExpandMode]="rowExpandMode()"
+        [editMode]="editMode()"
+        (onEditComplete)="editComplete.emit($event)"
+        [lazy]="lazy()"
+        (onLazyLoad)="onLoadData.emit($event)"
+        [lazyLoadOnInit]="lazyLoadOnInit()"
+        [dataKey]="dataKey()"
+        stateStorage="local"
+        [stateKey]="stateKey()"
+        (onStateSave)="onStateSave.emit($event)"
+        (onStateRestore)="onStateRestore.emit($event)"
+        [paginator]="paginator()"
+        [paginatorLocale]="currentLang() === 'en' ? 'en-US' : 'ar-EG'"
+        [paginatorPosition]="paginatorPosition()"
+        [showFirstLastIcon]="true"
+        [pageLinks]="3"
+        [rows]="rows()"
+        [totalRecords]="totalRecords()"
+        [loading]="loading()"
+        [showLoader]="false"
+        [filterDelay]="700"
+        [alwaysShowPaginator]="true"
+        [showPageLinks]="true"
+        [showCurrentPageReport]="showCurrentPageReport()"
+        [currentPageReportTemplate]="currentPageReport()"
+        [rowsPerPageOptions]="rowsPerPageOptions()"
+        [styleClass]="getTableClass()"
+        [showJumpToPageDropdown]="false"
+        [globalFilterFields]="globalFilterFields()"
+      >
+        <!--
+          'p-datatable-hoverable-rows' class is set if (rowHover || selectionMode) are set.
+        -->
+
+        <!-- caption -->
+        <ng-template pTemplate="caption">
+          @if (withScreenHeader()) {
+            <div class="flex flex-wrap align-items-center justify-content-between gap-2">
+              <h2
+                [class]="
+                  'flex align-items-center gap-2 flex-wrap font-medium capitalize text-lg line-height-2 my-0 ' +
+                  titleClass()
+                "
+              >
+                <span class="flex align-items-center gap-2">
+                  <i [class]="titleIcon() + ' text-base'"></i>
+                  <span>{{ headerTitle() }}</span>
+                </span>
+                @if (headerSubTitle()) {
+                  <span class="font-semibold text-sm text-green-500 mt-1">
+                    ({{ headerSubTitle() }})
+                  </span>
+                }
+              </h2>
+
+              <div class="flex flex-wrap align-items-center gap-1">
+                <ng-content select="[moreActions]" />
+
+                @if (displayHeaderButton()) {
+                  <button
+                    pButton
+                    *appHasPermission="createBtnPermissions()"
+                    class="text-sm px-3 py-2 white-space-nowrap"
+                    (click)="createBtnClicked.emit()"
+                    [label]="headerBtnLabel()"
+                  ></button>
+                }
+              </div>
+            </div>
+
+            <p-divider></p-divider>
+          }
+
+          @if (globalFilterFields().length) {
+            <div
+              class="mb-3 flex justify-content-end"
+              [ngClass]="{ 'justify-content-between align-items-center': withAdditionalContent() }"
+            >
+              @if (withAdditionalContent()) {
+                <ng-container *ngTemplateOutlet="additionalContentTemplate() || null" />
+              }
+
+              <div class="flex flex-auto justify-content-end">
+                <ng-container
+                  *ngTemplateOutlet="searchTemplate; context: { $implicit: primengTable }"
+                />
+              </div>
+            </div>
+          }
+          @if (withCustomFilters()) {
+            <ng-container *ngTemplateOutlet="customFiltersTemplate() || null" />
+          }
+        </ng-template>
+
+        <!-- paginator left -->
+        <ng-template pTemplate="paginatorleft">
+          @if (withSelection()) {
+            <span class="block p-2 has-selection">
+              <p-tableHeaderCheckbox />
+            </span>
+          }
+        </ng-template>
+
+        <!-- paginator right -->
+        <ng-template pTemplate="paginatorright">
+          <div class="flex flex-wrap gap-2 align-items-center">
+            @if (withAdditionalContent()) {
+              <ng-container *ngTemplateOutlet="additionalContentTemplate() || null" />
+            }
+
+            @if (withMultiLayout()) {
+              <button
+                pButton
+                (click)="isListLayout.set(!isListLayout())"
+                class="p-button-outlined bg-transparent text-600 border-300 hover:border-primary w-2.5rem field-height transition-none shadow-none"
+                pTooltip="{{
+                  isListLayout() ? ('grid_view' | translate) : ('list_view' | translate)
+                }}"
+                tooltipPosition="top"
+                [icon]="isListLayout() ? 'pi pi-th-large' : 'pi pi-bars'"
+              ></button>
+            }
+
+            @if (withResetButton()) {
+              <button
+                pButton
+                (click)="resetTable()"
+                class="p-button-outlined bg-transparent text-600 border-300 hover:border-primary w-2.5rem field-height transition-none shadow-none"
+                [pTooltip]="'reset_table' | translate"
+                tooltipPosition="top"
+                icon="fas fa-eraser"
+              ></button>
+            }
+
+            @if (withTableSearch()) {
+              <ng-container
+                *ngTemplateOutlet="searchTemplate; context: { $implicit: primengTable }"
+              />
+            }
+          </div>
+        </ng-template>
+
+        <!-- header -->
+        <ng-template pTemplate="header" let-columns>
+          <ng-container
+            *ngTemplateOutlet="
+              headerTemplate() || defaultHeaderTemplate;
+              context: { $implicit: columns }
+            "
+          />
+        </ng-template>
+
+        <!-- default header -->
+        <ng-template #defaultHeaderTemplate let-columns>
+          <ng-container>
+            <tr class="capitalize font-semibold">
+              @if (withSelection()) {
+                <th class="text-center w-4rem">
+                  <p-tableHeaderCheckbox />
+                </th>
+              }
+              @if (reorderableRows()) {
+                <th class="text-center w-4rem"></th>
+              }
+              @for (col of columns; track $index) {
+                <th [pSortableColumn]="col.name" [pSortableColumnDisabled]="!col.orderable">
+                  {{ col.title }}
+                  @if (col.orderable) {
+                    <p-sortIcon [field]="col.name"></p-sortIcon>
+                  }
+                </th>
+              }
+              @if (withActionsColumn()) {
+                <th class="text-center">{{ "actions" | translate }}</th>
+              }
+            </tr>
+          </ng-container>
+        </ng-template>
+
+        <!-- body -->
+        <ng-template
+          pTemplate="body"
+          let-rowData
+          let-expanded="expanded"
+          let-index="rowIndex"
+          let-columns="columns"
+        >
+          @if (!loading()) {
+            <ng-container
+              *ngTemplateOutlet="
+                bodyTemplate() || defaultBodyTemplate;
+                context: {
+                  $implicit: rowData,
+                  expanded: expanded,
+                  rowIndex: index,
+                  columns: columns
+                }
+              "
+            />
+          }
+        </ng-template>
+
+        <!-- default body -->
+        <ng-template
+          #defaultBodyTemplate
+          let-rowData
+          let-expanded="expanded"
+          let-index="rowIndex"
+          let-columns="columns"
+        >
+          <tr [pReorderableRow]="index">
+            @if (withSelection()) {
+              <td class="text-center">
+                <p-tableCheckbox [value]="rowData" />
+              </td>
+            }
+            @if (reorderableRows()) {
+              <td class="text-center">
+                <span class="pi pi-bars p-3" pReorderableRowHandle></span>
+              </td>
+            }
+            @for (col of columns; track $index) {
+              <td>
+                <!-- column -->
+                @if (col.render) {
+                  <ng-container *ngTemplateOutlet="col.render; context: { $implicit: rowData }" />
+                } @else if (col.name === "created_at" || col.name === "updated_at") {
+                  {{ rowData | nestedProperty: col.name | dateFormatter: "absolute" : col.format }}
+                } @else if (col.name === "created_by") {
+                  {{ getLabelById("assignments:all_users_info", rowData[col.name]) }}
+                } @else {
+                  {{ rowData | nestedProperty: col.name }}
+                }
+              </td>
+            }
+            <!-- actions -->
+            @if (withActionsColumn()) {
+              <td class="text-center">
+                <ng-container
+                  *ngTemplateOutlet="
+                    actionsTemplate() || defaultActionsTemplate;
+                    context: { $implicit: rowData }
+                  "
+                />
+                <!-- default actions -->
+                <ng-template #defaultActionsTemplate let-rowData>
+                  <ng-container>
+                    <button
+                      pButton
+                      type="button"
+                      *appHasPermission="updateBtnPermissions()"
+                      [icon]="constants.icons.pencil + ' text-xs'"
+                      class="p-button-rounded p-button-text p-button-sm"
+                      [pTooltip]="'update' | translate"
+                      tooltipPosition="top"
+                      (click)="updateBtnClicked.emit(rowData)"
+                    ></button>
+
+                    <button
+                      pButton
+                      type="button"
+                      *appHasPermission="deleteBtnPermissions()"
+                      icon="fas fa-trash text-xs"
+                      class="p-button-sm p-button-rounded p-button-text p-button-danger"
+                      [pTooltip]="'delete' | translate"
+                      tooltipPosition="top"
+                      (click)="confirmDelete(rowData)"
+                    ></button>
+
+                    @if (extendDefaultActionsTemplate()) {
+                      <ng-container
+                        *ngTemplateOutlet="
+                          extendDefaultActionsTemplate() || null;
+                          context: { $implicit: rowData }
+                        "
+                      />
+                    }
+                  </ng-container>
+                </ng-template>
+              </td>
+            }
+          </tr>
+        </ng-template>
+
+        <!-- expansion -->
+        <ng-template pTemplate="rowexpansion" let-rowData>
+          <ng-container
+            *ngTemplateOutlet="expandedRowTemplate() || null; context: { $implicit: rowData }"
+          />
+        </ng-template>
+
+        <!-- emptymessage -->
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="3">
+              {{ "no_data_available" | translate }}
+            </td>
+          </tr>
+        </ng-template>
+
+        <!-- loadingbody -->
+        <ng-template pTemplate="loadingbody" let-columns>
+          <ng-container
+            *ngTemplateOutlet="
+              loadingBodyTemplate() || defaultLoadingTemplate;
+              context: { $implicit: columns }
+            "
+          />
+        </ng-template>
+
+        <ng-template #defaultLoadingTemplate let-columns>
+          @for (i of [] | range: 5; track $index) {
+            <tr>
+              @for (col of columns; track $index) {
+                <td>
+                  <p-skeleton [style]="{ minWidth: '150px' }" height="10px" />
+                </td>
+              }
+              @if (reorderableRows()) {
+                <td>
+                  <p-skeleton [style]="{ minWidth: '150px' }" height="10px" />
+                </td>
+              }
+              @if (withActionsColumn()) {
+                <td>
+                  <p-skeleton [style]="{ minWidth: '150px' }" height="10px" />
+                </td>
+              }
+            </tr>
+          }
+        </ng-template>
+      </p-table>
+    </p-card>
+
+    @if (showScrollHint() && primengTable.responsiveLayout !== "stack") {
+      <div class="scroll-hint-wrap md:hidden flex flex-column gap-2 align-items-center">
+        <span class="arrow-icon"></span>
+        <span class="hand-icon"></span>
+        <span class="text-xs">{{ "scrollable" | translate }}</span>
+      </div>
+    }
+  </div>
+</ng-container>
+
+<ng-template #searchTemplate let-primengTable>
+  <span class="p-input-icon-left">
+    <i class="pi pi-search"></i>
+    <input
+      #filterInput
+      pInputText
+      type="text"
+      class="p-inputtext-sm field-height w-full"
+      [value]="globalFilterValue() || null"
+      (input)="primengTable.filterGlobal(filterInput.value, 'contains')"
+      placeholder="{{ 'search' | translate }}"
+    />
+  </span>
+</ng-template>

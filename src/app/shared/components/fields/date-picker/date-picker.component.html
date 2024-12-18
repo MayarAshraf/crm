@@ -1,0 +1,75 @@
+<div class="p-field">
+  @if (props.description) {
+    <p class="mb-3 text-xs">{{ props.description }}</p>
+  }
+
+  @if (props.withPresets) {
+    <p-tabMenu
+      [scrollable]="true"
+      [model]="presetItems"
+      [styleClass]="'date-slider ' + (forceDisplay() ? 'mb-3' : '')"
+    >
+      <ng-template pTemplate="item" let-item>
+        <span role="button" class="preset-item" (click)="item.command($event)">
+          <i [class]="item.icon"></i>
+          {{ item.label }}</span
+        >
+      </ng-template>
+    </p-tabMenu>
+  }
+
+  <p-floatLabel>
+    @if (!props.withPresets || forceDisplay()) {
+      <p-calendar
+        #datePicker
+        [formControl]="formControl"
+        [formlyAttributes]="field"
+        [placeholder]="props.placeholder ?? ''"
+        [defaultDate]="props.defaultDate ?? null"
+        [dateFormat]="props.dateFormat ?? 'yy-mm-dd'"
+        [showClear]="props.showClear"
+        [hourFormat]="props.hourFormat ?? '12'"
+        [selectionMode]="props.selectionMode ?? 'single'"
+        rangeSeparator="/"
+        [required]="props.required ?? false"
+        [minDate]="props.minDate ?? null"
+        [maxDate]="props.maxDate ?? null"
+        [disabledDates]="props.disabledDates ?? null"
+        [disabledDays]="props.disabledDays ?? null"
+        [stepMinute]="15"
+        [showIcon]="props.showIcon ?? true"
+        [showButtonBar]="props.showButtonBar ?? true"
+        [showTime]="props.showTime ?? false"
+        [hideOnDateTimeSelect]="props.showTime ? false : true"
+        [showSeconds]="props.showSeconds ?? false"
+        [showOtherMonths]="props.showOtherMonths ?? true"
+        [selectOtherMonths]="props.selectOtherMonths ?? false"
+        [monthNavigator]="props.monthNavigator ?? true"
+        [yearNavigator]="props.yearNavigator ?? true"
+        [inline]="props.inline"
+        [yearRange]="props.yearRange ?? null"
+        [numberOfMonths]="props.numberOfMonths ?? 1"
+        dataType="string"
+        [appendTo]="props.appendTo ?? 'body'"
+        [touchUI]="props.touchUI ?? false"
+        [styleClass]="props.styleClass"
+        (onClearClick)="onClearClick($event)"
+      />
+    }
+
+    @if ((props.label && !props.withPresets) || forceDisplay()) {
+      <label [ngClass]="props.labelClass">
+        {{ props.label }}
+        @if (props.required && props.hideRequiredMarker !== true) {
+          <span class="text-red-500">*</span>
+        }
+      </label>
+    }
+  </p-floatLabel>
+
+  @if (showError && formControl.errors) {
+    <small role="alert" class="p-error">
+      <formly-validation-message [field]="field"></formly-validation-message>
+    </small>
+  }
+</div>

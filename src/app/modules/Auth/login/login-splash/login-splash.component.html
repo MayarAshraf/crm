@@ -1,0 +1,297 @@
+<div class="login-splash">
+
+  <div class="login-splash__circles">
+    <span class="fall--1">
+      <span class="up--1">
+        <span class="down--1"><span class="tremble"></span></span>
+      </span>
+    </span>
+    <span class="fall--2">
+      <span class="up--2">
+        <span class="down--2"><span class="tremble"></span></span>
+      </span>
+    </span>
+    <span class="fall--3">
+      <span class="up--3">
+        <span class="down--3"><span class="tremble"></span></span>
+      </span>
+    </span>
+    <span class="fall--4">
+      <span class="up--4">
+        <span class="down--4"><span class="tremble"></span></span>
+      </span>
+    </span>
+    <span class="fall--5">
+      <span class="up--5">
+        <span class="down--5"><span class="tremble"></span></span>
+      </span>
+    </span>
+    <span class="fall--6">
+      <span class="up--6">
+        <span class="down--6"><span class="tremble"></span></span>
+      </span>
+    </span>
+    <span class="fall--7">
+      <span class="up--7">
+        <span class="down--7"><span class="tremble"></span></span>
+      </span>
+    </span>
+    <span class="fall--8">
+      <span class="up--8">
+        <span class="down--8"><span class="tremble"></span></span>
+      </span>
+    </span>
+    <span class="fall--9">
+      <span class="up--9">
+        <span class="down--9"><span class="tremble"></span></span>
+      </span>
+    </span>
+  </div>
+
+  <div class="login-splash__screens">
+    <div class="screen circle">
+      <img src="assets/media/screenshots/sc-1.jpg"
+           alt="">
+    </div>
+    <div class="screen square">
+      <img src="assets/media/screenshots/sc-2.jpg"
+           alt="">
+    </div>
+    <div class="screen diamond">
+      <img src="assets/media/screenshots/sc-3.jpg"
+           alt="">
+    </div>
+    <div class="screen circle">
+      <img src="assets/media/screenshots/sc-4.jpg"
+           alt="">
+    </div>
+    <div class="screen square">
+      <img src="assets/media/screenshots/sc-5.jpg"
+           alt="">
+    </div>
+    <div class="screen diamond">
+      <img src="assets/media/screenshots/sc-6.jpg"
+           alt="">
+    </div>
+    <div class="screen circle">
+      <img src="assets/media/screenshots/sc-1.jpg"
+           alt="">
+    </div>
+    <div class="screen square">
+      <img src="assets/media/screenshots/sc-1.jpg"
+           alt="">
+    </div>
+    <div class="screen diamond">
+      <img src="assets/media/screenshots/sc-3.jpg"
+           alt="">
+    </div>
+    <div class="screen circle">
+      <img src="assets/media/screenshots/sc-2.jpg"
+           alt="">
+    </div>
+    <div class="screen square">
+      <img src="assets/media/screenshots/sc-1.jpg"
+           alt="">
+    </div>
+    <div class="screen diamond">
+      <img src="assets/media/screenshots/sc-6.jpg"
+           alt="">
+    </div>
+    <div class="screen circle">
+      <img src="assets/media/screenshots/sc-4.jpg"
+           alt="">
+    </div>
+    <div class="screen square">
+      <img src="assets/media/screenshots/sc-3.jpg"
+           alt="">
+    </div>
+    <div class="screen diamond">
+      <img src="assets/media/screenshots/sc-3.jpg"
+           alt="">
+    </div>
+  </div>
+
+  <div class="login-splash__bg">
+    <div class="water">
+      <div class="splash splash--1"></div>
+      <div class="splash splash--2"></div>
+      <div class="splash splash--3"></div>
+      <div class="splash splash--4"></div>
+      <div class="splash splash--5"></div>
+      <div class="splash splash--6"></div>
+      <div class="splash splash--7"></div>
+      <div class="splash splash--8"></div>
+      <div class="splash splash--9"></div>
+      <svg class="wobble"
+           viewBox="0 0 841.9 73.5">
+        <path id="trampoline"
+              d="M851,79.5H-8V13.4c0,0,243,0,430,0s429,0,429,0V79.5z"></path>
+        <animate #animTrampoline
+                 xlink:href="#trampoline"
+                 attributeName="d"
+                 dur="1s"
+                 keyTimes="0; 0.2; 0.5; 1"
+                 begin="click"
+                 repeatCount="1"
+                 fill="freeze"
+                 values="M851,79.5H-8V13.4c0,0,243,0,430,0s429,0,429,0V79.5z; M851,79.5H-8V13.4c0,0,243,10,430,10s429-10,429-10V79.5z; M851,79.5H-8V13.4c0,0,243-4,430-4s429,4,429,4V79.5z; M851,79.5H-8V13.4c0,0,243,0,430,0s429,0,429,0V79.5z;">
+        </animate>
+      </svg>
+    </div>
+  </div>
+
+  <div class="login-splash__welcome">
+    <p>
+      <span style="--delay: 7.3s">w</span>
+      <span style="--delay: 7.35s">e</span>
+      <span style="--delay: 7.4s">l</span>
+      <span style="--delay: 7.45s">c</span>
+      <span style="--delay: 7.5s">o</span>
+      <span style="--delay: 7.55s">m</span>
+      <span style="--delay: 7.6s">e</span>
+    </p>
+    <div class="mask">
+      <div class="imgs">
+        @for (img of clientImgs; track $index) {
+        <img [src]="img.src"
+             width="50"
+             height="50"
+             class="img-cover" />
+        }
+      </div>
+    </div>
+    <div class="login-splash__loader">
+      <svg width="50"
+           viewBox="0 0 100 100">
+        <defs>
+          <filter id="if0nv24sig-filter"
+                  x="-100%"
+                  y="-100%"
+                  width="300%"
+                  height="300%"
+                  color-interpolation-filters="sRGB">
+            <feGaussianBlur in="SourceGraphic"
+                            stdDeviation="2.4000000000000004"></feGaussianBlur>
+            <feComponentTransfer result="cutoff">
+              <feFuncA type="table"
+                       tableValues="0 0 0 0 0 0 1 1 1 1 1"></feFuncA>
+            </feComponentTransfer>
+          </filter>
+        </defs>
+        <g transform="scale(2.1)"
+           filter="url(#if0nv24sig-filter)">
+          <g transform="translate(25 23)">
+            <g>
+              <circle cx="17"
+                      cy="0"
+                      r="5"
+                      fill="#068bea">
+                <animate attributeName="r"
+                         keyTimes="0;0.5;1"
+                         values="3.5999999999999996;8.399999999999999;3.5999999999999996"
+                         dur="4s"
+                         repeatCount="indefinite"
+                         begin="-0.25s"></animate>
+              </circle>
+              <animateTransform attributeName="transform"
+                                type="rotate"
+                                keyTimes="0;1"
+                                values="0;360"
+                                dur="4s"
+                                repeatCount="indefinite"
+                                begin="0s"></animateTransform>
+            </g>
+          </g>
+          <g transform="translate(25 23)">
+            <g>
+              <circle cx="17"
+                      cy="0"
+                      r="5"
+                      fill="#068bea">
+                <animate attributeName="r"
+                         keyTimes="0;0.5;1"
+                         values="3.5999999999999996;8.399999999999999;3.5999999999999996"
+                         dur="2s"
+                         repeatCount="indefinite"
+                         begin="-0.2s"></animate>
+              </circle>
+              <animateTransform attributeName="transform"
+                                type="rotate"
+                                keyTimes="0;1"
+                                values="0;360"
+                                dur="2s"
+                                repeatCount="indefinite"
+                                begin="-0.05s"></animateTransform>
+            </g>
+          </g>
+          <g transform="translate(25 23)">
+            <g>
+              <circle cx="17"
+                      cy="0"
+                      r="5"
+                      fill="#068bea">
+                <animate attributeName="r"
+                         keyTimes="0;0.5;1"
+                         values="3.5999999999999996;8.399999999999999;3.5999999999999996"
+                         dur="1.3333333333333333s"
+                         repeatCount="indefinite"
+                         begin="-0.15s"></animate>
+              </circle>
+              <animateTransform attributeName="transform"
+                                type="rotate"
+                                keyTimes="0;1"
+                                values="0;360"
+                                dur="1.3333333333333333s"
+                                repeatCount="indefinite"
+                                begin="-0.1s"></animateTransform>
+            </g>
+          </g>
+          <g transform="translate(25 23)">
+            <g>
+              <circle cx="17"
+                      cy="0"
+                      r="5"
+                      fill="#068bea">
+                <animate attributeName="r"
+                         keyTimes="0;0.5;1"
+                         values="3.5999999999999996;8.399999999999999;3.5999999999999996"
+                         dur="1s"
+                         repeatCount="indefinite"
+                         begin="-0.1s"></animate>
+              </circle>
+              <animateTransform attributeName="transform"
+                                type="rotate"
+                                keyTimes="0;1"
+                                values="0;360"
+                                dur="1s"
+                                repeatCount="indefinite"
+                                begin="-0.15s"></animateTransform>
+            </g>
+          </g>
+          <g transform="translate(25 23)">
+            <g>
+              <circle cx="17"
+                      cy="0"
+                      r="5"
+                      fill="#068bea">
+                <animate attributeName="r"
+                         keyTimes="0;0.5;1"
+                         values="3.5999999999999996;8.399999999999999;3.5999999999999996"
+                         dur="0.8s"
+                         repeatCount="indefinite"
+                         begin="-0.05s"></animate>
+              </circle>
+              <animateTransform attributeName="transform"
+                                type="rotate"
+                                keyTimes="0;1"
+                                values="0;360"
+                                dur="0.8s"
+                                repeatCount="indefinite"
+                                begin="-0.2s"></animateTransform>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>

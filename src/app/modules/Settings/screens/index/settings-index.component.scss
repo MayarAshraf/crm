@@ -1,0 +1,63 @@
+:host ::ng-deep {
+  .settings-panel-menu.p-panelmenu {
+    .p-panelmenu-panel {
+      margin-bottom: 0;
+    }
+
+    .p-panelmenu-header {
+
+      &:not(.p-highlight):not(.p-disabled):hover .p-panelmenu-header-content {
+        color: var(--primary-600);
+      }
+
+      .p-panelmenu-header-content {
+        border: none;
+        color: var(--primary-color);
+        background-color: transparent !important;
+        border-radius: 0;
+        box-shadow: none;
+        transition: none;
+
+        a.p-panelmenu-header-action {
+          display: inline-flex;
+          gap: 5px;
+          color: inherit;
+          padding: 10px 0;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .p-panelmenu-content {
+      padding: 0.25rem 0;
+      border: 0;
+      background-color: transparent;
+      border-radius: 0;
+
+      .p-menuitem {
+
+        &:not(.p-highlight):not(.p-disabled).p-focus>.p-menuitem-content,
+        &:not(.p-highlight):not(.p-disabled)>.p-menuitem-content:hover {
+          color: var(--primary-600);
+          background-color: transparent;
+        }
+
+        .p-menuitem-content {
+          transition: none;
+          color: var(--primary-color);
+
+          .p-menuitem-link {
+            color: inherit !important;
+            padding: 10px 1.25rem;
+
+            .p-submenu-icon,
+            .p-menuitem-text,
+            .p-menuitem-icon {
+              color: inherit !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

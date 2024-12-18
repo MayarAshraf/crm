@@ -1,0 +1,123 @@
+<app-filters-panel
+  [filters]="filters()"
+  [displaySettings]="false"
+  [displayMoreFilter]="false"
+  [(showFilterSidebar)]="showBasicFilters"
+  (onRemoveChip)="refreshData($event)"
+  (onClearAllChips)="refreshData($event)"
+  (onSubmitFilters)="refreshData($event)"
+>
+  <ng-container ngProjectAs="[filtered-data]">
+    <div #targetElement>
+      <app-table-wrapper
+        [moduleName]="moduleName"
+        [headerTitle]="indexMeta.indexTitle"
+        [titleIcon]="indexMeta.indexIcon"
+        [headerSubTitle]="'keep_it_organized' | translate"
+        [headerBtnLabel]="indexMeta.createBtnLabel"
+        [withScreenHeader]="false"
+        [showStriped]="true"
+        [withSelection]="true"
+        [(selection)]="selectedItems"
+        (selectionChange)="onSelectionChange($event)"
+        [columns]="indexMeta.columns"
+        [dataSource]="records()"
+        [loading]="isLoading()"
+        [totalRecords]="totalRecords()"
+        [recordsFiltered]="recordsFiltered()"
+        paginatorPosition="both"
+        [indexPermissions]="permissions().index"
+        [updateBtnPermissions]="permissions().update"
+        [deleteBtnPermissions]="permissions().delete"
+        stateKey="DUPLICATES_ITEMS_KEY"
+        [globalFilterValue]="globalFilterValue"
+        (deleteBtnClicked)="deleteRecord($event)"
+        (onLoadData)="loadRecords($event)"
+        styleClass="is-no-table-style"
+      >
+        <ng-template #bodyTemplate let-rowData let-i="rowIndex">
+          <tr>
+            <td>
+              <div class="flex gap-2 align-items-center">
+                <p-tableCheckbox [value]="rowData" class="font-size-0" />
+
+                <div class="flex-auto">
+                  <div class="flex gap-2">
+                    <span
+                      class="w-2.5rem h-2.5rem border-circle flex align-items-center justify-content-center font-medium text-white"
+                      [style.background-color]="'' | randomColor"
+                    >
+                      {{ rowData.full_name | initials }}
+                    </span>
+                    <div>
+                      <span class="font-medium capitalize">
+                        {{ rowData.full_name }}
+                      </span>
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template #loadingBodyTemplate>
+          @for (i of [] | range: 10; track $index) {
+            <tr>
+              <td>
+                <div class="flex gap-2 align-items-center">
+                  <p-skeleton width="17px" height="17px" borderRadius="3px" />
+
+                  <div class="flex-auto">
+                    <div class="flex gap-3">
+                      <div class="flex gap-2">
+                        <p-skeleton shape="circle" size="2.5rem" />
+                        <div>
+                          <p-skeleton width="200px" height="25px" borderRadius="4px" />
+                          <p-skeleton width="100px" height="12px" styleClass="mt-2" />
+                        </div>
+                      </div>
+
+                      <div class="flex align-items-center gap-2">
+                        <p-skeleton shape="circle" size="2.5rem" />
+                        <div>
+                          <p-skeleton width="200px" height="25px" borderRadius="4px" />
+                          <p-skeleton width="100px" height="12px" styleClass="mt-2" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="flex align-items-center justify-content-end gap-2 mt-3">
+                      <p-skeleton width="100px" height="15px" borderRadius="4px" />
+                      <p-skeleton width="100px" height="35px" borderRadius="22px" />
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          }
+        </ng-template>
+      </app-table-wrapper>
+    </div>
+  </ng-container>
+</app-filters-panel>
+
+<app-bulk-actions
+  #bulkActionsRef
+  [(selectedAction)]="bulkActionsService.selectedAction"
+  stateKey="DUPLICATES_ITEMS_KEY"
+  [(bulkActions)]="bulkActions"
+  [(selection)]="selectedItems"
+  [targetElement]="targetElement"
+/>
+
+<app-bulk-dialog
+  [(selectedAction)]="bulkActionsService.selectedAction"
+  [coordinates]="bulkActionsRef.coordinates()"
+  [(selection)]="selectedItems"
+  [model]="bulkActionsService.model()"
+  [fields]="bulkActionsService.fields()"
+  [endpoint]="bulkActionsService.endpoint()"
+  (onAddBulkAction)="refreshData({})"
+/>

@@ -1,0 +1,71 @@
+<app-table-wrapper
+  [moduleName]="moduleName"
+  [withScreenHeader]="false"
+  [columns]="columns()"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  [totalRecords]="totalRecords()"
+  [recordsFiltered]="recordsFiltered()"
+  [indexPermissions]="permissions().index"
+  paginatorPosition="both"
+  stateKey="IMPORTS_LEADS_TABLE_KEY"
+  (onLoadData)="loadRecords($event)"
+>
+  <ng-template #file let-rowData>
+    <a class="table-link-title" href="{{ rowData.file }}" target="_blank">
+      [{{ rowData.file_type }}] Download <i class="fas fa-cloud-download-alt"></i>
+    </a>
+    <div class="mt-2">
+      <span class="block text-xs white-space-nowrap">
+        Created At:
+        <strong class="font-semibold">
+          {{ rowData.created_at | dateFormatter: "absolute" }}
+        </strong>
+      </span>
+      <span class="block text-xs white-space-nowrap">
+        Created By:
+        <strong class="font-semibold">
+          {{ getLabelById("assignments:all_users_info", rowData.created_by) }}
+        </strong>
+      </span>
+    </div>
+  </ng-template>
+
+  <ng-template #importStatus let-rowData>
+    <span class="font-semibold">{{ rowData.import_status }}</span>
+
+    <span class="block text-xs white-space-nowrap mt-2">
+      Imported By:
+      <strong class="font-semibold">
+        {{ getLabelById("assignments:all_users_info", rowData.created_by) }}
+      </strong>
+    </span>
+  </ng-template>
+
+  <ng-template #actionsTemplate let-rowData>
+    <div class="flex align-items-center gap-1">
+      @if (rowData.imported_at === null && rowData.import_status_id === null) {
+        <button
+          pButton
+          type="button"
+          icon="fas fa-file-import"
+          class="p-button-sm p-button-rounded p-button-text w-2.5rem h-2.5rem"
+          [pTooltip]="'Import' | translate"
+          tooltipPosition="top"
+          (click)="onImportClicked.emit(rowData)"
+        ></button>
+      }
+
+      <button
+        pButton
+        type="button"
+        *appHasPermission="permissions().delete"
+        icon="fas fa-trash text-xs"
+        class="p-button-sm p-button-rounded p-button-text p-button-danger w-2.5rem h-2.5rem"
+        [pTooltip]="'delete' | translate"
+        tooltipPosition="top"
+        (click)="confirmDelete(rowData.id)"
+      ></button>
+    </div>
+  </ng-template>
+</app-table-wrapper>

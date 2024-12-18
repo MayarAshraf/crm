@@ -1,0 +1,22 @@
+@media (width >= 767px) {
+  .base-row {
+    transition: transform 150ms linear;
+
+    &.move {
+      transform: translateY(1.3rem);
+    }
+  }
+
+  .lead-table-info {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 150ms linear,
+      visibility 150ms linear;
+
+    &.is-expanded {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

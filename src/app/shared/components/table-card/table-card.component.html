@@ -1,0 +1,95 @@
+<div class="item-card text-center" [class.is-list-layout]="isListLayout()">
+  <div
+    class="item-img block bg-white shadow-1 border-circle p-1"
+    [ngClass]="{
+      'mx-auto mb-2': !isListLayout(),
+      'flex-shrink-0': isListLayout()
+    }"
+  >
+    <img
+      class="w-full h-full border-circle"
+      src="{{ imgSrc() ?? 'assets/media/icons/avatar.jpg' }}"
+      [alt]="title()"
+    />
+  </div>
+
+  @if (title()) {
+    @if (isClickable()) {
+      <button
+        (click)="titleBtnClicked.emit()"
+        [pTooltip]="title()"
+        tooltipPosition="top"
+        class="table-link-title white-space-nowrap"
+      >
+        {{ title() ?? "" | truncateText: 20 }}
+      </button>
+    } @else {
+      <h2
+        class="m-0 capitalize text-base font-semibold white-space-nowrap"
+        [pTooltip]="title()"
+        tooltipPosition="top"
+      >
+        {{ title() ?? "" | truncateText: 20 }}
+      </h2>
+    }
+  }
+
+  <div class="more-content">
+    <ng-content />
+  </div>
+
+  <h3 class="overflow-hidden m-0 text-500 text-xs font-medium">
+    <span
+      class="block subtitle"
+      [pTooltip]="subtitleTooltip()"
+      tooltipPosition="top"
+      style="--delay: 100ms"
+      >{{ subtitle() }}</span
+    >
+  </h3>
+
+  <p class="overflow-hidden m-0 text-500 text-xs font-medium" [class.ml-auto]="isListLayout()">
+    <span
+      class="block hint"
+      [pTooltip]="hintTooltip()"
+      tooltipPosition="top"
+      style="--delay: 150ms"
+      >{{ hint() }}</span
+    >
+  </p>
+
+  @if (isEditable() || isDeletable()) {
+    <div class="overflow-hidden py-1">
+      <div
+        class="actions flex justify-content-center align-items-center gap-2"
+        style="--delay: 200ms"
+      >
+        @if (isEditable()) {
+          <button
+            pButton
+            type="button"
+            class="text-xs p-button-text px-2 py-1"
+            [ngClass]="{ 'p-0 w-2.5rem h-2.5rem p-button-rounded': isListLayout() }"
+            [label]="isListLayout() ? '' : ('update' | translate)"
+            [icon]="isListLayout() ? constants.icons.pencil + ' text-xs' : ''"
+            (click)="updateBtnClicked.emit()"
+          ></button>
+        }
+
+        <p-divider layout="vertical" styleClass="p-0 m-0"></p-divider>
+
+        @if (isDeletable()) {
+          <button
+            pButton
+            type="button"
+            class="text-xs p-button-text px-2 py-1 p-button-danger"
+            [ngClass]="{ 'p-0 w-2.5rem h-2.5rem p-button-rounded': isListLayout() }"
+            [label]="isListLayout() ? '' : ('delete' | translate)"
+            [icon]="isListLayout() ? 'fas fa-trash text-xs' : ''"
+            (click)="confirmDelete()"
+          ></button>
+        }
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,12 @@
+{
+	"attachments": "Attachments",
+	"image": "Image",
+	"video": "Video",
+	"pdf": "PDF",
+	"file": "File",
+	"view_image": "View Image",
+	"view_video": "View Video",
+	"view_pdf": "View PDF",
+	"view_file": "View File",
+	"delete": "Delete"
+}

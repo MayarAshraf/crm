@@ -1,0 +1,118 @@
+:host ::ng-deep {
+  .p-sidebar {
+    .p-sidebar-header {
+      flex-direction: column;
+
+      .p-autocomplete {
+        &-input {
+          background-color: #f9fafc;
+
+          &::placeholder {
+            color: var(--text-300);
+          }
+        }
+      }
+    }
+
+    .p-panelmenu.menu-panel-style {
+
+      .p-panelmenu-header {
+        gap: 10px;
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        background-color: transparent;
+        box-shadow: none;
+
+        &-content {
+          border: none;
+          border-radius: 0;
+          background-color: transparent;
+          box-shadow: none;
+        }
+
+        &-action {
+          padding: 0;
+          margin-bottom: .5rem;
+          font-size: 14px;
+          color: var(--gray-600);
+          font-weight: bold;
+
+          .p-icon-wrapper {
+            order: 99;
+            flex: auto;
+            justify-content: flex-end;
+
+            svg.p-icon {
+              width: 14px;
+              height: auto;
+            }
+          }
+        }
+      }
+
+      .p-panelmenu-content {
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background-color: transparent;
+
+        .p-menuitem {
+          &:not(.p-highlight):not(.p-disabled) {
+            &> {
+              .p-menuitem-content:hover {
+                color: #4b5563;
+                background-color: #e2e5eb;
+              }
+            }
+          }
+
+          &-link {
+            padding-block: .5rem;
+            margin: 0;
+            margin-bottom: .2rem;
+            font-size: 13px;
+            color: var(--gray-600);
+            font-weight: 500;
+
+            &-active {
+              color: #4b5563;
+              background-color: #e2e5eb;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  p-calendar {
+    .p-calendar.p-calendar-w-btn {
+      .p-inputtext {
+        padding: 5px 10px;
+        font-size: 1rem;
+      }
+
+      .p-button-icon-only {
+        color: var(--surface-500);
+        transition: background-color 0.2s linear;
+
+        &:hover {
+          background-color: var(--gray-100);
+        }
+      }
+
+      .p-datepicker-trigger {
+        background-color: transparent;
+        border-color: #d1d5db;
+        margin-inline-start: -1px;
+      }
+    }
+  }
+}
+
+.custom-style-button {
+  padding: 5px 10px;
+  background-color: transparent;
+  border-color: #d1d5db;
+  color: var(--surface-500);
+}

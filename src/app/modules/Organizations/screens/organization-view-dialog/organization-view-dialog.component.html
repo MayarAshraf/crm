@@ -1,0 +1,188 @@
+<div class="relative bg-white" #viewWrapper>
+  <div class="dialog-profile-sidebar">
+    <div class="inner-sidebar">
+      @if (organization().logo) {
+        <img
+          class="w-2.5rem h-2.5rem object-cover border-round"
+          src="{{ organization().logo }}"
+          alt="Organization Logo"
+        />
+      } @else {
+        <span
+          class="flex-shrink-0 w-2.5rem h-2.5rem border-round flex align-items-center justify-content-center text-white"
+          [style.background-color]="'' | randomColor"
+        >
+          {{ organization().organization | initials }}
+        </span>
+      }
+      @for (item of tabsItems(); track $index) {
+        <button
+          [pTooltip]="item.tooltip"
+          class="sidebar-item"
+          [class.active]="activeIndex() === item.index"
+          (click)="onTabClicked(item.index)"
+        >
+          @if (item.badgeNumber) {
+            <span class="badge">{{ item.badgeNumber }}</span>
+          }
+          <i class="{{ item.icon }}"></i>
+        </button>
+      }
+    </div>
+  </div>
+
+  <div [style.margin-inline-start]="'var(--sidebar-width)'">
+    <div class="bg-white md:sticky top-0 z-10 p-3 pb-1 border-bottom-1 border-200">
+      <div class="flex flex-column gap-3">
+        <div class="flex justify-content-between align-items-center gap-2">
+          <h2 class="font-semibold text-black capitalize text-lg m-0 p-0">
+            {{ organization().organization }}
+          </h2>
+          <div class="flex align-items-center gap-1">
+            <button
+              pButton
+              class="flex-shrink-0 p-button-text p-button-plain p-button-rounded w-2rem h-2rem"
+              [pTooltip]="'more_actions' | translate"
+              tooltipPosition="top"
+              (click)="menu.toggle($event)"
+              icon="fas fa-ellipsis-vertical"
+            ></button>
+
+            <button
+              pButton
+              class="flex-shrink-0 p-button-text p-button-plain p-button-rounded w-2rem h-2rem"
+              (click)="closeDialog()"
+              icon="pi pi-times"
+            ></button>
+          </div>
+        </div>
+
+        @if (organization().social_accounts.length) {
+          <app-social-accounts [(socialAccounts)]="organization().social_accounts" />
+        }
+
+        @if (organization().phones.length) {
+          <div>
+            <app-phones
+              [phones]="organization().phones"
+              [phonableId]="organization().id"
+              [sliceCount]="2"
+              [phonableType]="ITEM_ORGANIZATION"
+              (onPhoneAdded)="onPhoneAdded($event)"
+            />
+          </div>
+        }
+        <div class="grid">
+          @if (organization().description) {
+            <div class="col-12">
+              <app-list-info-item [label]="'description' | translate">
+                <span class="font-semibold text-sm">{{ organization().description }}</span>
+              </app-list-info-item>
+            </div>
+          }
+          <div class="col-12 lg:col md:col-4">
+            <app-list-info-item [label]="'assignees' | translate">
+              <app-comma-separated-labels
+                styleClass="text-sm font-semibold"
+                [items]="getLabelsByIds('assignments:all_users_info', organization().assignees_ids)"
+                [tooltip]="'assignees' | translate"
+              />
+            </app-list-info-item>
+          </div>
+          @if (organization().ref_no) {
+            <div class="col-12 lg:col md:col-4">
+              <app-list-info-item [label]="'ref_no' | translate">
+                <span class="flex align-items-center gap-1">
+                  <span class="font-semibold text-sm">{{ organization().ref_no }}</span>
+                </span>
+              </app-list-info-item>
+            </div>
+          }
+          <div class="col-12 lg:col md:col-4">
+            <app-list-info-item [label]="'id' | translate">
+              <span class="flex align-items-center gap-1">
+                <span class="font-semibold text-sm">{{ organization().id }}</span>
+                <app-copy-button [text]="organization().id + ''" />
+              </span>
+            </app-list-info-item>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p-menu #menu appendTo="body" [model]="moreOptions" [popup]="true"></p-menu>
+
+    <div class="p-3">
+      <p-tabView [(activeIndex)]="activeIndex" styleClass="sidebar-tabview">
+        @for (item of tabsItems(); track $index) {
+          <p-tabPanel>
+            <h2 class="flex align-items-center gap-2 mb-2 mt-0 section-title">
+              <i [class]="item.icon"></i>
+              <span class="capitalize">{{ item.label }}</span>
+            </h2>
+            @switch (item.slug) {
+              @case ("members") {
+                <app-leads-table
+                  [filtersData]="$any({ organization_ids: [this.organization().id] })"
+                  [withSelection]="false"
+                  indexTableKey="MEMEBER_ORGANIZATIONS_KEY"
+                />
+              }
+              @case ("deals") {
+                <ng-template pTemplate="content">
+                  <app-opportunities-table
+                    [filtersData]="{ organization_ids: [this.organization().id] }"
+                    [showActions]="false"
+                    [withScreenHeader]="false"
+                    indexTableKey="OPPORTUNITIES_ORGANIZATIONS_KEY"
+                  />
+                </ng-template>
+              }
+              @case ("referrals") {
+                <ng-template pTemplate="content">
+                  <app-leads-table
+                    [filtersData]="{ referrals_organization_ids: [this.organization().id] }"
+                    [withSelection]="false"
+                    indexTableKey="REFERRALS_ORGANIZATIONS_KEY"
+                  />
+                </ng-template>
+              }
+              @case ("addresses") {
+                <ng-template pTemplate="content">
+                  <app-index-addresses
+                    [withTableTitle]="false"
+                    [addressableType]="ITEM_ORGANIZATION"
+                    [addressableId]="organization().id"
+                  />
+                </ng-template>
+              }
+              @case ("notes") {
+                <ng-template pTemplate="content">
+                  <app-note-form
+                    [notableId]="organization().id"
+                    [notableType]="ITEM_ORGANIZATION"
+                  />
+                </ng-template>
+              }
+              @case ("cases") {
+                <ng-template pTemplate="content">
+                  <app-cases-table
+                    [filtersData]="$any({ organization_ids: [this.organization().id] })"
+                    indexTableKey="CASES_ORGANIZATIONS_KEY"
+                    [withScreenHeader]="false"
+                    [withActionsColumn]="false"
+                  />
+                </ng-template>
+              }
+              @case ("attachments") {
+                <ng-template pTemplate="content">
+                  <app-media-list [(dataSource)]="organization" [target]="viewWrapper" />
+                </ng-template>
+              }
+            }
+          </p-tabPanel>
+        }
+      </p-tabView>
+    </div>
+  </div>
+</div>

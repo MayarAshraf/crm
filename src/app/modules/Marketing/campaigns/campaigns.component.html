@@ -1,0 +1,142 @@
+<app-filters-panel
+  [filters]="campaignFilters()"
+  [(showFilterSidebar)]="showBasicFilters"
+  [(isAdvancedFilter)]="showAdvancedFilters"
+  [displaySettings]="false"
+  (onRemoveChip)="refreshCampaign($event)"
+  (onClearAllChips)="refreshCampaign($event)"
+  (onSubmitFilters)="refreshCampaign($event)"
+>
+  <ng-container ngProjectAs="[filtered-data]">
+    <!--
+      ngProjectAs is useful if we want to project an ng-container with a certain selector.
+     -->
+    <div #targetElement>
+      <app-table-wrapper
+        [moduleName]="moduleName"
+        [headerTitle]="indexMeta.indexTitle"
+        [titleIcon]="indexMeta.indexIcon"
+        [headerBtnLabel]="indexMeta.createBtnLabel"
+        [columns]="indexMeta.columns"
+        [dataSource]="records()"
+        [loading]="isLoading()"
+        [totalRecords]="totalRecords()"
+        [recordsFiltered]="recordsFiltered()"
+        paginatorPosition="both"
+        [indexPermissions]="permissions().index"
+        [updateBtnPermissions]="permissions().update"
+        [createBtnPermissions]="permissions().create"
+        [deleteBtnPermissions]="permissions().delete"
+        (deleteBtnClicked)="deleteRecord($event)"
+        (createBtnClicked)="openCreateRecordDialog()"
+        (updateBtnClicked)="openUpdateRecordDialog($event)"
+        [stateKey]="indexMeta.indexTableKey"
+        [globalFilterValue]="globalFilterValue"
+        (onLoadData)="loadRecords($event)"
+      >
+        <ng-template #headerTemplate>
+          <ng-container>
+            <tr class="capitalize font-semibold">
+              <th colspan="4">{{ "campaign" | translate }}</th>
+              <th class="text-center">{{ "actions" | translate }}</th>
+            </tr>
+          </ng-container>
+        </ng-template>
+
+        <ng-template #bodyTemplate let-rowData>
+          <tr>
+            <td colspan="4">
+              <ul class="p-reset flex justify-content-between row-gap-2 column-gap-4 px-2">
+                <li class="flex gap-4">
+                  <span class="flex align-items-center gap-1">
+                    <span
+                      class="flex align-items-center gap-1 text-xs"
+                      [pTooltip]="'campaign_id' | translate"
+                      tooltipPosition="top"
+                    >
+                      <i class="fas fa-hashtag text-gray-400 mr-1"></i>
+                      <span class="font-medium">{{ rowData.id }}</span>
+                    </span>
+                  </span>
+
+                  @if (permissions().view) {
+                    <button
+                      [pTooltip]="'campaign_name' | translate"
+                      tooltipPosition="top"
+                      (click)="openProfileCampaign(rowData)"
+                      class="table-link-title"
+                    >
+                      {{ rowData.campaign_name }}
+                    </button>
+                  } @else {
+                    <span class="capitalize font-semibold text-primary">
+                      {{ rowData.campaign_name }}
+                    </span>
+                  }
+                </li>
+
+                <li class="flex gap-4">
+                  @if (getCampaignsTypes(rowData.campaign_type_id)) {
+                    <div
+                      class="bg-highlight px-2 border-round-md flex justify-content-center align-items-center"
+                    >
+                      <span [pTooltip]="'campaign_type' | translate" tooltipPosition="top">
+                        {{ getCampaignsTypes(rowData.campaign_type_id) }}
+                      </span>
+                    </div>
+                  }
+
+                  @if (getCampaignStatus(rowData.campaign_status_id)) {
+                    <div
+                      class="bg-highlight-success px-2 border-round-md flex justify-content-center align-items-center"
+                    >
+                      <span [pTooltip]="'campaign_status' | translate" tooltipPosition="top">
+                        {{ getCampaignStatus(rowData.campaign_status_id) }}
+                      </span>
+                    </div>
+                  }
+                </li>
+              </ul>
+            </td>
+            <td class="text-center">
+              <div class="flex align-items-center justify-content-center gap-1">
+                <button
+                  pButton
+                  type="button"
+                  *appHasPermission="permissions().update"
+                  [icon]="constants.icons.pencil + ' text-xs'"
+                  class="p-button-rounded p-button-text p-button-sm"
+                  [pTooltip]="'update' | translate"
+                  tooltipPosition="top"
+                  (click)="openUpdateRecordDialog(rowData)"
+                ></button>
+
+                <button
+                  pButton
+                  type="button"
+                  *appHasPermission="permissions().delete"
+                  icon="fas fa-trash text-xs"
+                  class="p-button-sm p-button-rounded p-button-text p-button-danger"
+                  [pTooltip]="'delete' | translate"
+                  tooltipPosition="top"
+                  (click)="confirmDelete(rowData)"
+                ></button>
+
+                <button
+                  pButton
+                  type="button"
+                  *appHasPermission="permissions().view"
+                  icon="fas fa-eye text-xs"
+                  class="p-button-sm p-button-rounded p-button-text p-button-success"
+                  [pTooltip]="'view_campaign' | translate"
+                  tooltipPosition="top"
+                  (click)="openProfileCampaign(rowData)"
+                ></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </app-table-wrapper>
+    </div>
+  </ng-container>
+</app-filters-panel>

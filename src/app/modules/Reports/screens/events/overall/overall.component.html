@@ -1,0 +1,56 @@
+<app-table-wrapper
+  titleClass="hidden"
+  [titleIcon]="indexMeta.indexIcon"
+  [withScreenHeader]="true"
+  [displayHeaderButton]="false"
+  [withActionsColumn]="false"
+  [withAdditionalContent]="true"
+  [columns]="selectedColumns"
+  [withCustomFilters]="true"
+  [indexPermissions]="permissions().index"
+  [dataSource]="recordsEvents()"
+  [rows]="10"
+  [loading]="loading()"
+  paginatorPosition="both"
+  [withTableSearch]="false"
+  [withResetButton]="false"
+  [lazyLoadOnInit]="false"
+  [totalRecords]="getDataReport().recordsTotal"
+  [recordsFiltered]="getDataReport().recordsFiltered"
+  [stateKey]="indexMeta.indexTableKey"
+  (onLoadData)="loadRecords($event)"
+>
+  <div moreActions>
+    <div class="flex gap-2">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-file-excel text-xs"
+        (click)="exportExcel()"
+        class="text-xs py-1 px-3"
+        [label]="'excel' | translate"
+        [pTooltip]="'export_as_excel' | translate"
+        tooltipPosition="top"
+      ></button>
+    </div>
+  </div>
+
+  <ng-template #customFiltersTemplate>
+    <app-search-overall-events
+      (onFilterChange)="onFilterChange($event)"
+      (onResetChange)="onResetChange()"
+    ></app-search-overall-events>
+  </ng-template>
+
+  <ng-template #additionalContentTemplate>
+    <p-multiSelect
+      [options]="originalColumns"
+      [(ngModel)]="selectedColumns"
+      [showHeader]="false"
+      [displaySelectedLabel]="false"
+      optionLabel="title"
+      [placeholder]="'column_visibility' | translate"
+    >
+    </p-multiSelect>
+  </ng-template>
+</app-table-wrapper>

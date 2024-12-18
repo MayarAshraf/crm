@@ -1,0 +1,162 @@
+@if (lead().id) {
+  <div class="relative bg-white" #viewWrapper>
+    <div class="dialog-profile-sidebar">
+      <div class="inner-sidebar">
+        <span
+          class="flex-shrink-0 w-2.5rem h-2.5rem border-round flex align-items-center justify-content-center text-white"
+          [style.background-color]="'' | randomColor"
+        >
+          {{ lead().full_name || "Unnamed Lead" | initials }}
+        </span>
+        @for (item of tabsItems().slice(0, 7); track $index) {
+          <button
+            [pTooltip]="item.tooltip"
+            class="sidebar-item"
+            [class.active]="activeIndex() === item.index"
+            (click)="activeIndex.set(item.index)"
+          >
+            @if (item.badgeNumber) {
+              <span class="badge">{{ item.badgeNumber }}</span>
+            }
+            <i class="{{ item.icon }}"></i>
+          </button>
+        }
+        <!-- <button (click)="menu.toggle($event)" class="sidebar-item" pTooltip="More">
+            <i class="fas fa-ellipsis-h"></i>
+          </button> -->
+      </div>
+
+      <p-menu appendTo="body" #menu [model]="tabsItems().slice(7)" [popup]="true">
+        <ng-template pTemplate="item" let-item>
+          <a
+            class="p-menuitem-link"
+            [ngClass]="item.styleClass === 'active' ? 'text-primary' : ''"
+            (click)="activeIndex.set(item.index)"
+          >
+            <i [class]="item.icon + ' p-menuitem-icon'"></i>
+            <span class="p-menuitem-text"> {{ item.label }}</span>
+          </a>
+        </ng-template>
+      </p-menu>
+    </div>
+
+    <div [style.margin-inline-start]="'var(--sidebar-width)'">
+      <div class="bg-white md:sticky top-0 z-10 pb-3 border-bottom-1 border-200">
+        <app-lead-profile-header
+          [(lead)]="lead"
+          [(socialAccounts)]="socialAccounts"
+          [withCloseButton]="withCloseButton()"
+          (closeDialog)="closeDialog()"
+        />
+        @if (checkPermission("access-??-contact-details")) {
+          @if (lead().phones.length) {
+            <div class="px-3">
+              <app-phones
+                [(phones)]="lead().phones"
+                [phonableId]="lead().id"
+                [sliceCount]="2"
+                [phonableType]="ITEM_LEAD"
+                (onPhoneAdded)="onPhoneAdded($event)"
+              />
+            </div>
+          }
+        }
+      </div>
+      <div class="p-3">
+        <p-tabView [(activeIndex)]="activeIndex" styleClass="sidebar-tabview">
+          <p-tabPanel>
+            <app-lead-profile-info-tab
+              [(lead)]="lead"
+              [(organization)]="organization"
+              [(campaign)]="campaign"
+            />
+          </p-tabPanel>
+
+          <p-tabPanel>
+            <ng-template pTemplate="content">
+              <h2 class="mt-0 mb-3 section-title">{{ "todos" | translate }}</h2>
+            </ng-template>
+          </p-tabPanel>
+
+          <p-tabPanel>
+            <ng-template pTemplate="content">
+              <h2 class="mt-0 mb-3 section-title">{{ "cases" | translate }}</h2>
+            </ng-template>
+          </p-tabPanel>
+
+          <p-tabPanel>
+            <ng-template pTemplate="content">
+              <h2 class="mt-0 mb-3 section-title">
+                {{ "attachments" | translate }}
+              </h2>
+              <app-media-list
+                [(dataSource)]="lead"
+                [target]="viewWrapper"
+                (onRemoveFile)="updateLeadInList($event)"
+              />
+            </ng-template>
+          </p-tabPanel>
+
+          <p-tabPanel>
+            <ng-template pTemplate="content">
+              <h2 class="mt-0 mb-3 section-title">
+                {{ "campaigns" | translate }}
+              </h2>
+            </ng-template>
+          </p-tabPanel>
+
+          <p-tabPanel>
+            <ng-template pTemplate="content">
+              <app-lead-sources-tab [lead]="lead()" />
+            </ng-template>
+          </p-tabPanel>
+
+          <p-tabPanel>
+            <ng-template pTemplate="content">
+              <h2 class="mt-0 mb-3 section-title">
+                {{ "assignees" | translate }}
+              </h2>
+            </ng-template>
+          </p-tabPanel>
+
+          <p-tabPanel>
+            <ng-template pTemplate="content">
+              <h2 class="mt-0 mb-3 section-title">
+                {{ "duplicates_info" | translate }}
+              </h2>
+            </ng-template>
+          </p-tabPanel>
+
+          <p-tabPanel>
+            <ng-template pTemplate="content">
+              <p-tabView styleClass="special-tabview">
+                <p-tabPanel [header]="'logs' | translate">
+                  <app-logs [id]="lead().id" [type]="ITEM_LEAD" />
+                </p-tabPanel>
+
+                <p-tabPanel [header]="'archived_logs' | translate">
+                  <ng-template pTemplate="content">
+                    <app-logs [id]="lead().id" [type]="ITEM_LEAD" [isArchived]="true" />
+                  </ng-template>
+                </p-tabPanel>
+              </p-tabView>
+            </ng-template>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+  </div>
+} @else {
+  @if (withCloseButton()) {
+    <div class="text-right p-3 border-bottom-1 border-200">
+      <button
+        pButton
+        icon="pi pi-times"
+        class="p-button-text p-button-plain p-button-rounded w-2rem h-2rem"
+        (click)="closeDialog()"
+      ></button>
+    </div>
+  }
+
+  <app-spinner></app-spinner>
+}

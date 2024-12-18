@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
+
+:root {
+  --high-index: 9999;
+  --sidebar-width: 4rem;
+  --sidebar-width-lg: 265px;
+  --scrollbar-width: 3px;
+  --field-height: 40px;
+  --layout-inline-padding: 1rem;
+  --font-family: "Poppins", sans-serif;
+  --inner-sidebar-bg: #f4f6f5;
+  --body-bg: #e6e6e6;
+  --gray-color: #36393d;
+  --green-color: #44ab4b;
+  --pink-color: #d53677;
+  --red-color: #f14726;
+  --purple-color: #960fac;
+  --dark-purple-color: #652ab8;
+  --black-color: #0d1619;
+
+  &[dir="rtl"] {
+    --font-family: "Cairo", sans-serif;
+  }
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #eeeeee;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cecece;
+  border-radius: 8px;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  text-align: start;
+  font-family: var(--font-family);
+  background-color: var(--body-bg);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+  // Prevent adjustments of font size after orientation changes in iOS.
+  -webkit-text-size-adjust: 100%;
+  // Change the default tap highlight to be completely transparent in iOS.
+  -webkit-tap-highlight-color: rgba(#000, 0);
+  margin: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+input:focus,
+textarea:focus {
+  box-shadow: none !important;
+}
+
+textarea {
+  display: block;
+}
+
+// prevent background-color and font color changes due to autofill.
+input:-webkit-autofill {
+  transition:
+    background-color 50000s ease-in-out,
+    color 50000s ease-in-out;
+}

@@ -1,0 +1,87 @@
+<div class="grid">
+  @if (loadChartsOnly() && loadChartsOnly().length) {
+    @for (item of loadChartsOnly(); track $index) {
+      <div class="md:col-6 lg:col-4 col-12">
+        <app-default-screen-header
+          [title]="item.name"
+          [subtitle]="item.desc"
+          titleIcon="fas fa-calendar-days"
+          titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+          subTitleClass="text-sm text-gray-500 font-light block mt-1"
+          [displayButton]="false"
+        />
+
+        <app-chart-pie-total-center
+          [data]="item.data"
+          [labels]="item.labels"
+          [isLoading]="isLoading()"
+          [backgroundColors]="item.backgroundColor"
+        />
+      </div>
+    }
+  } @else {
+    @for (item of [] | range: 2; track $index) {
+      <div class="md:col-6 lg:col-4 col-12 p-4">
+        <p-skeleton styleClass="mb-2" width="10rem" />
+        <p-skeleton width="4rem" styleClass="mb-2" />
+        <p-skeleton shape="circle" size="8rem" />
+      </div>
+    }
+  }
+</div>
+
+<!-- <app-table-wrapper
+  titleClass="hidden"
+  [titleIcon]="indexMeta.indexIcon"
+  [headerBtnLabel]="indexMeta.createBtnLabel"
+  [columns]="indexMeta.columns"
+  [displayHeaderButton]="false"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  [totalRecords]="totalRecords()"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [recordsFiltered]="recordsFiltered()"
+  paginatorPosition="both"
+  [withAdditionalContent]="true"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterValue]="globalFilterValue"
+  (createBtnClicked)="openCreateRecordDialog()"
+  (updateBtnClicked)="openUpdateRecordDialog($event)"
+  (deleteBtnClicked)="deleteRecord($event)"
+  (onLoadData)="loadRecords($event)"
+>
+  <div moreActions>
+    <div class="flex gap-2">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-file-excel text-xs"
+        class="text-xs py-1 px-3"
+        label="Excel"
+        pTooltip="Export As Excel"
+        tooltipPosition="top"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-file-pdf text-xs"
+        class="text-xs bg-pink-color border-pink-color py-1 px-3"
+        label="PDF"
+        pTooltip="Export As PDF"
+        tooltipPosition="top"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-print text-xs"
+        class="text-xs bg-purple-color border-purple-color py-1 px-3"
+        label="Print"
+        pTooltip="Print"
+        tooltipPosition="top"
+      ></button>
+    </div>
+  </div>
+</app-table-wrapper> -->

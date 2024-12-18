@@ -1,0 +1,29 @@
+@if (showDialogHeader()) {
+  <div
+    class="px-3 border-bottom-1 border-300 bg-white"
+    [ngClass]="{ 'md:sticky top-0 z-10': isHeaderSticky() }"
+    [ngStyle]="{ paddingBlock: '.75rem' }"
+  >
+    <app-default-screen-header
+      [title]="dialogTitle()"
+      [titleIcon]="titleIcon()"
+      [isTitleRenderedAsBtn]="isTitleRenderedAsBtn()"
+      [titleClass]="titleClass()"
+      [subtitle]="subtitle()"
+      buttonIcon="pi pi-times"
+      buttonClass="p-button-text p-button-plain p-button-rounded w-2rem h-2rem"
+      (onTitleBtnClicked)="onTitleBtnClicked.emit()"
+      (onClick)="closeDialog()"
+      [extraContent]="extraContentTemplate() || null"
+      [headerContent]="headerContentTemplate() || null"
+    />
+  </div>
+}
+
+<div [ngClass]="{ 'pt-3 px-3': withPadding() }">
+  @if (dialogData$() | async) {
+    <ng-content select="[bodyContent]"></ng-content>
+  } @else {
+    <app-spinner></app-spinner>
+  }
+</div>

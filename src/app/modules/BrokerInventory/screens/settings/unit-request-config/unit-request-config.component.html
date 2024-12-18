@@ -1,0 +1,68 @@
+<app-table-wrapper
+  [headerTitle]="indexMeta.indexTitle"
+  [titleIcon]="indexMeta.indexIcon"
+  [withScreenHeader]="true"
+  [displayHeaderButton]="false"
+  [indexPermissions]="permissions().index"
+  [withActionsColumn]="false"
+  [columns]="indexMeta.columns"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  [paginator]="false"
+  [lazy]="false"
+  [recordsFiltered]="recordsFiltered()"
+  paginatorPosition="both"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterFields]="['field']"
+>
+  <ng-template #field let-unitRequestConfig>
+    {{ unitRequestConfig.field | manipulateTitle }}
+  </ng-template>
+
+  <ng-template #fullCreation let-unitRequestConfig>
+    <ng-container
+      *ngTemplateOutlet="
+        inputSwitchTemplate;
+        context: {
+          $implicit: {
+            model: unitRequestConfig.is_full_creation_hidden,
+            disabled: unitRequestConfig.is_required ?? false,
+            type: TypeunitRequestConfig.FULLCREATION,
+            rowData: unitRequestConfig
+          }
+        }
+      "
+    />
+  </ng-template>
+
+  <ng-template #required let-unitRequestConfig>
+    <ng-container
+      *ngTemplateOutlet="
+        inputSwitchTemplate;
+        context: {
+          $implicit: {
+            model: unitRequestConfig.is_required,
+            type: TypeunitRequestConfig.ISREQUIRED,
+            rowData: unitRequestConfig,
+            typeValue: {
+              trueValue: true,
+              falseValue: false
+            }
+          }
+        }
+      "
+    />
+  </ng-template>
+</app-table-wrapper>
+
+<ng-template #inputSwitchTemplate let-switchData>
+  <p-inputSwitch
+    [(ngModel)]="switchData.model"
+    [disabled]="switchData.disabled"
+    [readonly]="!checkUpdateField"
+    [trueValue]="switchData.typeValue ? switchData.typeValue.trueValue : false"
+    [falseValue]="switchData.typeValue ? switchData.typeValue.falseValue : true"
+    (onChange)="update($event, switchData.type, switchData.rowData)"
+  >
+  </p-inputSwitch>
+</ng-template>

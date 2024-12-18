@@ -1,0 +1,114 @@
+<div class="grid">
+  @if (doneMettings() && doneMettings().data) {
+    @for (item of doneMettings().data; track $index) {
+      <div class="md:col-6 lg:col-4 col-12">
+        @switch (item.title) {
+          @case ("Meetings") {
+            <app-default-screen-header
+              [title]="item.title"
+              [subtitle]="item.subtitle"
+              titleIcon="fas fa-handshake"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+          @case ("By Type") {
+            <app-default-screen-header
+              [title]="item.title"
+              [subtitle]="item.subtitle"
+              titleIcon="fas fa-font"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+        }
+        <!-- @if (item.type === "doughnut") {
+          <app-pie-chrat [dataSets]="item.datasets" [isLoading]="Loading()"> </app-pie-chrat>
+        } -->
+      </div>
+    }
+  } @else {
+    @for (item of [] | range: 2; track $index) {
+      <div class="md:col-6 lg:col-4 col-12 p-4">
+        <p-skeleton styleClass="mb-2" width="10rem" />
+        <p-skeleton width="4rem" styleClass="mb-2" />
+        <p-skeleton shape="circle" size="8rem" />
+      </div>
+    }
+  }
+</div>
+
+<!-- <app-table-wrapper
+  titleClass="hidden"
+  [titleIcon]="indexMeta.indexIcon"
+  [headerBtnLabel]="indexMeta.createBtnLabel"
+  [columns]="indexMeta.columns"
+  [displayHeaderButton]="false"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  [totalRecords]="totalRecords()"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [recordsFiltered]="recordsFiltered()"
+  paginatorPosition="both"
+  [withAdditionalContent]="true"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterValue]="globalFilterValue"
+  (createBtnClicked)="openCreateRecordDialog()"
+  (updateBtnClicked)="openUpdateRecordDialog($event)"
+  (deleteBtnClicked)="deleteRecord($event)"
+  (onLoadData)="loadRecords($event)"
+>
+  <div moreActions>
+    <div class="flex gap-2">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-file-excel text-xs"
+        class="text-xs py-1 px-3"
+        label="Excel"
+        pTooltip="Export As Excel"
+        tooltipPosition="top"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-file-pdf text-xs"
+        class="text-xs bg-pink-color border-pink-color py-1 px-3"
+        label="PDF"
+        pTooltip="Export As PDF"
+        tooltipPosition="top"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-print text-xs"
+        class="text-xs bg-purple-color border-purple-color py-1 px-3"
+        label="Print"
+        pTooltip="Print"
+        tooltipPosition="top"
+      ></button>
+    </div>
+  </div>
+
+  <ng-template #additionalContentTemplate>
+    <div class="flex-order-0">
+      <p-dropdown
+        [options]="usersType"
+        styleClass="py-1 pl-2 shadow-none"
+        [(ngModel)]="selectedUsersType"
+      />
+    </div>
+    <div class="flex-order-0">
+      <p-dropdown
+        [options]="usersType"
+        styleClass="py-1 pl-2 shadow-none"
+        [(ngModel)]="selectedUsersType"
+      />
+    </div>
+  </ng-template>
+</app-table-wrapper> -->

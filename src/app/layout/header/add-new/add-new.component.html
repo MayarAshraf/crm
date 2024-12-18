@@ -1,0 +1,54 @@
+<button
+  pButton
+  (click)="dialogVisible.set(true)"
+  icon="fa fa-plus text-lg"
+  [pTooltip]="'add_new' | translate"
+  tooltipPosition="bottom"
+  class="p-2 w-2rem h-2rem shadow-none"
+></button>
+
+<p-dialog
+  position="right"
+  appendTo="body"
+  [(visible)]="dialogVisible"
+  styleClass="m-0 max-w-full max-h-none h-full"
+  [contentStyle]="{ width: dialogWidth() }"
+  contentStyleClass="transition-duration-200 max-w-full border-noround p-0"
+  [showHeader]="false"
+  [focusOnShow]="false"
+  [closeOnEscape]="false"
+  [modal]="true"
+>
+  <div class="p-3 bg-white border-bottom-1 border-300 sticky top-0 z-10">
+    <app-default-screen-header
+      [isTitleRenderedAsBtn]="!!selectedItem()"
+      [title]="(selectedItem() ? selectedItem()?.title : ('add_new' | translate)) ?? ''"
+      titleClass="text-600 shadow-none"
+      [titleIcon]="selectedItem() ? 'fas fa-arrow-left' : 'fas fa-plus'"
+      buttonClass="p-button-text p-button-plain p-button-rounded w-2rem h-2rem"
+      buttonIcon="pi pi-times"
+      (onClick)="dialogVisible.set(false); back()"
+      (onTitleBtnClicked)="back()"
+    />
+  </div>
+
+  <ng-container #dynamicDialog></ng-container>
+
+  @if (!selectedItem()) {
+    <ul class="list-none p-0">
+      @for (item of activeItems(); track $index) {
+        @if (item.visible) {
+          <li>
+            <button
+              pButton
+              class="p-button-text w-full text-left border-noround shadow-none"
+              [label]="item.label ?? ''"
+              [icon]="item.icon ?? ''"
+              (click)="displayItem(item)"
+            ></button>
+          </li>
+        }
+      }
+    </ul>
+  }
+</p-dialog>

@@ -1,0 +1,137 @@
+<app-table-wrapper
+  [moduleName]="moduleName"
+  [headerTitle]="indexMeta.indexTitle"
+  [titleIcon]="indexMeta.indexIcon"
+  [headerBtnLabel]="indexMeta.createBtnLabel"
+  [showGridlines]="false"
+  [showStriped]="true"
+  [columns]="indexMeta.columns"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  [totalRecords]="totalRecords()"
+  [recordsFiltered]="recordsFiltered()"
+  paginatorPosition="both"
+  [stateKey]="indexMeta.indexTableKey"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [globalFilterValue]="globalFilterValue"
+  (createBtnClicked)="openCreateRecordDialog()"
+  (onLoadData)="loadRecords($event)"
+  styleClass="is-no-table-style"
+>
+  <ng-template #bodyTemplate let-rowData>
+    <tr>
+      <td>
+        <div class="flex gap-3 justify-content-between align-items-start">
+          <ul class="list-none p-0 m-0">
+            <li class="text-lg font-medium capitalize line-height-1">
+              {{ rowData.address_line_1 }}
+            </li>
+            @if (rowData.address_line_2) {
+              <li>{{ rowData.address_line_2 }}</li>
+            }
+            @if (rowData.address_name) {
+              <li class="font-semibold">{{ rowData.address_name }}</li>
+            }
+          </ul>
+          <ul class="list-none p-0 m-0">
+            @if (rowData.building_number) {
+              <li class="flex gap-1 align-items-center">
+                <span>{{ "building" | translate }}:</span>
+                <strong>{{ rowData.building_number }}</strong>
+              </li>
+            }
+            @if (rowData.floor_number) {
+              <li class="flex gap-1 align-items-center">
+                <span>{{ "floor" | translate }}:</span>
+                <strong>{{ rowData.floor_number }}</strong>
+              </li>
+            }
+          </ul>
+
+          <ul class="list-none p-0 m-0">
+            @if (rowData.landmark) {
+              <li class="flex gap-1 align-items-center">
+                <span>{{ "landmark" | translate }}:</span>
+                <strong>{{ rowData.landmark }}</strong>
+              </li>
+            }
+            @if (rowData.postal_code) {
+              <li class="flex gap-1 align-items-center">
+                <span>{{ "postal_code" | translate }}:</span>
+                <strong>{{ rowData.postal_code }}</strong>
+              </li>
+            }
+            @if (rowData.phone_number) {
+              <li class="flex gap-1 align-items-center">
+                <span>{{ "phone_number" | translate }}:</span>
+                <strong>{{ rowData.phone_number }}</strong>
+                <span><app-copy-button [text]="rowData.phone_number" /></span>
+              </li>
+            }
+          </ul>
+          <ul class="list-none p-0 m-0">
+            <li class="flex gap-1 align-items-center">
+              <span>{{ "created_by" | translate }}:</span>
+              <strong>
+                {{ getLabelById("assignments:all_users_info", rowData.created_by) }}
+              </strong>
+            </li>
+            <li class="flex gap-1 align-items-center">
+              <span>{{ "created_at" | translate }}:</span>
+              <strong>{{ rowData.created_at | dateFormatter: "absolute" }}</strong>
+            </li>
+          </ul>
+
+          <button
+            pButton
+            type="button"
+            class="p-button-rounded p-button-text p-button-secondary w-2rem h-2rem"
+            icon="pi pi-ellipsis-v"
+            (click)="menu.toggle($event)"
+          ></button>
+        </div>
+
+        <p-menu appendTo="body" #menu [model]="getActions" [popup]="true">
+          <ng-template pTemplate="item" let-item>
+            @if (item.slug === "delete") {
+              <a
+                class="flex align-items-center p-menuitem-link gap-2"
+                (click)="deleteRecord(rowData)"
+              >
+                <i class="{{ item.icon }}"></i>
+                {{ item.label }}
+              </a>
+            } @else if (item.slug === "update") {
+              <a
+                class="flex align-items-center p-menuitem-link gap-2"
+                (click)="openUpdateRecordDialog(rowData)"
+              >
+                <i class="{{ item.icon }}"></i>
+                {{ item.label }}
+              </a>
+            }
+          </ng-template>
+        </p-menu>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #loadingBodyTemplate>
+    @for (i of [] | range: 10; track $index) {
+      <tr>
+        <td class="bg-white">
+          <div class="flex gap-3 flex-wrap align-items-center">
+            <p-skeleton class="flex-auto" height="25px" />
+            <p-skeleton class="flex-auto" height="25px" />
+            <p-skeleton class="flex-auto" height="25px" />
+            <p-skeleton class="flex-auto" height="25px" />
+            <p-skeleton shape="circle" size="2rem" />
+          </div>
+        </td>
+      </tr>
+    }
+  </ng-template>
+</app-table-wrapper>

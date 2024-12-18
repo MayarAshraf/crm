@@ -1,0 +1,182 @@
+<div #targetElement>
+  <app-table-wrapper
+    [moduleName]="moduleName"
+    [headerTitle]="'deals' | translate"
+    titleIcon="fas fa-money-bills"
+    [headerSubTitle]="'monitor_your_success' | translate"
+    [headerBtnLabel]="indexMeta.createBtnLabel"
+    [showScrollHint]="false"
+    [showGridlines]="false"
+    [showStriped]="true"
+    [columns]="indexMeta.columns"
+    [dataSource]="records()"
+    [loading]="isLoading()"
+    [totalRecords]="totalRecords()"
+    [recordsFiltered]="recordsFiltered()"
+    paginatorPosition="both"
+    [indexPermissions]="permissions().index"
+    [updateBtnPermissions]="permissions().update"
+    [createBtnPermissions]="permissions().create"
+    [deleteBtnPermissions]="permissions().delete"
+    [stateKey]="indexMeta.indexTableKey"
+    [globalFilterValue]="globalFilterValue"
+    (createBtnClicked)="openCreateRecordDialog()"
+    (updateBtnClicked)="openUpdateRecordDialog($event)"
+    (deleteBtnClicked)="deleteRecord($event)"
+    (onLoadData)="loadRecords($event)"
+    [withActionsColumn]="false"
+    [withScreenHeader]="withScreenHeader()"
+    styleClass="is-no-table-style"
+  >
+    <ng-template #bodyTemplate let-rowData>
+      <tr>
+        <td>
+          <div class="flex gap-3 align-items-center">
+            <div class="flex-auto">
+              <div class="flex flex-wrap gap-3 align-items-center">
+                <app-lead-name
+                  [checkPermission]="checkPermission(rowData.opportunitable, 'view-??')"
+                  [lead]="rowData.opportunitable"
+                  (nameClicked)="openLeadDialog($event)"
+                  [isTitleDisplayed]="isVisible('title') ?? true"
+                  [isCompanyDisplayed]="isVisible('company') ?? true"
+                />
+                @if (isVisible("last_activity") && rowData.opportunitable.last_activity?.notes) {
+                  <p class="ml-auto my-0 flex align-items-center gap-2 text-500">
+                    <i class="fas fa-user-clock text-xs"></i>
+                    <span
+                      [pTooltip]="rowData.opportunitable.last_activity.notes"
+                      tooltipPosition="bottom"
+                    >
+                      {{ rowData.opportunitable.last_activity.notes | truncateText: 30 }}
+                    </span>
+                  </p>
+                }
+                <span class="text-green-500 text-lg font-semibold ml-auto">
+                  {{ rowData.amount | currency: rowData.currency_code + " " }}
+                </span>
+              </div>
+
+              <ul class="p-reset flex row-gap-2 column-gap-3 flex-wrap align-items-center">
+                <!-- lead id -->
+                <li>
+                  <app-lead-id [leadId]="rowData.opportunitable.id" />
+                </li>
+
+                <!-- interests -->
+                @if (isVisible("interests") && rowData.interests_ids?.length) {
+                  <li class="flex gap-1 align-items-center">
+                    <i [class]="constants.icons.heart + ' text-red'"></i>
+                    <app-comma-separated-labels
+                      [items]="getLabelsByIds('interests:interests', rowData.interests_ids)"
+                      [tooltip]="'interests' | translate"
+                    />
+                  </li>
+                }
+
+                <!-- tags -->
+                @if (isVisible("tags") && rowData.tags_ids?.length) {
+                  <li class="flex gap-1 align-items-center">
+                    <i [class]="constants.icons.tag + ' text-dark-purple'"></i>
+                    <app-comma-separated-labels
+                      [items]="getLabelsByIds('tags:tags', rowData.tags_ids)"
+                      [tooltip]="'tags' | translate"
+                    />
+                  </li>
+                }
+
+                <!-- creator -->
+                <li class="text-xs font-medium">
+                  <span [pTooltip]="'creator' | translate" tooltipPosition="top">
+                    <i class="fas fa-user-pen"></i>
+                    <span class="pl-1">
+                      {{ getLabelById("assignments:all_users_info", rowData.created_by) }}
+                    </span>
+                  </span>
+                </li>
+
+                <!-- created at -->
+                <li class="text-xs font-medium">
+                  <span [pTooltip]="'created_at' | translate" tooltipPosition="top">
+                    <i class="fas fa-calendar-days"></i>
+                    <span class="pl-1">
+                      {{ rowData.created_at | dateFormatter: "absolute" }}
+                    </span>
+                  </span>
+                </li>
+
+                <li class="ml-auto"></li>
+
+                <!-- assignees -->
+                @if (isVisible("assignees") && rowData.assignees_ids?.length) {
+                  <li class="flex flex-wrap align-items-center gap-1">
+                    <i class="fas fa fa-user text-xs"></i>
+                    <app-comma-separated-labels
+                      [items]="getLabelsByIds('assignments:all_users_info', rowData.assignees_ids)"
+                      [tooltip]="'assignees' | translate"
+                    />
+                  </li>
+                }
+
+                <li class="text-sm">
+                  <b>{{ "pipeline" | translate }}:</b>
+                  {{ getLabelById("pipelines:deal_pipelines", rowData.pipeline_id) }}
+                </li>
+
+                <li>
+                  <app-entity-select
+                    [entity]="rowData"
+                    [endpoint]="constants.API_ENDPOINTS.updateOpportunitiesData"
+                    apiVersion="v2"
+                    styleClass="primary-status-select"
+                    [group]="true"
+                    listModule="pipelines"
+                    listName="deal_pipeline_stages"
+                    updateType="pipeline_stage_id"
+                    placeholder="pipeline_stage"
+                    (onChange)="onPipelineStageChange($event, rowData)"
+                  />
+                </li>
+              </ul>
+            </div>
+            @if (showActions()) {
+              <div class="flex-shrink-0">
+                <button
+                  pButton
+                  type="button"
+                  *appHasPermission="permissions().update"
+                  [icon]="constants.icons.pencil + ' text-xs'"
+                  class="w-2.5rem h-2.5rem p-button-rounded p-button-text"
+                  [pTooltip]="'update' | translate"
+                  tooltipPosition="top"
+                  (click)="openUpdateRecordDialog(rowData)"
+                ></button>
+
+                <button
+                  pButton
+                  type="button"
+                  *appHasPermission="permissions().delete"
+                  icon="fas fa-trash text-xs"
+                  class="w-2.5rem h-2.5rem p-button-rounded p-button-text p-button-danger"
+                  [pTooltip]="'delete' | translate"
+                  tooltipPosition="top"
+                  (click)="confirmDelete(rowData)"
+                ></button>
+              </div>
+            }
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #loadingBodyTemplate>
+      @for (i of [] | range: 10; track $index) {
+        <tr>
+          <td class="bg-white">
+            <app-custom-layout-skeleton [isListLayout]="true" />
+          </td>
+        </tr>
+      }
+    </ng-template>
+  </app-table-wrapper>
+</div>

@@ -1,0 +1,72 @@
+<div class="inline-flex align-items-center gap-1">
+  <app-call-activity
+    [(data)]="lead"
+    [activitiableType]="ITEM_LEAD"
+    listKey="activities:activity_outcomes"
+    [activityType]="activityType.LogCall"
+    (onActivityAdded)="onActivityAdded($event)"
+  />
+  <app-message-activity
+    [(data)]="lead"
+    [activitiableType]="ITEM_LEAD"
+    listKey="activities:activity_types_messages"
+    [activityType]="activityType.LogMsg"
+    (onActivityAdded)="onActivityAdded($event)"
+  />
+  <app-meeting-activity
+    [(data)]="lead"
+    [activitiableType]="ITEM_LEAD"
+    listKey="activities:activity_types_meetings"
+    [activityType]="activityType.LogMeetingFeedback"
+    (onActivityAdded)="onActivityAdded($event)"
+  />
+
+  <p-button
+    #actionsMenuToggler
+    severity="secondary"
+    [rounded]="true"
+    icon="pi pi-plus text-sm"
+    [pTooltip]="'add_more_actions' | translate"
+    tooltipPosition="top"
+    styleClass="w-2rem h-2rem p-0"
+    (onClick)="actionsMenu.toggle($event); leadActionsOverlay.hide()"
+  ></p-button>
+</div>
+
+<p-menu #actionsMenu appendTo="body" [model]="leadActions()" [popup]="true"></p-menu>
+
+<p-overlayPanel #leadActionsOverlay styleClass="lg-panel">
+  @if (currentAction() === "meeting") {
+    <app-event-action
+      [(data)]="lead"
+      [eventableType]="ITEM_LEAD"
+      (onEventAdded)="onEventAdded($event)"
+    />
+  } @else if (currentAction() === "deal") {
+    <app-opportunity-popup
+      [(data)]="lead"
+      [opportunitableType]="ITEM_LEAD"
+      (onOpportunityAdded)="onOpportunityAdded($event)"
+    />
+  } @else if (currentAction() === "task") {
+    <app-task-popup
+      [(data)]="lead"
+      [taskableType]="ITEM_LEAD"
+      (onTaskAdded)="onTaskAdded($event)"
+    />
+  } @else if (currentAction() === "note") {
+    <app-note-popup [(data)]="lead" [notableType]="ITEM_LEAD" (onNoteAdded)="onNoteAdded($event)" />
+  } @else if (currentAction() === "phone") {
+    <app-phone-popup
+      [(data)]="lead"
+      [phonableType]="ITEM_LEAD"
+      (onPhoneAdded)="onPhoneAdded($event)"
+    />
+  } @else if (currentAction() === "account") {
+    <app-account-popup
+      [(data)]="lead"
+      [accountableType]="ITEM_LEAD"
+      (onAccountAdded)="onAccountAdded($event)"
+    />
+  }
+</p-overlayPanel>

@@ -1,0 +1,17 @@
+@if (!isHidden()) {
+  @if (!options().length) {
+    <div class="p-3">
+      <h2 class="text-lg font-medium">{{ name() }}</h2>
+    </div>
+  } @else {
+    <div class="flex justify-content-between align-items-center px-3 mb-4">
+      <label [for]="slug()">{{ name() }}</label>
+      <p-dropdown
+        [options]="options()"
+        [ngModel]="selectedOption()"
+        [inputId]="slug()"
+        styleClass="w-15rem"
+      ></p-dropdown>
+    </div>
+  }
+}

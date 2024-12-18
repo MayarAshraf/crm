@@ -1,0 +1,71 @@
+<app-table-wrapper
+  [headerTitle]="indexMeta.indexTitle"
+  [titleIcon]="indexMeta.indexIcon"
+  [headerBtnLabel]="indexMeta.createBtnLabel"
+  [columns]="indexMeta.columns"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  [totalRecords]="totalRecords()"
+  [recordsFiltered]="recordsFiltered()"
+  paginatorPosition="both"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterValue]="globalFilterValue"
+  (createBtnClicked)="openCreateRecordDialog()"
+  (updateBtnClicked)="openUpdateRecordDialog($event)"
+  (deleteBtnClicked)="deleteRecord($event)"
+  (onLoadData)="loadRecords($event)"
+>
+  <ng-template #sourceInfo let-rowData>
+    <div>
+      <span class="font-bold">{{ "identifier_type" | translate }}: </span>
+      <span>{{ rowData?.identifier_type }}</span>
+    </div>
+    <div>
+      <span class="font-bold">{{ "form_id" | translate }}: </span>
+      <span>{{ rowData?.identifier_id }}</span>
+    </div>
+  </ng-template>
+
+  <ng-template #leadInfo let-rowData>
+    @if (rowData?.interests) {
+      <div>
+        <span class="font-bold">{{ "interests" | translate }}: </span>
+        <span>{{ rowData?.interests }}</span>
+      </div>
+    }
+
+    @if (rowData?.tags) {
+      <div>
+        <span class="font-bold">{{ "tags" | translate }}: </span>
+        <span>{{ rowData?.tags }}</span>
+      </div>
+    }
+  </ng-template>
+
+  <ng-template #assignToInfo let-rowData>
+    @if (rowData?.assignment_rule === "assignment_rule_id") {
+      <div>
+        <span class="font-bold">{{ "assignment_rule" | translate }}: </span>
+        <span>{{ rowData?.assignment_rule_name }}</span>
+      </div>
+    }
+
+    @if (rowData?.users) {
+      <div>
+        <span class="font-bold">{{ "users" | translate }}: </span>
+        <span>{{ rowData?.users }}</span>
+      </div>
+    }
+
+    @if (rowData?.groups) {
+      <div>
+        <span class="font-bold">{{ "groups" | translate }}: </span>
+        <span>{{ rowData?.groups }}</span>
+      </div>
+    }
+  </ng-template>
+</app-table-wrapper>

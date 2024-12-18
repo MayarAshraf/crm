@@ -1,0 +1,132 @@
+<!-- <div class="mb-5 grid">
+  @if (overAllActivity() && !isLoading()) {
+    @for (item of overAllActivity().progress; track $index) {
+      <div class="col-12 md:col-6 lg:col-4">
+        <div class="flex justify-content-between">
+          <h4
+            class="flex gap-1 align-items-center mt-0 font-semibold text-sm mb-1 captalize text-900"
+          >
+            <span
+              class="block border-circle"
+              [ngClass]="{
+                'bg-green-400': item.title === 'Successful Calls',
+                'bg-yellow-400': item.title === 'Unsuccessful Calls',
+                'bg-red-400': item.title === 'Rejected/Missed Calls'
+              }"
+              [style]="{ width: '8px', height: '8px' }"
+            ></span>
+            {{ item.title }}
+          </h4>
+          <span
+            class="text-sm font-semibold"
+            [ngClass]="{
+              'text-green-400': item.title === 'Successful Calls',
+              'text-yellow-400': item.title === 'Unsuccessful Calls',
+              'text-red-400': item.title === 'Rejected/Missed Calls'
+            }"
+          >
+            {{ item.value }} %
+            <i [class]="item.icon"></i>
+          </span>
+        </div>
+        <p-progressBar
+          [showValue]="false"
+          [styleClass]="item.title | kebabCase"
+          [value]="item.value"
+        ></p-progressBar>
+      </div>
+    }
+  } @else {
+    @for (item of [] | range: 3; track $index) {
+      <div class="md:col-6 lg:col-4 col-12 p-4">
+        <p-skeleton styleClass="mb-2" width="4rem" height="7px" />
+        <p-skeleton width="16rem" height="8px" styleClass="mb-2" />
+      </div>
+    }
+  }
+</div> -->
+
+<div class="grid">
+  @if (loadChartsOnly() && loadChartsOnly().length) {
+    @for (item of loadChartsOnly(); track $index) {
+      <div class="md:col-6 lg:col-4 col-12">
+        @switch (item.name) {
+          @case ("Calls") {
+            <app-default-screen-header
+              [title]="item.name"
+              [subtitle]="item.desc"
+              titleIcon="fas fa-phone"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+          @case ("Meetings") {
+            <app-default-screen-header
+              [title]="item.name"
+              [subtitle]="item.desc"
+              titleIcon="fas fa-handshake"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+          @case ("Messages") {
+            <app-default-screen-header
+              [title]="item.name"
+              [subtitle]="item.desc"
+              titleIcon="fas fa-message"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+          @case ("Tasks") {
+            <app-default-screen-header
+              [title]="item.name"
+              [subtitle]="item.desc"
+              titleIcon="fas fa-list-check"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+          @case ("Scheduled Meetings") {
+            <app-default-screen-header
+              [title]="item.name"
+              [subtitle]="item.desc"
+              titleIcon="fas fa-calendar-days"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+          @case ("Created TENs") {
+            <app-default-screen-header
+              [title]="item.name"
+              [subtitle]="item.desc"
+              titleIcon="fas fa-list"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+        }
+        <app-chart-pie-total-center
+          [data]="item.data"
+          [labels]="item.labels"
+          [isLoading]="isLoading()"
+          [backgroundColors]="item.backgroundColor"
+        />
+      </div>
+    }
+  } @else {
+    @for (item of [] | range: 6; track $index) {
+      <div class="md:col-6 lg:col-4 col-12 p-4">
+        <p-skeleton styleClass="mb-2" width="10rem" />
+        <p-skeleton width="4rem" styleClass="mb-2" />
+        <p-skeleton shape="circle" size="8rem" />
+      </div>
+    }
+  }
+</div>

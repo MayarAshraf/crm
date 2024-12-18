@@ -1,0 +1,15 @@
+<p-sidebar [(visible)]="showSidebar" [position]="currentLang() === 'ar' ? 'right' : 'left'">
+  <ng-template pTemplate="header">{{ "filters" | translate }}</ng-template>
+
+  <ng-template pTemplate="content">
+    <ng-container *ngTemplateOutlet="sidebarContentTemplete() || null" />
+  </ng-template>
+
+  @if (footerTemplete()) {
+    <ng-template pTemplate="footer">
+      <ng-container *ngTemplateOutlet="footerTemplete() || null" />
+    </ng-template>
+  }
+</p-sidebar>
+
+<ng-container *ngTemplateOutlet="contentTemplete() || null" />

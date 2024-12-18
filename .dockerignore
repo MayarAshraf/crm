@@ -1,0 +1,9 @@
+**/node_modules/
+**/.git
+**/README.md
+**/.vscode
+**/npm-debug.log
+**/.editorconfig
+**/dist
+**/8X CRM.postman_collection.json
+**/.angular

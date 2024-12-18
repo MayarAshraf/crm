@@ -1,0 +1,69 @@
+@if (!isLoading()) {
+  @if (type() === "normal") {
+    <p-card styleClass="p-3 shadow-none">
+      <div class="flex justify-content-between align-items-center gap-3">
+        <div class="w-3rem h-3rem flex justify-content-center align-items-center">
+          <ng-content select="[icon]"></ng-content>
+        </div>
+        <div class="flex-1">
+          <div class="flex align-items-center" [ngClass]="{ 'justify-content-between': rate() }">
+            <h4 class="capitalize m-0 text-sm">
+              {{ title() }}
+            </h4>
+            @if (rate()) {
+              <span
+                class="font-bold text-xs"
+                [ngStyle]="{
+                  'background-color':
+                    (rate() | parseNumberOnly) > 0
+                      ? 'rgba(34 , 197 , 94 , 0.2)'
+                      : 'rgba(244 , 63 , 94 , 0.2)',
+                  color: (rate() | parseNumberOnly) > 0 ? 'var(--green-color)' : 'var(--red-color)'
+                }"
+              >
+                {{ rate() | parseNumberOnly }} %</span
+              >
+            }
+          </div>
+          @if (!rate()) {
+            <span class="font-semibold text-base text-900"
+              >{{ total() }} {{ currency() ? currency() : "" }}
+            </span>
+          }
+        </div>
+      </div>
+    </p-card>
+  }
+  @if (type() === "withoutIcon") {
+    <p-card styleClass="p-3 shadow-none">
+      <div class="flex flex-column">
+        <h4 class="m-0 font-semibold text-900 capitalize text-sm">{{ title() }}</h4>
+        <div class="flex justify-content-between align-items-center">
+          <span class="text-2xl font-bold">
+            {{ total() }}
+            <small
+              [ngStyle]="{
+                color: (rate() | parseNumberOnly) > 0 ? 'var(--green-color)' : 'var(--red-color)'
+              }"
+              class="px-1 text-sm"
+            >
+              {{ rate() | parseNumberOnly }} %
+            </small>
+          </span>
+          <span
+            class="m-0 text-sm font-bold"
+            [ngStyle]="{
+              color: cost() > 0 ? 'var(--red-color)' : '#000'
+            }"
+          >
+            cost : {{ cost().toFixed(2) }} {{ currency() }}
+          </span>
+        </div>
+      </div>
+    </p-card>
+  }
+} @else {
+  <div class="p-4">
+    <p-skeleton widt="100%" height="50px" />
+  </div>
+}

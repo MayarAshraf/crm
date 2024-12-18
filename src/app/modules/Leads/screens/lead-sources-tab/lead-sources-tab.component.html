@@ -1,0 +1,30 @@
+<p-table
+  [value]="sources()"
+  [loading]="isLoading()"
+  [rows]="10"
+  [paginator]="true"
+  [alwaysShowPaginator]="false"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [rowsPerPageOptions]="[5, 10, 20, 30, 50, 100]"
+  styleClass="p-datatable-sm p-datatable-striped"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>{{ "source" | translate }}</th>
+      <th>{{ "attached_by" | translate }}</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-source>
+    <tr>
+      <td>{{ getLabel("dynamic_list:sources", source.source_id) }}</td>
+      <td>{{ getLabel("assignments:all_users_info", source.created_by) }}</td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="5">{{ "no_sources_found" | translate }}.</td>
+    </tr>
+  </ng-template>
+</p-table>

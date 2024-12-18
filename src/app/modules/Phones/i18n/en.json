@@ -1,0 +1,21 @@
+{
+	"new_phone": "New Phone",
+	"country_code": "Country Code",
+	"mobile_number": "Mobile Number",
+	"has_whatsapp": "Has Whatsapp",
+	"new_mobile_number": "New Mobile Number",
+	"country_code_is_required": "Country code is required",
+	"enter_mobile_number": "Enter mobile number",
+	"mobile_number_max_is_191_characters_long": "Mobile number max is 191 characters long",
+	"mobile_number_is_required": "Mobile number is required",
+	"cancel": "Cancel",
+	"edit": "Edit",
+	"delete": "Delete",
+	"log_it": "Log It",
+	"save": "Save",
+	"add_new_phone": "Add New Phone",
+	"select_country_code": "Country code",
+	"new_mobile_number_desc": "Additional mobile number",
+	"view_less": "View Less",
+	"view_more": "View More"
+}

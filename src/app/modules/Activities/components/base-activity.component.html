@@ -1,0 +1,44 @@
+@if (options$ | async; as options) {
+  <app-popup-form
+    [fields]="fields()"
+    [model]="model()"
+    endpoint="activities/activities/store"
+    apiVersion="v2"
+    [payload]="model()"
+    [isLgPanel]="true"
+    [btnIcon]="selectedActivityIcon()"
+    [btnStyle]="{ 'background-color': selectedActivityColor() }"
+    [btnTooltip]="buttonTooltip()"
+    tooltipPosition="top"
+    [isEditHovered]="false"
+    btnStyleClass="p-button-rounded shadow-none border-none p-0 w-2rem h-2rem"
+    (updateUi)="updateUi($event)"
+  >
+    <div topForm class="block mb-3 text-sm text-primary">
+      {{ popupTitle() | translate }}
+      @if (data()?.full_name) {
+        <span class="text-xs">({{ data()?.full_name }})</span>
+      }
+
+      <div class="mt-2">
+        <p-dropdown
+          [options]="options || []"
+          [(ngModel)]="selectedActivityValue"
+          appendTo="body"
+          dropdownIcon="fas fa-caret-down text-xs"
+          styleClass="actions-menu"
+          (onChange)="onActivityChanged($event, options)"
+        >
+          <ng-template let-item pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <i class="{{ item.icon }}" [style.color]="item.color"></i>
+              <div>{{ item.label }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+    </div>
+  </app-popup-form>
+} @else {
+  <p-skeleton shape="circle" size="2rem" />
+}

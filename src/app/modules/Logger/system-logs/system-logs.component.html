@@ -1,0 +1,131 @@
+<h1 class="text-center header-print hidden font-semibold">{{ "system_logs" | translate }}</h1>
+<app-table-wrapper
+  [moduleName]="moduleName"
+  [headerTitle]="indexMeta.indexTitle"
+  [titleIcon]="indexMeta.indexIcon"
+  [withScreenHeader]="true"
+  [displayHeaderButton]="false"
+  [withActionsColumn]="false"
+  [withAdditionalContent]="true"
+  [withCustomFilters]="true"
+  [columns]="computedColumns()"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  paginatorPosition="both"
+  [totalRecords]="totalRecords()"
+  [recordsFiltered]="recordsFiltered()"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterValue]="globalFilterValue"
+  (onLoadData)="loadRecords($event)"
+>
+  <div moreActions>
+    <div class="flex gap-2">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-file-excel text-xs"
+        (click)="exportExcel()"
+        class="text-xs py-1 px-3"
+        [label]="'excel' | translate"
+        [pTooltip]="'export_as_excel' | translate"
+        tooltipPosition="top"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-file-pdf text-xs"
+        (click)="exportPdf()"
+        class="text-xs bg-pink border-pink py-1 px-3"
+        [label]="'PDF' | translate"
+        [pTooltip]="'export_as_pdf' | translate"
+        tooltipPosition="top"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-print text-xs"
+        (click)="print()"
+        class="text-xs bg-purple border-purple py-1 px-3"
+        [label]="'print' | translate"
+        [pTooltip]="'print' | translate"
+        tooltipPosition="top"
+      ></button>
+    </div>
+  </div>
+
+  <ng-template #additionalContentTemplate>
+    <p-multiSelect
+      [options]="indexMeta.columns"
+      [(ngModel)]="selectedColumns"
+      [showHeader]="false"
+      [displaySelectedLabel]="false"
+      optionLabel="title"
+      [placeholder]="'column_visibility' | translate"
+    >
+    </p-multiSelect>
+  </ng-template>
+
+  <ng-template #customFiltersTemplate>
+    <app-search-logger [(filtersData)]="filtersData"></app-search-logger>
+  </ng-template>
+
+  <ng-template #creator let-rowData>
+    <span class="flex gap-2 align-items-center">
+      <span class="white-space-nowrap">{{ rowData.causer_name }}</span>
+      <i class="fas fa-sm fa-info-circle" [pTooltip]="creatorContent" tooltipPosition="right"></i>
+    </span>
+
+    <ng-template #creatorContent>
+      <ul class="list-none p-0 text-300">
+        <li>
+          <strong class="text-white">{{ "description" | translate }}:</strong>
+          {{ rowData.description }}
+        </li>
+        <li>
+          <strong class="text-white">{{ "record_id" | translate }}:</strong>
+          {{ rowData.subject_id }}
+        </li>
+        <li>
+          <strong class="text-white">{{ "record_type" | translate }}:</strong>
+          {{ rowData.subject_type }}
+        </li>
+        <li>
+          <strong class="text-white">{{ "causer_id" | translate }}:</strong> {{ rowData.causer_id }}
+        </li>
+        <li>
+          <strong class="text-white">{{ "causer_type" | translate }}:</strong>
+          {{ rowData.causer_type }}
+        </li>
+      </ul>
+    </ng-template>
+  </ng-template>
+
+  <ng-template #logChanges let-rowData>
+    @if (rowData.log && rowData.log.length > 0) {
+      @for (log of rowData.log; track $index) {
+        @if (log.named_changes && log.named_changes.length > 0) {
+          @for (change of log.named_changes; track $index) {
+            @for (item of change | keyvalue; track item) {
+              <span class="flex gap-2 align-items-center">
+                <strong class="white-space-nowrap">{{ item.key }}:</strong>
+                <span class="white-space-nowrap font-medium">
+                  {{ assertChangeType(item.value).new }}</span
+                >
+                <i class="fas fa-arrow-alt-circle-right"></i>
+                <span class="white-space-nowrap font-medium">
+                  {{ assertChangeType(item.value).old }}</span
+                >
+              </span>
+            }
+          }
+        } @else {
+          --
+        }
+      }
+    }
+  </ng-template>
+</app-table-wrapper>

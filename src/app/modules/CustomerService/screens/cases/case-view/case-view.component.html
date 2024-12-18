@@ -1,0 +1,234 @@
+<div class="relative bg-white" #viewWrapper>
+  <div class="dialog-profile-sidebar">
+    <div class="inner-sidebar">
+      @for (item of tabsItems(); track $index) {
+        <button
+          [pTooltip]="item.tooltip"
+          class="sidebar-item"
+          [class.active]="activeIndex() === item.index"
+          (click)="activeIndex.set(item.index)"
+        >
+          @if (item.badgeNumber) {
+            <span class="badge">{{ item.badgeNumber }}</span>
+          }
+          <i class="{{ item.icon }}"></i>
+        </button>
+      }
+    </div>
+  </div>
+
+  <div [style.margin-inline-start]="'var(--sidebar-width)'">
+    <div class="bg-white md:sticky top-0 z-10 p-3 border-bottom-1 border-200">
+      <div class="flex justify-content-between align-items-center gap-3">
+        <h2 class="font-semibold capitalize text-black text-lg line-height-2 my-0">
+          {{ case().subject }}
+        </h2>
+
+        <div class="flex align-items-center gap-1">
+          <button
+            pButton
+            class="flex-shrink-0 p-button-text p-button-plain p-button-rounded w-2rem h-2rem"
+            [pTooltip]="'more_actions' | translate"
+            tooltipPosition="top"
+            (click)="menu.toggle($event)"
+            icon="fas fa-ellipsis-vertical"
+          ></button>
+
+          <button
+            pButton
+            class="flex-shrink-0 p-button-text p-button-plain p-button-rounded w-2rem h-2rem"
+            (click)="closeDialog()"
+            icon="pi pi-times"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <p-menu #menu appendTo="body" [model]="moreOptions" [popup]="true"></p-menu>
+
+    <div class="p-3">
+      <p-tabView [(activeIndex)]="activeIndex" styleClass="sidebar-tabview">
+        <p-tabPanel>
+          @if (case().interests.length || case().tags.length) {
+            <ul class="p-reset mb-3 flex flex-wrap row-gap-2 column-gap-3">
+              @if (case().interests.length) {
+                <li class="flex gap-1 align-items-center border-round py-1 px-2 bg-primary">
+                  <i [class]="constants.icons.heart"></i>
+                  <app-comma-separated-labels
+                    [items]="getlabels('interests:interests', case().interests)"
+                    [tooltip]="'Interests' | translate"
+                  />
+                </li>
+              }
+              @if (case().tags.length) {
+                <li class="flex gap-1 align-items-center border-round py-1 px-2 bg-primary">
+                  <i [class]="constants.icons.tags"></i>
+                  <app-comma-separated-labels
+                    [items]="getlabels('tags:tags', case().tags)"
+                    [tooltip]="'Tags' | translate"
+                  />
+                </li>
+              }
+            </ul>
+          }
+
+          <div class="mb-3">
+            <h2 class="mt-0 mb-3 section-title">{{ "description" | translate }}</h2>
+            <p class="m-0">
+              {{ case().description }}
+            </p>
+          </div>
+
+          <app-lead-name
+            [checkPermission]="checkPermission(case().ticketable, 'view-??')"
+            [lead]="case().ticketable"
+            [isOpenInNewTab]="true"
+            (nameClicked)="openLead($event)"
+          />
+
+          <div class="mt-3">
+            @if (checkPermission(case().ticketable, "access-??-contact-details")) {
+              <app-phones [withCreateBtn]="false" [phones]="case().ticketable.phones" />
+            }
+          </div>
+
+          <p-divider></p-divider>
+
+          <div class="grid">
+            <div class="col-12 lg:col md:col-4 py-3">
+              <app-entity-select
+                [(entity)]="case"
+                endpoint="customer-service/tickets/updateCustomData"
+                apiVersion="v2"
+                listModule="pipelines"
+                [listName]="'pipeline_stages:id:' + case().pipeline_id"
+                updateType="pipeline_stage_id"
+                label="{{ getLabelById('pipelines:ticket_pipelines', case().pipeline_id) }}"
+                placeholder="{{ getLabelById('pipelines:ticket_pipelines', case().pipeline_id) }}"
+                (onChange)="closeDialog($event)"
+              />
+            </div>
+
+            <div class="col-12 lg:col md:col-4 py-3">
+              <app-entity-select
+                [(entity)]="case"
+                endpoint="customer-service/tickets/updateCustomData"
+                apiVersion="v2"
+                listModule="customer_service"
+                listName="case_priorities"
+                updateType="case_priority_id"
+                [label]="'priority' | translate"
+                [placeholder]="'priority' | translate"
+                (onChange)="closeDialog($event)"
+              />
+            </div>
+
+            <div class="col-12 lg:col md:col-4 py-3">
+              <app-entity-select
+                [(entity)]="case"
+                endpoint="customer-service/tickets/updateCustomData"
+                apiVersion="v2"
+                listModule="customer_service"
+                listName="case_types"
+                updateType="case_type_id"
+                [label]="'type' | translate"
+                [placeholder]="'type' | translate"
+                (onChange)="closeDialog($event)"
+              />
+            </div>
+
+            <div class="col-12 lg:col md:col-4 py-3">
+              <app-entity-select
+                [(entity)]="case"
+                endpoint="customer-service/tickets/updateCustomData"
+                apiVersion="v2"
+                listModule="customer_service"
+                listName="case_reasons"
+                updateType="case_reason_id"
+                [label]="'reason' | translate"
+                [placeholder]="'reason' | translate"
+                (onChange)="closeDialog($event)"
+              />
+            </div>
+
+            <div class="col-12 lg:col md:col-4 py-3">
+              <app-entity-select
+                [(entity)]="case"
+                endpoint="customer-service/tickets/updateCustomData"
+                apiVersion="v2"
+                listModule="customer_service"
+                listName="case_origins"
+                updateType="case_origin_id"
+                [label]="'origin' | translate"
+                [placeholder]="'origin' | translate"
+                (onChange)="closeDialog($event)"
+              />
+            </div>
+          </div>
+
+          <div class="grid mt-3">
+            <div class="col-12 lg:col-3 md:col-4 py-3">
+              <app-list-info-item [label]="'id' | translate">
+                <span class="flex align-items-center gap-1">
+                  <span class="font-semibold text-sm">{{ case().id }}</span>
+                  <app-copy-button [text]="case().id + ''" />
+                </span>
+              </app-list-info-item>
+            </div>
+
+            <div class="col-12 lg:col-3 md:col-4 py-3">
+              <app-list-info-item
+                [label]="'created_by' | translate"
+                [item]="getLabelById('assignments:all_users_info', case().created_by)"
+              />
+            </div>
+
+            <div class="col-12 lg:col-3 md:col-4 py-3">
+              <app-list-info-item
+                [label]="'created_at' | translate"
+                [item]="case().created_at | dateFormatter: 'absolute'"
+              />
+            </div>
+
+            <div class="col-12 lg:col-3 md:col-4 py-3">
+              <app-list-info-item [label]="'assignees' | translate">
+                <app-comma-separated-labels
+                  styleClass="text-sm font-semibold"
+                  [items]="getlabels('assignments:all_users_info', case().assignees_ids)"
+                  [tooltip]="'assignees' | translate"
+                />
+              </app-list-info-item>
+            </div>
+          </div>
+
+          <div calss="mt-4">
+            <app-note-form [notableId]="case().id" [notableType]="ITEM_TICKET" />
+          </div>
+        </p-tabPanel>
+
+        <p-tabPanel>
+          <ng-template pTemplate="content">
+            <h2 class="mt-0 mb-3 section-title">{{ "attachments" | translate }}</h2>
+            <app-media-list [(dataSource)]="case" [target]="viewWrapper" />
+          </ng-template>
+        </p-tabPanel>
+
+        <p-tabPanel>
+          <ng-template pTemplate="content">
+            <p-tabView styleClass="special-tabview">
+              <p-tabPanel header="Logs">
+                <app-logs [id]="case().id" [type]="ITEM_TICKET" />
+              </p-tabPanel>
+
+              <p-tabPanel header="Archived Logs">
+                <ng-template pTemplate="content">
+                  <app-logs [id]="case().id" [type]="ITEM_TICKET" [isArchived]="true" />
+                </ng-template>
+              </p-tabPanel>
+            </p-tabView>
+          </ng-template>
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+</div>

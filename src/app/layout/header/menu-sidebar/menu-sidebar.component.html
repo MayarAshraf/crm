@@ -1,0 +1,33 @@
+@if (!isDesktopActive()) {
+  <button
+    pButton
+    icon="pi pi-ellipsis-v"
+    class="w-2rem h-2rem"
+    (click)="displayMenuSidebar.set(true)"
+  ></button>
+}
+
+<p-sidebar
+  [(visible)]="displayMenuSidebar"
+  [position]="currentLang() === 'ar' ? 'right' : 'left'"
+  appendTo="body"
+  [showCloseIcon]="!isDesktopActive()"
+  [closeOnEscape]="!isDesktopActive()"
+  [modal]="!isDesktopActive()"
+  styleClass="layout-sidebar"
+>
+  <ng-template pTemplate="header">
+    <a routerLink="/home">
+      <img class="w-4rem" src="assets/media/logo/colored-portrait-logo.png" alt="8X CRM Logo" />
+    </a>
+  </ng-template>
+
+  <ng-template pTemplate="content">
+    <p-panelMenu
+      [model]="menuItems()"
+      [multiple]="false"
+      transitionOptions="200ms cubic-bezier(0.86, 0, 0.07, 1)"
+      styleClass="menu-sidebar"
+    />
+  </ng-template>
+</p-sidebar>

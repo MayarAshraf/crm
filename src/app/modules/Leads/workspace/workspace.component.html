@@ -1,0 +1,44 @@
+<app-filters-panel
+  #filterPanel
+  [filters]="filters()"
+  [(settings)]="workspaceSettings"
+  [(showFilterSidebar)]="showBasicFilters"
+  [(isAdvancedFilter)]="showAdvancedFilters"
+  (onRemoveChip)="refreshData($event)"
+  (onClearAllChips)="refreshData($event)"
+  (onSubmitFilters)="refreshData($event)"
+>
+  <ng-container ngProjectAs="[filtered-data]">
+    <!--
+      ngProjectAs is useful if we want to project an ng-container with a certain selector.
+    -->
+    <div #targetElement>
+      <app-leads-table
+        [withSelection]="true"
+        [(selection)]="selectedItems"
+        [(filtersData)]="filtersData"
+        [(settings)]="workspaceSettings"
+        indexTableKey="LEADS_KEY"
+      />
+    </div>
+  </ng-container>
+</app-filters-panel>
+
+<app-bulk-actions
+  #bulkActionsRef
+  [(selectedAction)]="bulkActionsService.selectedAction"
+  stateKey="LEADS_KEY"
+  [(bulkActions)]="bulkActions"
+  [(selection)]="selectedItems"
+  [targetElement]="targetElement"
+/>
+
+<app-bulk-dialog
+  [(selectedAction)]="bulkActionsService.selectedAction"
+  [coordinates]="bulkActionsRef.coordinates()"
+  [(selection)]="selectedItems"
+  [model]="bulkActionsService.model()"
+  [fields]="bulkActionsService.fields()"
+  [endpoint]="bulkActionsService.endpoint()"
+  (onAddBulkAction)="refreshData({})"
+/>

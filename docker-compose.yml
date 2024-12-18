@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  8xcrm-front:
+    container_name: 8xcrm-front-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 4200:80

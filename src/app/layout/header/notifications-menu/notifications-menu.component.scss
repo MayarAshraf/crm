@@ -1,0 +1,45 @@
+::ng-deep {
+  .notifications-panel {
+    width: 350px;
+    top: 35px !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    inset-inline-end: 0 !important;
+
+    .p-overlaypanel-content {
+      padding-inline-end: 0;
+      max-height: none;
+      display: flex;
+      flex-direction: column;
+
+      .content {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        padding-inline-end: 0.5rem;
+        max-height: 350px;
+        overflow-y: auto;
+      }
+
+      .footer {
+        margin-top: auto;
+      }
+    }
+  }
+
+  .with-dot-badge {
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 7px;
+      inset-inline-end: 7px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--red-500);
+    }
+  }
+}

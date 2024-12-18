@@ -1,0 +1,128 @@
+<app-table-wrapper
+  [headerTitle]="indexMeta.indexTitle"
+  [titleIcon]="indexMeta.indexIcon"
+  [withScreenHeader]="true"
+  [displayHeaderButton]="false"
+  [withActionsColumn]="false"
+  [withAdditionalContent]="true"
+  [columns]="indexMeta.columns"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [paginator]="false"
+  [lazy]="false"
+  paginatorPosition="both"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterFields]="['lead_field']"
+>
+  <ng-template #additionalContentTemplate>
+    @if (leadFields().length) {
+      <p-tabMenu [model]="menuItems" [activeItem]="activeItem()"> </p-tabMenu>
+    } @else {
+      <div class="flex gap-2">
+        @for (i of [] | range: 4; track $index) {
+          <p-skeleton height="7px" width="60px" borderRadius="0" />
+        }
+      </div>
+    }
+  </ng-template>
+
+  <ng-template #leadField let-rowData>
+    {{ rowData.lead_field | manipulateTitle }}
+  </ng-template>
+
+  <ng-template #fastCreation let-rowData>
+    <ng-container
+      *ngTemplateOutlet="
+        inputSwitchTemplate;
+        context: {
+          $implicit: {
+            model: rowData.is_fast_creation_hidden,
+            disabled: rowData.is_required ?? false,
+            type: typeLeadFields.FASTCREATION,
+            rowData: rowData
+          }
+        }
+      "
+    >
+    </ng-container>
+  </ng-template>
+
+  <ng-template #fastEdit let-rowData>
+    <ng-container
+      *ngTemplateOutlet="
+        inputSwitchTemplate;
+        context: {
+          $implicit: {
+            model: rowData.is_fast_edit_hidden,
+            disabled: rowData.is_required ?? false,
+            type: typeLeadFields.FASTEDIT,
+            rowData: rowData
+          }
+        }
+      "
+    >
+    </ng-container>
+  </ng-template>
+
+  <ng-template #fullView let-rowData>
+    <ng-container
+      *ngTemplateOutlet="
+        inputSwitchTemplate;
+        context: {
+          $implicit: {
+            model: rowData.is_full_view_hidden,
+            disabled: rowData.is_required ?? false,
+            type: typeLeadFields.FULLVIEW,
+            rowData: rowData
+          }
+        }
+      "
+    >
+    </ng-container>
+  </ng-template>
+
+  <ng-template #required let-rowData>
+    <ng-container
+      *ngTemplateOutlet="
+        inputSwitchTemplate;
+        context: {
+          $implicit: {
+            model: rowData.is_required,
+            type: typeLeadFields.ISREQUIRED,
+            rowData: rowData,
+            valueType: {
+              trueValue: true,
+              falseValue: false
+            }
+          }
+        }
+      "
+    >
+    </ng-container>
+  </ng-template>
+</app-table-wrapper>
+
+<ng-template #inputSwitchTemplate let-data>
+  @if (
+    (data.rowData.lead_field === "country_id" ||
+      data.rowData.lead_field === "region_id" ||
+      data.rowData.lead_field === "city_id" ||
+      data.rowData.lead_field === "area_place_id") &&
+    data.type !== typeLeadFields.ISREQUIRED
+  ) {
+    ——
+  } @else {
+    <p-inputSwitch
+      [(ngModel)]="data.model"
+      [disabled]="data.disabled"
+      [trueValue]="data.valueType ? data.valueType.trueValue : false"
+      [falseValue]="data.valueType ? data.valueType.falseValue : true"
+      (onChange)="update($event, data.type, data.rowData)"
+    >
+    </p-inputSwitch>
+  }
+</ng-template>

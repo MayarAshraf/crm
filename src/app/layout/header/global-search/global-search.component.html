@@ -1,0 +1,153 @@
+<div class="search-holder">
+  <div class="search-bar flex align-items-center justify-content-between gap-2">
+    <div class="flex-auto flex">
+      <ng-select
+        #globalSearchRef
+        class="global-search-input"
+        [items]="items$ | async"
+        [(ngModel)]="selectedItem"
+        [placeholder]="placeholder()"
+        [clearOnBackspace]="false"
+        bindLabel="name"
+        [trackByFn]="trackByFn"
+        [loading]="itemsLoading()"
+        [typeahead]="itemsInput$"
+        [loadingText]="isValidTerm() ? ('loading' | translate) : ''"
+        [notFoundText]="isValidTerm() ? ('no_items_found' | translate) : ''"
+        [appendTo]="'.search-result-container'"
+        (clear)="searchTerm.set(null)"
+        (focus)="globalSearchRef.searchTerm = searchTerm() ?? ''"
+        (search)="searchTerm.set($event.term)"
+      >
+        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+          @if (searchTerm()) {
+            <div class="flex align-items-center gap-1">
+              <button
+                pButton
+                class="text-sm p-button-link p-0 shadow-none"
+                (click)="viewItem(item)"
+                label="{{ item.name }}"
+              ></button>
+
+              <button
+                pButton
+                icon="fas fa-arrow-up-right-from-square text-xs"
+                class="p-button-rounded p-button-text w-1.5rem h-1.5rem p-0 border-none shadow-none"
+                [pTooltip]="'open_in_new_tab' | translate"
+                tooltipPosition="top"
+                (click)="viewItemInNewTab(item)"
+              ></button>
+            </div>
+            <span class="text-xs text-500">{{ item?.hint }}</span>
+          }
+        </ng-template>
+      </ng-select>
+
+      <p-dropdown
+        [styleClass]="
+          (withSpecialCloseBtn() && 'search-by-menu-with-close-btn') + ' search-by-menu'
+        "
+        [(ngModel)]="selectedSearchItem"
+        appendTo="body"
+        [options]="searchByItems()"
+        [group]="true"
+        (onFocus)="globalSearchRef.focus()"
+        [autoOptionFocus]="false"
+        [autoDisplayFirst]="false"
+      />
+      @if (withSpecialCloseBtn()) {
+        <button
+          pButton
+          icon="pi pi-times text-xs"
+          class="special-close-btn w-2.5rem p-0 shadow-none border-none"
+          (click)="closeSearch.emit()"
+        ></button>
+      }
+    </div>
+
+    <button
+      pButton
+      label="{{ 'cancel' | translate }}"
+      class="close-search-btn p-button-link text-xs p-0 shadow-none"
+      (click)="closeSearch.emit()"
+    ></button>
+  </div>
+
+  <div class="search-result-container">
+    @if (searchTerm() && !isValidTerm()) {
+      <span class="block p-error text-sm px-4 py-2">{{ errorMessage() }}</span>
+    }
+
+    @if (!searchTerm() && recenetItems().length) {
+      <div class="flex justify-content-between align-items-center py-2 px-4">
+        <h4 class="m-0 font-medium text-400">{{ "recent" | translate }}</h4>
+        <p-button
+          label="Clear All"
+          [link]="true"
+          styleClass="hover:underline shadow-none font-medium p-0 text-sm"
+          (click)="recentSearches.set([]); recentQueries.set([])"
+        />
+      </div>
+
+      <div class="recent-items-holder">
+        @for (item of recenetItems(); track $index) {
+          @if (item.type === "search") {
+            <div
+              class="flex justify-content-between gap-2 align-items-center px-4 py-2 hover:bg-gray-50"
+            >
+              <div>
+                <div class="flex align-items-center gap-1">
+                  <button
+                    pButton
+                    class="text-sm p-button-link p-0 shadow-none"
+                    [icon]="item.data.icon + ' text-xs'"
+                    (click)="viewItem(item.data); selectedItem.set(item.data)"
+                    label="{{ item.data.name }}"
+                  ></button>
+
+                  <button
+                    pButton
+                    icon="fas fa-arrow-up-right-from-square text-xs"
+                    class="p-button-rounded p-button-text w-1.5rem h-1.5rem p-0 border-none shadow-none"
+                    [pTooltip]="'open_in_new_tab' | translate"
+                    tooltipPosition="top"
+                    (click)="viewItemInNewTab(item.data)"
+                  ></button>
+                </div>
+                <span class="text-xs text-500"> {{ item.data.type }} - {{ item.data.label }} </span>
+              </div>
+              <p-button
+                icon="pi pi-times"
+                [rounded]="true"
+                [text]="true"
+                severity="secondary"
+                styleClass="text-xs p-0 w-2rem h-2rem shadow-none"
+                (click)="removeSearchItem(item.data.id)"
+              />
+            </div>
+          } @else if (item.type === "query") {
+            <div
+              class="flex justify-content-between gap-2 align-items-center px-4 py-2 hover:bg-gray-50"
+            >
+              <button
+                pButton
+                class="text-sm p-button-link p-0 shadow-none"
+                icon="pi pi-search text-sm"
+                label="{{ item.data.query }}"
+                (click)="searchByQuery(item.data.query, item.data.searchBy)"
+              ></button>
+              <p-button
+                icon="pi pi-times"
+                [rounded]="true"
+                [text]="true"
+                severity="secondary"
+                styleClass="text-xs p-0 w-2rem h-2rem shadow-none"
+                (click)="removeQueryItem(item.data.id)"
+              />
+            </div>
+          }
+        }
+      </div>
+    }
+  </div>
+</div>

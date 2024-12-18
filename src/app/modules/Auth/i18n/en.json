@@ -1,0 +1,7 @@
+{
+	"login": "Login",
+	"sign_in": "Sign In",
+	"keep_me_logged_in_for_week": "Keep me logged in for a week",
+	"incorrect_credentials": "Incorrect credentials",
+	"session_timed_out": "Session timed out"
+}

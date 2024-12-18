@@ -1,0 +1,84 @@
+<!-- <div class="grid">
+  @if (loadChartsOnly() && loadChartsOnly().length) {
+    @for (item of loadChartsOnly(); track $index) {
+      <div class="md:col-6 lg:col-4 col-12">
+        @switch (item.name) {
+          @case ("Calls") {
+            <app-default-screen-header
+              [title]="item.name"
+              [subtitle]="item.desc"
+              titleIcon="fas fa-phone"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+          @case ("Meetings") {
+            <app-default-screen-header
+              [title]="item.name"
+              [subtitle]="item.desc"
+              titleIcon="fas fa-handshake"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+          @case ("Messages") {
+            <app-default-screen-header
+              [title]="item.name"
+              [subtitle]="item.desc"
+              titleIcon="fas fa-message"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+          @case ("Tasks") {
+            <app-default-screen-header
+              [title]="item.name"
+              [subtitle]="item.desc"
+              titleIcon="fas fa-list-check"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+          @case ("Scheduled Meetings") {
+            <app-default-screen-header
+              [title]="item.name"
+              [subtitle]="item.desc"
+              titleIcon="fas fa-calendar-days"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+          @case ("Created TENs") {
+            <app-default-screen-header
+              [title]="item.name"
+              [subtitle]="item.desc"
+              titleIcon="fas fa-list"
+              titleClass="text-base m-0 ml-3 text-gray-600 font-light"
+              subTitleClass="text-sm text-gray-500 font-light block mt-1"
+              [displayButton]="false"
+            />
+          }
+        }
+        <app-chart-pie-total-center
+          [data]="item.data"
+          [labels]="item.labels"
+          [isLoading]="isLoading()"
+          [backgroundColors]="item.backgroundColor"
+        />
+      </div>
+    }
+  } @else {
+    @for (item of [] | range: 6; track $index) {
+      <div class="md:col-6 lg:col-4 col-12 p-4">
+        <p-skeleton styleClass="mb-2" width="10rem" />
+        <p-skeleton width="4rem" styleClass="mb-2" />
+        <p-skeleton shape="circle" size="8rem" />
+      </div>
+    }
+  }
+</div> -->

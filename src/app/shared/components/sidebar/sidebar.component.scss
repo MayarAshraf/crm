@@ -1,0 +1,31 @@
+@use "src/assets/styles/_utilities.scss";
+
+:host ::ng-deep {
+  .p-sidebar {
+    inset: 8px;
+    height: auto;
+    width: var(--sidebar-width-lg);
+    background-color: transparent;
+
+    &-header {
+      background-color: var(--inner-sidebar-bg);
+      border-start-start-radius: 12px;
+      .p-sidebar-close {
+        &:hover {
+          background-color: #fff;
+        }
+      }
+    }
+
+    &-content {
+      --scrollbar-thumb-border: var(--inner-sidebar-bg);
+      @extend %scrollable-content;
+      background-color: var(--inner-sidebar-bg);
+    }
+
+    &-footer {
+      background-color: var(--inner-sidebar-bg);
+      border-end-start-radius: 12px;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+<p-tabView styleClass="special-tabview">
+  <p-tabPanel header="Insight">
+    <app-campaign-insight [campaign]="campaign()"></app-campaign-insight>
+  </p-tabPanel>
+
+  @if (campaign().tables_data && campaign().tables_data.leads.length) {
+    <p-tabPanel header="Leads">
+      <ng-template pTemplate="content">
+        <app-campaign-leads [leads]="campaign().tables_data.leads"></app-campaign-leads>
+      </ng-template>
+    </p-tabPanel>
+  }
+  @if (campaign().tables_data && campaign().tables_data.assignees.length) {
+    <p-tabPanel header="Assigness">
+      <ng-template pTemplate="content">
+        <app-campaign-assigness
+          [assigness]="campaign().tables_data.assignees"
+        ></app-campaign-assigness>
+      </ng-template>
+    </p-tabPanel>
+  }
+
+  <p-tabPanel header="Notes">
+    <ng-template pTemplate="content">
+      <app-campaign-notes [campaignId]="campaign().id"></app-campaign-notes>
+    </ng-template>
+  </p-tabPanel>
+  <p-tabPanel header="Attachments">
+    <ng-template pTemplate="content">
+      <h2 class="mt-0 mb-3 text-base font-semibold">{{ "attachments" | translate }}</h2>
+      <div class="relative" #viewWrapper>
+        <app-media-list [(dataSource)]="campaign" [target]="viewWrapper" />
+      </div>
+    </ng-template>
+  </p-tabPanel>
+</p-tabView>

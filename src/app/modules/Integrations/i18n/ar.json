@@ -1,0 +1,11 @@
+{
+	"google_accounts": "حسابات جوجل",
+	"filter": "تصفية",
+	"apply": "بحث",
+	"reset": "إعادة تهيئة",
+	"add_account": "إضافة حساب",
+	"delete_account": "حذف الحساب",
+	"no_google_accounts": "لا يوجد حسابات جوجل.",
+	"subscribed": "مشترك",
+	"not_subscribed": "غير مشترك"
+}

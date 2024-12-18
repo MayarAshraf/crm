@@ -1,0 +1,25 @@
+.profile-item {
+  display: block;
+  width: 100%;
+  border: 0;
+  text-align: start;
+  color: var(--gray-500);
+  background-color: transparent;
+  padding: 1rem;
+
+  &:hover {
+    background-color: var(--surface-50);
+  }
+
+  .icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+  }
+
+  &.active-link {
+    color: var(--primary-color) !important;
+  }
+}

@@ -1,0 +1,54 @@
+<app-table-wrapper
+  titleClass="hidden"
+  [titleIcon]="indexMeta.indexIcon"
+  [withScreenHeader]="true"
+  [displayHeaderButton]="false"
+  [withActionsColumn]="false"
+  [withAdditionalContent]="true"
+  [withCustomFilters]="true"
+  [columns]="indexMeta.columns"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  paginatorPosition="both"
+  [totalRecords]="totalRecords()"
+  [recordsFiltered]="recordsFiltered()"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterValue]="globalFilterValue"
+  (onLoadData)="loadRecords($event)"
+>
+  <div moreActions>
+    <div class="flex gap-2">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-file-excel text-xs"
+        class="text-xs py-1 px-3"
+        [label]="'excel' | translate"
+        [pTooltip]="'export_as_excel' | translate"
+        tooltipPosition="top"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-file-pdf text-xs"
+        class="text-xs bg-pink-color border-pink-color py-1 px-3"
+        [label]="'PDF' | translate"
+        [pTooltip]="'export_as_pdf' | translate"
+        tooltipPosition="top"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-print text-xs"
+        class="text-xs bg-purple-color border-purple-color py-1 px-3"
+        [label]="'print' | translate"
+        [pTooltip]="'print' | translate"
+        tooltipPosition="top"
+      ></button>
+    </div>
+  </div>
+</app-table-wrapper>

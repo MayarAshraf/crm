@@ -1,0 +1,54 @@
+.item-card {
+  &.is-list-layout {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+
+    .item-img {
+      width: 70px;
+      height: 70px;
+    }
+  }
+
+  &:not(.is-list-layout) {
+    padding: 1rem;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background-color: transparent;
+
+    .item-img {
+      width: 150px;
+      height: 150px;
+      transition: transform 300ms ease-in-out;
+    }
+
+    .actions,
+    .subtitle,
+    .hint {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    &:hover {
+      background-color: #fcfcfd;
+      border-color: #e5e5e5;
+      transition:
+        border-color 300ms,
+        background-color 300ms;
+
+      .item-img {
+        transform: scale(0.85);
+      }
+      .actions,
+      .subtitle,
+      .hint {
+        transform: none;
+        opacity: 1;
+        transition:
+          transform 200ms ease-in-out var(--delay),
+          opacity 200ms ease-in-out var(--delay);
+      }
+    }
+  }
+}

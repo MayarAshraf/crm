@@ -1,0 +1,19 @@
+{
+	"new_phone": "رقم هاتف جديد",
+	"country_code": "رمز الدولة",
+	"mobile_number": "رقم الجوال",
+	"has_whatsapp": "لديه واتساب",
+	"new_mobile_number": "رقم جوال جديد",
+	"country_code_is_required": "رمز الدولة مطلوب",
+	"enter_mobile_number": "ادخل رقم الجوال",
+	"mobile_number_max_is_191_characters_long": "اقصى عدد لرقم الجوال هو 191 حرف",
+	"mobile_number_is_required": "رقم الجوال مطلوب",
+	"cancel": "إلغاء",
+	"log_it": "حفظ",
+	"save": "حفظ",
+	"add_new_phone": "اضافة رقم جوال جديد",
+	"select_country_code": "رمز الدولة",
+	"new_mobile_number_desc": "إضافة رقم إضافي",
+	"view_less": "عرض أقل",
+	"view_more": "عرض المزيد"
+}

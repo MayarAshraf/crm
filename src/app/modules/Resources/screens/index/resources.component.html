@@ -1,0 +1,58 @@
+<app-filters-panel
+  [filters]="resourcesFilters()"
+  [(showFilterSidebar)]="showBasicFilters"
+  [(isAdvancedFilter)]="showAdvancedFilters"
+  [displaySettings]="false"
+  (onRemoveChip)="refreshResources($event)"
+  (onClearAllChips)="refreshResources($event)"
+  (onSubmitFilters)="refreshResources($event)"
+>
+  <ng-container ngProjectAs="[filtered-data]">
+    <!--
+        ngProjectAs is useful if we want to project an ng-container with a certain selector.
+       -->
+    <div #targetElement>
+      <app-table-wrapper
+        [moduleName]="moduleName"
+        [headerTitle]="indexMeta.indexTitle"
+        [titleIcon]="indexMeta.indexIcon"
+        [headerBtnLabel]="indexMeta.createBtnLabel"
+        [columns]="indexMeta.columns"
+        [dataSource]="records()"
+        [loading]="isLoading()"
+        [totalRecords]="totalRecords()"
+        [recordsFiltered]="recordsFiltered()"
+        paginatorPosition="both"
+        [indexPermissions]="permissions().index"
+        [updateBtnPermissions]="permissions().update"
+        [createBtnPermissions]="permissions().create"
+        [deleteBtnPermissions]="permissions().delete"
+        [stateKey]="indexMeta.indexTableKey"
+        [globalFilterValue]="globalFilterValue"
+        (createBtnClicked)="openCreateRecordDialog()"
+        (updateBtnClicked)="openUpdateRecordDialog($event)"
+        (deleteBtnClicked)="deleteRecord($event)"
+        (onLoadData)="loadRecords($event)"
+      >
+        <ng-template #image let-rowData>
+          @if (rowData.featured_image) {
+            <p-image
+              [preview]="true"
+              [src]="rowData.featured_image"
+              loading="lazy"
+              [alt]="rowData.title"
+              width="50"
+              height="50"
+            />
+          }
+        </ng-template>
+
+        <ng-template #title let-rowData>
+          <button class="table-link-title" (click)="openViewRecordDialog(rowData)">
+            {{ rowData.title }}
+          </button>
+        </ng-template>
+      </app-table-wrapper>
+    </div>
+  </ng-container>
+</app-filters-panel>

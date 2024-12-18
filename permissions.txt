@@ -1,0 +1,1073 @@
+permssions = [
+  "manage-groups",
+  constants.permissions['index-groups'], 👍
+  constants.permissions['create-group'],👍
+  constants.permissions['view-group'],👍
+  constants.permissions['update-group'],👍
+  constants.permissions['delete-group'],👍
+  constants.permissions['update-group-permissions'],👍
+  constants.permissions['update-group-access-scopes-groups'],👍
+]
+
+permssions = [
+  "manage-users",
+  "constants.permissions['index-users']",👍
+  "constants.permissions['create-user']",👍
+  "constants.permissions['view-user']",
+  "constants.permissions['update-user']",👍
+  "constants.permissions['delete-user']",👍
+  "constants.permissions['update-user-permissions']",👍
+  "constants.permissions['suspend-user']"👍
+  "constants.permissions['manage-sms']"👍
+]
+
+permssions = [
+  "manage-leads"
+  "constants.permissions['index-leads']",
+  "constants.permissions['create-lead']",
+  "constants.permissions['view-lead']",
+  "constants.permissions['update-lead']",
+  "constants.permissions['delete-lead']"
+]
+
+permssions = [
+  "manage-contacts"
+  "constants.permissions['index-contacts']",
+  "constants.permissions['create-contact']",
+  "constants.permissions['view-contact']",
+  "constants.permissions['update-contact']",
+  "constants.permissions['delete-contact']"
+]
+
+permssions = [
+  "manage-customers"
+  "constants.permissions['index-customers']",
+  "constants.permissions['create-customer']",
+  "constants.permissions['view-customer']",
+  "constants.permissions['update-customer']",
+  "constants.permissions['delete-customer']"
+]
+
+permssions = [
+  "manage-accounts",
+  "constants.permissions['index-accounts']",
+  "constants.permissions['create-account']",
+  "constants.permissions['view-account']",
+  "constants.permissions['update-account']",
+  "constants.permissions['delete-account']"
+]
+
+permssions = [
+  "manage-duplicate-leads",
+  "constants.permissions['index-duplicate-leads']",
+  "constants.permissions['view-duplicate-lead']",
+  "constants.permissions['update-duplicate-lead']",
+  "constants.permissions['take-action-on-duplicate-lead']",
+  "constants.permissions['delete-duplicate-lead']"
+]
+
+permssions = [
+  "manage-duplicate-contacts"
+  "constants.permissions['index-duplicate-contacts']",
+  "constants.permissions['view-duplicate-contact']",
+  "constants.permissions['update-duplicate-contact']",
+  "constants.permissions['take-action-on-duplicate-contact']",
+  "constants.permissions['delete-duplicate-contact']"
+]
+
+permssions = [
+  "manage-duplicate-customers"
+  "constants.permissions['index-duplicate-customers']",
+  "constants.permissions['view-duplicate-customer']",
+  "constants.permissions['update-duplicate-customer']",
+  "constants.permissions['take-action-on-duplicate-customer']",
+  "constants.permissions['delete-duplicate-customer']"
+]
+
+permssions = [
+  "manage-duplicate-accounts",
+  "constants.permissions['index-duplicate-accounts']",
+  "constants.permissions['view-duplicate-account']",
+  "constants.permissions['update-duplicate-account']",
+  "constants.permissions['take-action-on-duplicate-account']",
+  "constants.permissions['delete-duplicate-account']"
+]
+permssions = [
+  "manage-calendar",
+  "constants.permissions['view-calendar']"
+]
+
+permssions = [
+  "manage-interests",
+  "constants.permissions['index-interests']" 👍,
+  "constants.permissions['create-interest']" 👍,
+  "constants.permissions['update-interest']" 👍,
+  "constants.permissions['delete-interest'] 👍"
+]
+
+permssions = [
+  "manage-tags",
+  "constants.permissions['index-tags']" 👍,
+  "constants.permissions['create-tag']" 👍,
+  "constants.permissions['update-tag']" 👍,
+  "constants.permissions['delete-tag']" 👍
+]
+
+permssions = [
+  "manage-google-accounts",
+  "constants.permissions['index-google-accounts']",
+  "constants.permissions['add-google-account']",
+  "constants.permissions['delete-google-account']"
+]
+
+permssions = [
+  "manage-industries",
+  "constants.permissions['index-industries']"👍,
+  "constants.permissions['create-industry']",👍
+  "constants.permissions['update-industry']",👍
+  "constants.permissions['delete-industry']"👍
+]
+
+permssions = [
+  "manage-company-sizes",
+  "constants.permissions['index-company-sizes']"👍,
+  "constants.permissions['create-company-size']"👍,
+  "constants.permissions['update-company-size']"👍,
+  "constants.permissions['delete-company-size']"👍
+]
+
+permssions = [
+  "manage-jobs",
+  "constants.permissions['index-jobs']"👍,
+  "constants.permissions['create-job']"👍,
+  "constants.permissions['update-job']"👍,
+  "constants.permissions['delete-job']"👍
+]
+
+permssions = [
+  "manage-departments",
+  "constants.permissions['index-departments']" 👍,
+  "constants.permissions['create-department']",👍
+  "constants.permissions['update-department']",👍
+  "constants.permissions['delete-department']"👍
+]
+
+permssions = [
+  "manage-account-types",
+  "constants.permissions['index-account-types']"👍,
+  "constants.permissions['create-account-type']"👍,
+  "constants.permissions['update-account-type']"👍,
+  "constants.permissions['delete-account-type']"👍
+]
+
+permssions = [
+  "manage-statuses"
+  "constants.permissions['index-statuses']"👍,
+  "constants.permissions['create-status']",👍
+  "constants.permissions['update-status']",👍
+  "constants.permissions['delete-status']"👍
+]
+
+permssions = [
+  "manage-salutations",
+  "constants.permissions['index-salutations']"👍,
+  "constants.permissions['create-salutation']"👍,
+  "constants.permissions['update-salutation']"👍,
+  "constants.permissions['delete-salutation']"👍
+]
+
+permssions = [
+  "manage-ratings",
+  "constants.permissions['index-ratings']"👍,
+  "constants.permissions['create-rating']"👍,
+  "constants.permissions['update-rating']"👍,
+  "constants.permissions['delete-rating']"👍
+]
+
+permssions = [
+  "manage-lead-sources",
+  "constants.permissions['index-lead-sources']",
+  "constants.permissions['create-lead-source']",
+  "constants.permissions['update-lead-source']",
+  "constants.permissions['delete-lead-source']",
+  "constants.permissions['view-lead-source']"
+]
+
+permssions = [
+  "manage-activities"
+  "constants.permissions['view-activities']",
+  "constants.permissions['create-activity']",
+  "constants.permissions['update-activity']",
+  "constants.permissions['delete-activity']"
+]
+
+permssions = [
+  "manage-tasks",
+  "constants.permissions['view-tasks']",
+  "constants.permissions['create-task']",
+  "constants.permissions['update-task']",
+  "constants.permissions['delete-task']"
+]
+
+permssions = [
+  "manage-events",
+  "constants.permissions['create-event']",
+  "constants.permissions['update-event']",
+  "constants.permissions['delete-event']",
+  "constants.permissions['view-events']"
+]
+
+permssions = [
+  "manage-notes",
+  "constants.permissions['view-notes']",
+  "constants.permissions['create-note']",
+  "constants.permissions['update-note']",
+  "constants.permissions['delete-note']"
+]
+
+permssions = [
+  "manage-opportunities"
+  "constants.permissions['view-opportunities']",
+  "constants.permissions['create-opportunity']",
+  "constants.permissions['update-opportunity']",
+  "constants.permissions['delete-opportunity']",
+  "constants.permissions['export-opportunities']"
+]
+
+permssions = [
+  "constants.permissions['view-agent-statistics-report']",
+  "constants.permissions['export-agent-statistics-report']",
+  "constants.permissions['view-lead-statistics-report']",
+  "constants.permissions['export-lead-statistics-report']"
+]
+
+permssions = [
+  "constants.permissions['view-events-report']",
+  "constants.permissions['export-events-report']"
+]
+
+permssions = [
+  "constants.permissions['export-leads']",
+  "constants.permissions['export-contacts']",
+  "constants.permissions['export-customers']",
+  "constants.permissions['export-accounts']",
+  "constants.permissions['export-tasks']"
+]
+
+permssions = [
+  "constants.permissions['view-events']",
+  "constants.permissions['export-events']"
+]
+
+permssions = [ "constants.permissions['manage-imports']" ]
+permssions = [ "constants.permissions['import-8x-data-file']" ]
+permssions = [ "constants.permissions['import-facebook-sheet']" ]
+
+permssions = [
+  "constants.permissions['import-leads']",
+  "constants.permissions['import-contacts']",
+  "constants.permissions['import-customers']",
+  "constants.permissions['import-accounts']"
+]
+
+permssions = [ "constants.permissions['manage-assignments']" ]
+
+permssions = [
+  "manage-assignment-rules",
+  "constants.permissions['index-assignment-rules']"👍,
+  "constants.permissions['create-assignment-rule']",👍
+  "constants.permissions['update-assignment-rule']",👍
+  "constants.permissions['delete-assignment-rule']"👍
+  "constants.permissions['view-assignment-rule']",
+]
+
+permssions = [
+  "constants.permissions['view-lead-conversions-report']",
+  "constants.permissions['export-lead-conversions-report']"
+]
+
+permssions = [
+  "manage-broker-inventory-developers",
+  "constants.permissions['index-broker-inventory-developers']",
+  "constants.permissions['create-broker-inventory-developer']",
+  "constants.permissions['update-broker-inventory-developer']",
+  "constants.permissions['delete-broker-inventory-developer']"
+]
+
+permssions = [
+  "manage-broker-inventory-bathrooms",
+  "constants.permissions['index-broker-inventory-bathrooms']"👍,
+  "constants.permissions['create-broker-inventory-bathroom']"👍,
+  "constants.permissions['update-broker-inventory-bathroom']"👍,
+  "constants.permissions['delete-broker-inventory-bathroom']"👍
+]
+
+permssions = [
+  "manage-broker-inventory-bedrooms",
+  "constants.permissions['index-broker-inventory-bedrooms']"👍,
+  "constants.permissions['create-broker-inventory-bedroom']"👍,
+  "constants.permissions['update-broker-inventory-bedroom']"👍,
+  "constants.permissions['delete-broker-inventory-bedroom']"👍
+]
+
+permssions = [
+  "manage-broker-inventory-finishing-types",
+  "constants.permissions['index-broker-inventory-finishing-types']"👍
+  "constants.permissions['create-broker-inventory-finishing-type']"👍
+  "constants.permissions['update-broker-inventory-finishing-type']"👍
+  "constants.permissions['delete-broker-inventory-finishing-type']👍
+]
+
+permssions = [
+  "manage-broker-inventory-furnishing-statuses"
+  "constants.permissions['index-broker-inventory-furnishing-statuses']"👍,
+  "constants.permissions['create-broker-inventory-furnishing-status']"👍,
+  "constants.permissions['update-broker-inventory-furnishing-status']"👍,
+  "constants.permissions['delete-broker-inventory-furnishing-status']"👍
+]
+
+permssions = [
+  "manage-broker-inventory-offering-types",
+  "constants.permissions['index-broker-inventory-offering-types']"👍,
+  "constants.permissions['create-broker-inventory-offering-type']"👍,
+  "constants.permissions['update-broker-inventory-offering-type']"👍,
+  "constants.permissions['delete-broker-inventory-offering-type']"👍
+]
+
+permssions = [
+  "manage-broker-inventory-payment-methods",
+  "constants.permissions['index-broker-inventory-payment-methods']"👍,
+  "constants.permissions['create-broker-inventory-payment-method']"👍,
+  "constants.permissions['update-broker-inventory-payment-method']"👍,
+  "constants.permissions['delete-broker-inventory-payment-method']"👍
+]
+
+permssions = [
+  "manage-broker-inventory-positions",
+  "constants.permissions['index-broker-inventory-positions']"👍,
+  "constants.permissions['create-broker-inventory-position']"👍,
+  "constants.permissions['update-broker-inventory-position']"👍,
+  "constants.permissions['delete-broker-inventory-position']"👍
+]
+
+permssions = [
+  "manage-broker-inventory-views",
+  "constants.permissions['index-broker-inventory-views']"👍,
+  "constants.permissions['create-broker-inventory-view']"👍,
+  "constants.permissions['update-broker-inventory-view']"👍,
+  "constants.permissions['delete-broker-inventory-view']"👍
+]
+
+permssions = [
+  "manage-broker-inventory-facilities"
+  "constants.permissions['index-broker-inventory-facilities']"👍,
+  "constants.permissions['create-broker-inventory-facility']"👍,
+  "constants.permissions['update-broker-inventory-facility']"👍,
+  "constants.permissions['delete-broker-inventory-facility']"👍
+]
+
+permssions = [
+  "constants.permissions['manage-broker-inventory-amenities']"👍,
+  "constants.permissions['index-broker-inventory-amenities']"👍,
+  "constants.permissions['create-broker-inventory-amenity']"👍,
+  "constants.permissions['update-broker-inventory-amenity']"👍,
+  "constants.permissions['delete-broker-inventory-amenity']👍"
+]
+
+permssions = [
+  "constants.permissions['manage-broker-inventory-area-units']"👍,
+  "constants.permissions['index-broker-inventory-area-units']"👍,
+  "constants.permissions['create-broker-inventory-area-unit']"👍,
+  "constants.permissions['update-broker-inventory-area-unit']"👍,
+  "constants.permissions['delete-broker-inventory-area-unit']👍"
+]
+
+permssions = [
+  "manage-broker-inventory-purposes",
+  "constants.permissions['index-broker-inventory-purposes']"👍,
+  "constants.permissions['create-broker-inventory-purpose']"👍,
+  "constants.permissions['update-broker-inventory-purpose']"👍,
+  "constants.permissions['delete-broker-inventory-purpose']"👍
+]
+
+permssions = [
+  "manage-broker-inventory-purpose-types",
+  "constants.permissions['index-broker-inventory-purpose-types']"👍,
+  "constants.permissions['create-broker-inventory-purpose-type']"👍,
+  "constants.permissions['update-broker-inventory-purpose-type']"👍,
+  "constants.permissions['delete-broker-inventory-purpose-type']"👍
+]
+
+permssions = [
+  "manage-broker-inventory-projects",
+  "constants.permissions['index-broker-inventory-projects']",
+  "constants.permissions['create-broker-inventory-project']",
+  "constants.permissions['update-broker-inventory-project']",
+  "constants.permissions['delete-broker-inventory-project']"
+]
+
+permssions = [
+  "manage-broker-inventory-units"
+  "constants.permissions['index-broker-inventory-units']",
+  "constants.permissions['create-broker-inventory-unit']",
+  "constants.permissions['update-broker-inventory-unit']",
+  "constants.permissions['delete-broker-inventory-unit']",
+  "constants.permissions['view-broker-inventory-unit']",
+  "constants.permissions['export-broker-inventory-unit']"
+]
+permssions = [
+  "constants.permissions['assign-to-user-last-assignment-date']",
+  "constants.permissions['assign-to-group-last-assignment-date']"
+]
+
+permssions = [
+  "constants.permissions['delete-broker-inventory-unit-attachment']"
+]
+
+permssions = [
+  "manage-broker-inventory-publish-times",
+  "constants.permissions['index-broker-inventory-publish-times']",
+  "constants.permissions['create-broker-inventory-publish-time']",
+  "constants.permissions['update-broker-inventory-publish-time']",
+  "constants.permissions['delete-broker-inventory-publish-time']"
+]
+
+permssions = [
+  "manage-broker-inventory-rental-cases",
+  "constants.permissions['index-broker-inventory-rental-cases']",
+  "constants.permissions['create-broker-inventory-rental-case']",
+  "constants.permissions['update-broker-inventory-rental-case']",
+  "constants.permissions['delete-broker-inventory-rental-case']"
+]
+
+permssions = [
+  "constants.permissions['delete-lead-attachment']",
+  "constants.permissions['delete-contact-attachment']",
+  "constants.permissions['delete-customer-attachment']",
+  "constants.permissions['delete-account-attachment']"
+]
+
+permssions = [
+  "constants.permissions['bulk-assign-leads']",
+  "constants.permissions['bulk-assign-contacts']",
+  "constants.permissions['bulk-assign-customers']",
+  "constants.permissions['bulk-assign-accounts']"
+]
+
+permssions = [
+  "manage-broker-inventory-floor-numbers",
+  "constants.permissions['index-broker-inventory-floor-numbers']"👍,
+  "constants.permissions['create-broker-inventory-floor-number']"👍,
+  "constants.permissions['update-broker-inventory-floor-number']"👍,
+  "constants.permissions['delete-broker-inventory-floor-number']"👍
+]
+
+permssions = [
+  "manage-broker-inventory-reservations",
+  "constants.permissions['index-broker-inventory-reservations']",
+  "constants.permissions['create-broker-inventory-reservation']",
+  "constants.permissions['update-broker-inventory-reservation']",
+  "constants.permissions['delete-broker-inventory-reservation']",
+  "constants.permissions['export-broker-inventory-reservations']"
+]
+
+permssions = [
+  "constants.permissions['bulk-delete-leads']",
+  "constants.permissions['bulk-delete-contacts']",
+  "constants.permissions['bulk-delete-customers']",
+  "constants.permissions['bulk-delete-accounts']",
+  "constants.permissions['bulk-delete-broker-inventory-units']",
+  "constants.permissions['bulk-delete-leads-duplicates']",
+  "constants.permissions['bulk-delete-contacts-duplicates']",
+  "constants.permissions['bulk-delete-customers-duplicates']",
+  "constants.permissions['bulk-delete-accounts-duplicates']"
+]
+
+permssions = [
+  "constants.permissions['bulk-add-interests-to-leads']",
+  "constants.permissions['bulk-add-interests-to-contacts']",
+  "constants.permissions['bulk-add-interests-to-customers']",
+  "constants.permissions['bulk-add-interests-to-accounts']"
+]
+
+permssions = [
+  "constants.permissions['bulk-add-tags-to-leads']",
+  "constants.permissions['bulk-add-tags-to-contacts']",
+  "constants.permissions['bulk-add-tags-to-customers']",
+  "constants.permissions['bulk-add-tags-to-accounts']"
+]
+
+permssions = [
+  "constants.permissions['bulk-change-leads-stage']",
+  "constants.permissions['bulk-change-contacts-stage']",
+  "constants.permissions['bulk-change-customers-stage']",
+  "constants.permissions['bulk-change-accounts-stage']"
+]
+
+permssions = [
+  "constants.permissions['manage-fblgi-routings']",
+  "constants.permissions['view-fblgi-routings']",
+  "constants.permissions['index-fblgi-routings']"👍,
+  "constants.permissions['create-fblgi-routing']",👍
+  "constants.permissions['update-fblgi-routing']",👍
+  "constants.permissions['delete-fblgi-routing']"👍
+]
+
+permssions = [
+  "constants.permissions['manage-web-form-routings']",
+  "constants.permissions['view-web-form-routings']",
+  "constants.permissions['index-web-form-routings']",👍
+  "constants.permissions['create-web-form-routing']",👍
+  "constants.permissions['update-web-form-routing']",👍
+  "constants.permissions['delete-web-form-routing']"👍
+]
+
+permssions = [
+  "constants.permissions['access-fblgi-routings-technical-documentation']",
+  "constants.permissions['access-web-form-routings-technical-documentation']"👍,
+  "constants.permissions['manage-call-center']",
+  "constants.permissions['access-call-center-calls-technical-documentation']"
+]
+
+permssions = [
+  "constants.permissions['bulk-re-assign-leads-duplicates']",
+  "constants.permissions['bulk-re-assign-contacts-duplicates']",
+  "constants.permissions['bulk-re-assign-customers-duplicates']",
+  "constants.permissions['bulk-re-assign-accounts-duplicates']"
+]
+
+permssions = [
+  "constants.permissions['bulk-merge-leads-duplicates']",
+  "constants.permissions['bulk-merge-contacts-duplicates']",
+  "constants.permissions['bulk-merge-customers-duplicates']",
+  "constants.permissions['bulk-merge-accounts-duplicates']"
+]
+
+permssions = [
+  "constants.permissions['bulk-add-leads-duplicates-as-new']",
+  "constants.permissions['bulk-add-contacts-duplicates-as-new']",
+  "constants.permissions['bulk-add-customers-duplicates-as-new']",
+  "constants.permissions['bulk-add-accounts-duplicates-as-new']"
+]
+
+permssions = [
+  "manage-wallets",
+  "constants.permissions['index-wallets']"👍,
+  "constants.permissions['create-wallet']"👍,
+  "constants.permissions['update-wallet']"👍,
+  "constants.permissions['delete-wallet']"👍
+]
+
+permssions = [
+  "constants.permissions['bulk-change-leads-wallet']",
+  "constants.permissions['bulk-change-contacts-wallet']",
+  "constants.permissions['bulk-change-customers-wallet']",
+  "constants.permissions['bulk-change-accounts-wallet']"
+]
+
+permssions = [
+  "manage-related-contacts"
+  "constants.permissions['view-related-contacts']",
+  "constants.permissions['create-related-contact']",
+  "constants.permissions['update-related-contact']",
+  "constants.permissions['delete-related-contact']"
+]
+
+permssions = [
+  "manage-voice-notes"
+  "constants.permissions['view-voice-notes']",
+  "constants.permissions['create-voice-note']",
+  "constants.permissions['update-voice-note']",
+  "constants.permissions['delete-voice-note']"
+]
+
+permssions = [
+  "constants.permissions['access-notes-technical-documentation']",
+  "constants.permissions['manage-leads-technical-documentations']",
+  "constants.permissions['access-search-leads-technical-documentation']"
+]
+
+permssions = [
+  "constants.permissions['update-lead-assignment']",
+  "constants.permissions['update-contact-assignment']",
+  "constants.permissions['update-customer-assignment']",
+  "constants.permissions['update-account-assignment']"
+]
+
+permssions = [
+  "constants.permissions['view-lead-profile-view-log']",
+  "constants.permissions['view-contact-profile-view-log']",
+  "constants.permissions['view-customer-profile-view-log']",
+  "constants.permissions['view-account-profile-view-log']"
+]
+
+permssions = [
+  "constants.permissions['convert-lead']",
+  "constants.permissions['convert-contact']",
+  "constants.permissions['convert-customer']",
+  "constants.permissions['convert-account']"
+]
+
+permssions = [
+  "constants.permissions['access-lead-contact-details']",
+  "constants.permissions['access-contact-contact-details']",
+  "constants.permissions['access-customer-contact-details']",
+  "constants.permissions['access-account-contact-details']"
+]
+
+permssions = [
+  "manage-case-types"
+  "constants.permissions['view-case-types']"👍,
+  "constants.permissions['create-case-type']",👍
+  "constants.permissions['update-case-type']",👍
+  "constants.permissions['delete-case-type']"👍
+]
+
+permssions = [
+  "manage-case-origins"
+  "constants.permissions['view-case-origins']",👍
+  "constants.permissions['create-case-origin']",👍
+  "constants.permissions['update-case-origin']",👍
+  "constants.permissions['delete-case-origin']"👍
+]
+
+permssions = [
+  "manage-case-priorities"
+  "constants.permissions['view-case-priorities']"👍,
+  "constants.permissions['create-case-priority']"👍,
+  "constants.permissions['update-case-priority']"👍,
+  "constants.permissions['delete-case-priority']👍"
+]
+
+permssions = [
+  "manage-case-reasons"
+  "constants.permissions['view-case-reasons']"👍,
+  "constants.permissions['create-case-reason']"👍,
+  "constants.permissions['update-case-reason']"👍,
+  "constants.permissions['delete-case-reason']"👍
+]
+
+permssions = [
+  "manage-tickets"
+  "constants.permissions['index-tickets']",
+  "constants.permissions['create-ticket']",
+  "constants.permissions['update-ticket']",
+  "constants.permissions['delete-ticket']"
+]
+
+permssions = [
+  "constants.permissions['bulk-change-leads-source']",
+  "constants.permissions['bulk-change-contacts-source']",
+  "constants.permissions['bulk-change-customers-source']",
+  "constants.permissions['bulk-change-accounts-source']",
+  "constants.permissions['bulk-change-leads-type']",
+  "constants.permissions['bulk-change-contacts-type']",
+  "constants.permissions['bulk-change-customers-type']",
+  "constants.permissions['bulk-change-accounts-type']",
+  "constants.permissions['bulk-change-leads-rating']",
+  "constants.permissions['bulk-change-contacts-rating']",
+  "constants.permissions['bulk-change-customers-rating']",
+  "constants.permissions['bulk-change-accounts-rating']"
+]
+
+permssions = [
+  "constants.permissions['view-ticket-details']",
+  "constants.permissions['export-tickets']",
+  "constants.permissions['delete-ticket-attachment']"
+]
+
+permssions = [
+  "constants.permissions['view-sms-user-balance-sheet-details']",
+  "constants.permissions['view-sms-transfer-balance-sheet-details']",
+  "constants.permissions['view-sms-deliverability-details']",
+  "constants.permissions['add-sms-balance-to-user']",
+  "constants.permissions['subtract-sms-balance-from-user']",
+  "constants.permissions['transfer-sms-balance-to-user']",
+  "constants.permissions['transfer-sms-balance-from-user']"
+]
+
+permssions = [
+  "manage-campaign-types"
+  "constants.permissions['index-campaign-types']"👍,
+  "constants.permissions['create-campaign-type']"👍,
+  "constants.permissions['update-campaign-type']"👍,
+  "constants.permissions['delete-campaign-type']"👍
+]
+
+permssions = [
+  "manage-campaign-statuses"
+  "constants.permissions['index-campaign-statuses']"👍,
+  "constants.permissions['create-campaign-status']"👍,
+  "constants.permissions['update-campaign-status']"👍,
+  "constants.permissions['delete-campaign-status']👍"
+]
+
+permssions = [
+  "manage-campaigns"
+  "constants.permissions['index-campaigns']"👍,
+  "constants.permissions['create-campaign']"👍,
+  "constants.permissions['update-campaign']"👍,
+  "constants.permissions['delete-campaign']👍"
+]
+
+permssions = [
+  "constants.permissions['view-campaign-details']",
+  "constants.permissions['export-campaigns']",
+  "constants.permissions['delete-campaign-attachment']"
+]
+
+permssions = [
+  "manage-lead-campaign-statuses"
+  "constants.permissions['index-lead-campaign-statuses']"👍,
+  "constants.permissions['create-lead-campaign-status']",👍
+  "constants.permissions['update-lead-campaign-status']",👍
+  "constants.permissions['delete-lead-campaign-status']"👍
+]
+
+permssions = [
+  "manage-lead-campaigns"
+  "constants.permissions['index-lead-campaigns']"
+]
+
+permssions = [
+  "constants.permissions['attach-campaign-to-lead']",
+  "constants.permissions['detach-campaign-from-lead']"
+]
+
+permssions = ["constants.permissions['change-lead-campaign-status']"]
+
+permssions = [
+  "manage-organizations":
+  "constants.permissions['index-organizations']",
+  "constants.permissions['create-organization']",
+  "constants.permissions['update-organization']",
+  "constants.permissions['delete-organization']",
+  "constants.permissions['view-organization-details']",
+  "constants.permissions['export-organizations']",
+  "constants.permissions['delete-organization-attachment']"
+]
+
+permssions = [
+  "constants.permissions['bulk-change-leads-organization']",
+  "constants.permissions['bulk-change-contacts-organization']",
+  "constants.permissions['bulk-change-customers-organization']",
+  "constants.permissions['bulk-change-accounts-organization']"
+]
+
+permssions = [
+  "manage-exports":
+  "constants.permissions['index-exported-files']",
+  "constants.permissions['view-exported-file']",
+  "constants.permissions['delete-exported-file']"
+]
+
+permssions = [
+  "manage-companies"
+  "constants.permissions['index-companies']" 👍,
+  "constants.permissions['create-company']" 👍,
+  "constants.permissions['update-company']" 👍,
+  "constants.permissions['delete-company'] 👍"
+]
+
+permssions = [
+  "manage-about-sections"
+  "constants.permissions['index-about-sections']"👍,
+  "constants.permissions['create-about-section']"👍,
+  "constants.permissions['update-about-section']"👍,
+  "constants.permissions['delete-about-section']"👍
+]
+
+permssions = [
+  "manage-contact-methods"
+  "constants.permissions['index-contact-methods']"👍,
+  "constants.permissions['create-contact-method']"👍,
+  "constants.permissions['update-contact-method']"👍,
+  "constants.permissions['delete-contact-method']"👍
+]
+
+permssions = [
+  "manage-brokers"
+  "constants.permissions['index-brokers']",
+  "constants.permissions['create-broker']",
+  "constants.permissions['update-broker']",
+  "constants.permissions['delete-broker']"
+]
+
+permssions = [
+  "constants.permissions['view-broker-details']",
+  "constants.permissions['export-brokers']",
+  "constants.permissions['delete-broker-attachment']"
+]
+
+permssions = [
+  "manage-broker-employees"
+  "constants.permissions['index-broker-employees']",
+  "constants.permissions['create-broker-employee']",
+  "constants.permissions['update-broker-employee']",
+  "constants.permissions['delete-broker-employee']"
+]
+
+permssions = [
+  "constants.permissions['view-broker-employee-details']",
+  "constants.permissions['export-broker-employees']",
+  "constants.permissions['delete-broker-employee-attachment']"
+]
+
+permssions = [
+  "manage-broker-inventory-blocks"
+  "constants.permissions['index-broker-inventory-blocks']",
+  "constants.permissions['create-broker-inventory-block']",
+  "constants.permissions['update-broker-inventory-block']",
+  "constants.permissions['delete-broker-inventory-block']"
+]
+
+permssions = [
+  "manage-hr-check-ins"
+  "constants.permissions['index-hr-check-ins']",
+  "constants.permissions['export-hr-check-ins']"
+]
+
+permssions = [
+  "constants.permissions['index-hr-fake-incidents']",
+  "constants.permissions['export-hr-fake-incidents']"
+]
+
+permssions = [
+  "constants.permissions['view-lead-stages-report']",
+  "constants.permissions['export-lead-stages-report']",
+  "constants.permissions['view-lead-wallets-report']",
+  "constants.permissions['export-lead-wallets-report']"
+]
+
+permssions = [
+  "manage-locations"
+  "constants.permissions['index-locations']"👍,
+  "constants.permissions['create-location']"👍,
+  "constants.permissions['update-location']"👍,
+  "constants.permissions['delete-location']"👍
+]
+
+permssions = [
+  "constants.permissions['manage-broker-inventory-config']",
+  "constants.permissions['update-broker-inventory-config']"
+]
+
+permssions = [
+ "constants.permissions['hide-history-while-assigning']"
+]
+
+permssions = [
+  "constants.permissions['view-trashed-broker-inventory-units']",
+  "constants.permissions['restore-trashed-broker-inventory-unit']"
+]
+
+permssions = [
+  "constants.permissions['view-lead-source']",
+  "constants.permissions['view-contact-source']",
+  "constants.permissions['view-customer-source']",
+  "constants.permissions['view-account-source']"
+]
+
+permssions = [
+  "constants.permissions['view-lead-creator']",
+  "constants.permissions['view-contact-creator']",
+  "constants.permissions['view-customer-creator']",
+  "constants.permissions['view-account-creator']"
+]
+
+permssions = [
+  "constants.permissions['view-lead-creation-date']",
+  "constants.permissions['view-contact-creation-date']",
+  "constants.permissions['view-customer-creation-date']",
+  "constants.permissions['view-account-creation-date']"
+]
+
+permssions = [
+  "constants.permissions['view-call-recordings']"
+]
+
+permssions = [
+  "manage-resources"
+  "constants.permissions['index-resources']",
+  "constants.permissions['create-resource']",
+  "constants.permissions['update-resource']",
+  "constants.permissions['delete-resource']",
+  "constants.permissions['view-resource']"
+]
+
+permssions = [
+  "manage-resource-types"
+  "constants.permissions['index-resource-types']"👍,
+  "constants.permissions['create-resource-type']"👍,
+  "constants.permissions['update-resource-type']"👍,
+  "constants.permissions['delete-resource-type']"👍,
+  "constants.permissions['view-resource-type']"
+]
+
+permssions = [
+  "manage-lead-lists"
+  "constants.permissions['index-lead-lists']"👍,
+  "constants.permissions['create-lead-list']"👍,
+  "constants.permissions['update-lead-list']"👍,
+  "constants.permissions['delete-lead-list']"👍
+]
+
+permssions = [
+  "manage-lead-classifications"
+  "constants.permissions['index-lead-classifications']"👍,
+  "constants.permissions['create-lead-classification']"👍,
+  "constants.permissions['update-lead-classification']"👍,
+  "constants.permissions['delete-lead-classification']"👍
+]
+
+permssions = [
+  "manage-lead-qualities"
+  "constants.permissions['index-lead-qualities']👍",
+  "constants.permissions['create-lead-quality']"👍,
+  "constants.permissions['update-lead-quality']"👍,
+  "constants.permissions['delete-lead-quality']👍"
+]
+
+permssions = [
+  "constants.permissions['update-lead-phone']",
+  "constants.permissions['update-lead-name']"
+]
+
+permssions = [
+  "constants.permissions['add-phone-to-lead']",
+  "constants.permissions['view-trashed-leads']",
+  "constants.permissions['restore-trashed-lead']",
+  "constants.permissions['bulk-restore-trashed-lead']"
+]
+
+permssions = [
+  "constants.permissions['update-inventory-unit-created-by-me']",
+  "constants.permissions['update-inventory-unit-assigned-to-me']"
+]
+
+permssions = [
+  "constants.permissions['export-datatables-report']",
+  "constants.permissions['export-agent-activities-report']",
+  "constants.permissions['export-broker-inventory-reservations']",
+  "constants.permissions['export-broker-inventory-blocks']"
+]
+
+permssions = [
+  "manage-scheduled-reports"
+  "constants.permissions['index-scheduled-reports']"👍,
+  "constants.permissions['create-scheduled-report']"👍,
+  "constants.permissions['update-scheduled-report']"👍,
+  "constants.permissions['delete-scheduled-report']"👍
+]
+
+permssions = [
+  "manage-broker-inventory-unit-requests"
+  "constants.permissions['index-broker-inventory-unit-requests']",
+  "constants.permissions['create-broker-inventory-unit-request']",
+  "constants.permissions['update-broker-inventory-unit-request-config']👍",
+  "constants.permissions['delete-broker-inventory-unit-request']",
+  "constants.permissions['view-broker-inventory-unit-request']"
+]
+
+permssions = [
+  "constants.permissions['update-broker-inventory-unit-request']",
+  "constants.permissions['export-broker-inventory-unit-request']",
+  "constants.permissions['update-broker-inventory-unit-request-matching-config']"👍,
+  "constants.permissions['bulk-change-leads-cold-calls-flag']"
+]
+
+permssions = [
+  "manage-pipelines"
+  "constants.permissions['index-pipelines']"👍,
+  "constants.permissions['create-pipeline']"👍,
+  "constants.permissions['update-pipeline']"👍,
+  "constants.permissions['delete-pipeline']"👍,
+  "constants.permissions['view-pipeline-details']",
+  "constants.permissions['export-pipelines']"
+]
+
+permssions = [
+  "manage-pipeline-stages"
+  "constants.permissions['index-pipeline-stages']"👍,
+  "constants.permissions['create-pipeline-stage']"👍,
+  "constants.permissions['update-pipeline-stage']"👍,
+  "constants.permissions['delete-pipeline-stage']"👍,
+  "constants.permissions['view-pipeline-stage-details']",
+  "constants.permissions['export-pipeline-stages']"
+]
+
+permssions = ["constants.permissions['merge-leads']"]
+permssions = ["constants.permissions['leads-data-management']"]
+permssions = ["constants.permissions['delete-hr-check-in']"]
+permssions = ["constants.permissions['view-broker-inventory-holded-unit']"]
+permssions = ["constants.permissions['view-broker-inventory-reserved-unit']"]
+
+permssions = [
+  "manage-referrals"
+  "constants.permissions['index-referrals']",
+  "constants.permissions['create-referral']",
+  "constants.permissions['update-referral']",
+  "constants.permissions['delete-referral']"
+]
+
+permssions = ["constants.permissions['view-referral']"]
+permssions = ["constants.permissions['index-opportunities']"]
+
+permssions = ["constants.permissions['view-lead-journey']"]
+permssions = ["constants.permissions['view-lead-assignees-logs']"]
+
+permssions = ["constants.permissions['view-lead-logs']"]
+
+permssions = ["constants.permissions['view-broker-inventory-on-hold-unit']"]
+
+permssions = [
+  "manage-automation-rules"
+  "constants.permissions['index-automation-rules']" 👍,
+  "constants.permissions['create-automation-rule']" 👍,
+  "constants.permissions['update-automation-rule']" 👍,
+  "constants.permissions['delete-automation-rule']" 👍,
+  "constants.permissions['view-automation-rule']"
+]
+
+permssions = [
+  "manage-contracts"
+  "constants.permissions['index-contracts']",
+  "constants.permissions['create-contract']",
+  "constants.permissions['update-contract']",
+  "constants.permissions['delete-contract']",
+  "constants.permissions['approve-contract']"
+]
+
+permssions = ["constants.permissions['view-contract-details']"]
+
+permssions = [
+  "constants.permissions['export-contracts']",
+  "constants.permissions['delete-contract-attachment']"
+]
+
+permssions = [
+  "constants.permissions['export-broker-inventory-projects']"
+]
+
+
+hasNoPermissions : [
+  lost-reasons,
+  units-config,
+  system-logs,
+  leads-fields-config,
+  activity-fields-config,
+  Source : it is  dynamic-list dynamic id
+  Module_global_settings : {
+    lead-generation,
+    intgrations,
+    lead,
+    hr,
+    calender,
+    events,
+    assignments,
+    inventory,
+    opportunities,
+    task module,
+    activities
+  }
+]

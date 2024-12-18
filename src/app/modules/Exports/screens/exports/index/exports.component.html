@@ -1,0 +1,79 @@
+<app-filters-panel
+  [filters]="exportsFilters()"
+  [(showFilterSidebar)]="showBasicFilters"
+  [(isAdvancedFilter)]="showAdvancedFilters"
+  [displaySettings]="false"
+  (onRemoveChip)="refreshExports($event)"
+  (onClearAllChips)="refreshExports($event)"
+  (onSubmitFilters)="refreshExports($event)"
+>
+  <ng-container ngProjectAs="[filtered-data]">
+    <!--
+      ngProjectAs is useful if we want to project an ng-container with a certain selector.
+     -->
+    <div #targetElement>
+      <app-table-wrapper
+        [moduleName]="moduleName"
+        [headerTitle]="indexMeta.indexTitle"
+        [withTableSearch]="false"
+        [titleIcon]="indexMeta.indexIcon"
+        [columns]="indexMeta.columns"
+        [dataSource]="records()"
+        [loading]="isLoading()"
+        [totalRecords]="totalRecords()"
+        [recordsFiltered]="recordsFiltered()"
+        paginatorPosition="both"
+        [indexPermissions]="permissions().index"
+        [stateKey]="indexMeta.indexTableKey"
+        [globalFilterValue]="globalFilterValue"
+        (onLoadData)="loadRecords($event)"
+      >
+        <div moreActions>
+          <ul class="list-none m-0 p-0 flex flex-wrap gap-3 align-items-center">
+            <li>
+              <a
+                pButton
+                class="p-button-text text-xs py-2"
+                [label]="'export_requests' | translate"
+                icon="fas fa-file-download"
+                routerLink="/exports/exports_requests"
+              >
+              </a>
+            </li>
+            <li>
+              <a
+                pButton
+                class="text-xs py-2"
+                [label]="'exports' | translate"
+                icon="fas fa-file-download"
+                routerLink="/exports/exports"
+              >
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <ng-template #file let-rowData>
+          <app-download-file *appHasPermission="permissions().download" [rowData]="rowData" />
+        </ng-template>
+
+        <ng-template #exportBy let-rowData>
+          {{ getLabelById("assignments:all_users_info", rowData.created_by) }}
+        </ng-template>
+
+        <ng-template #actionsTemplate let-rowData>
+          <button
+            pButton
+            type="button"
+            *appHasPermission="permissions().delete"
+            icon="fas fa-trash text-xs"
+            class="p-button-sm p-button-rounded p-button-text p-button-danger"
+            [pTooltip]="'delete' | translate"
+            tooltipPosition="top"
+            (click)="confirmDelete(rowData)"
+          ></button>
+        </ng-template>
+      </app-table-wrapper>
+    </div>
+  </ng-container>
+</app-filters-panel>

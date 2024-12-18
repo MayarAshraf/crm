@@ -1,0 +1,83 @@
+<app-table-wrapper
+  [headerTitle]="indexMeta.indexTitle"
+  [titleIcon]="indexMeta.indexIcon"
+  [headerBtnLabel]="indexMeta.createBtnLabel"
+  [columns]="indexMeta.columns"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  [totalRecords]="totalRecords()"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [recordsFiltered]="recordsFiltered()"
+  paginatorPosition="both"
+  [withAdditionalContent]="true"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterValue]="globalFilterValue"
+  (createBtnClicked)="openCreateRecordDialog()"
+  (updateBtnClicked)="openUpdateRecordDialog($event)"
+  (deleteBtnClicked)="deleteRecord($event)"
+  (onLoadData)="loadRecords($event)"
+>
+  <button
+    moreActions
+    pButton
+    type="button"
+    (click)="menu.toggle($event)"
+    icon="fas fa-ellipsis-vertical"
+    [pTooltip]="'more' | translate"
+    tooltipPosition="top"
+    class="flex-order-6 w-auto text-sm px-3 py-2"
+  ></button>
+  <p-menu #menu appendTo="body" [model]="moreActions()" [popup]="true"></p-menu>
+
+  <ng-template #additionalContentTemplate>
+    <div class="flex-order-0">
+      <p-dropdown
+        [options]="usersType"
+        styleClass="py-1 pl-2 shadow-none"
+        [(ngModel)]="selectedUsersType"
+        (onChange)="filterUserType()"
+      />
+    </div>
+  </ng-template>
+
+  <ng-template #extendDefaultActionsTemplate let-user>
+    <button
+      pButton
+      icon="fas fa-user-shield text-sm"
+      class="p-button-rounded p-button-text p-button-sm"
+      [pTooltip]="'update_user_permissions' | translate"
+      tooltipPosition="top"
+      *appHasPermission="permissions().update_user_permissions"
+      (click)="openUpdateUserPermissionsDialog(user)"
+    ></button>
+
+    <button
+      pButton
+      *appHasPermission="permissions().sms"
+      icon="fas fa-comment-sms text-xl"
+      [pTooltip]="'update_user_sms_balance' | translate"
+      tooltipPosition="top"
+      class="p-button-rounded p-button-text p-button-sm"
+      (click)="openSMSBalanceDialog(user)"
+    ></button>
+
+    <button
+      pButton
+      icon="fas fa-user-lock"
+      [pTooltip]="'suspend_user_account' | translate"
+      tooltipPosition="top"
+      class="p-button-rounded p-button-text p-button-sm p-button-warning"
+      *appHasPermission="permissions().suspend_user"
+      (click)="openSuspendDialog(user)"
+    ></button>
+  </ng-template>
+</app-table-wrapper>
+
+<app-simple-import-dialog
+  [(visible)]="showImportDialog"
+  dialogTitle="import_users"
+  template="assets/files/8WORXCRM-USERS-TEMPLATE.xlsx"
+/>

@@ -1,0 +1,251 @@
+<p-card styleClass="custom-style-card">
+  <div class="flex align-items-center gap-3">
+    <div class="flex justify-content-center align-items-center">
+      <p-avatar
+        [image]="srcImage()"
+        size="xlarge"
+        shape="circle"
+        styleClass="swirl-in-fwd"
+      ></p-avatar>
+    </div>
+    <div class="flex-1 flex flex-column">
+      <h4 class="captalize text-900 text-base m-0 font-semibold mb-2">{{ fullName() }}</h4>
+      <div class="flex gap-3 mb-3 md:flex-nowrap flex-wrap">
+        <p class="m-0 text-500 text-sm gap-2 flex align-items-center">
+          <i class="pi pi-briefcase"></i>
+          {{ jobTitle() }}
+        </p>
+        <p class="m-0 text-500 text-sm gap-2 flex align-items-center">
+          <i class="pi pi-users"></i>
+          {{ group() }}
+        </p>
+        <p class="m-0 text-500 text-sm gap-2 flex align-items-center">
+          <i class="pi pi-sign-in"></i>
+          {{ joinData() }}
+        </p>
+        <p class="m-0 text-500 text-sm gap-2 flex align-items-center">
+          <i class="pi pi-hourglass"></i>
+          {{ lastLogin() }}
+        </p>
+      </div>
+      <div class="m-0 text-500 text-sm gap-2 flex align-items-center">
+        <i class="pi pi-calendar"></i>
+        Report Period :
+        <span class="font-bold">
+          <span> {{ dateRange()[0] }}</span>
+          VS
+          <span> {{ dateRange()[1] }} </span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <p-tabView>
+    <p-tabPanel>
+      <ng-template pTemplate="header">
+        <i class="pi pi-calendar"></i>
+        <span class="ml-1">Summary</span>
+      </ng-template>
+      <div class="grid row-gap-2">
+        @if (performanceUser() && performanceUser().length) {
+          @for (item of performanceUser(); track $index; let i = $index) {
+            @switch (item.label) {
+              @case ("score") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="far fa-star"
+                    type="normal"
+                  />
+                </div>
+              }
+              @case ("assignmentsInRange") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="far fa-star"
+                    type="normal"
+                  />
+                </div>
+              }
+              @case ("averageDailyViews") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="far fa-star"
+                    type="normal"
+                  />
+                </div>
+              }
+              @case ("lostDeals") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="far fa-star"
+                    type="normal"
+                  />
+                </div>
+              }
+              @case ("openDeals") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="far fa-star"
+                    type="normal"
+                  />
+                </div>
+              }
+              @case ("totalRevenues") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="far fa-star"
+                    type="normal"
+                  />
+                </div>
+              }
+              @case ("openAmount") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="far fa-star"
+                    type="normal"
+                  />
+                </div>
+              }
+              @case ("closingThisMonth") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="far fa-star"
+                    type="normal"
+                  />
+                </div>
+              }
+              @case ("totalDurations") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="pi pi-history"
+                    type="normal"
+                  />
+                </div>
+              }
+              @case ("avgCallDuration") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="far fa-star"
+                    type="normal"
+                  />
+                </div>
+              }
+              @case ("longestCall") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="far fa-star"
+                    type="normal"
+                  />
+                </div>
+              }
+              @case ("shortestCall") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="far fa-star"
+                    type="normal"
+                  />
+                </div>
+              }
+              @case ("calls") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="far fa-star"
+                    type="normal"
+                  />
+                </div>
+              }
+              @case ("notes") {
+                <div class="md:col-4">
+                  <app-box-card
+                    [title]="item.label"
+                    [total]="item.value"
+                    [rate]="'2.86'"
+                    [isLoading]="isLoading()"
+                    icon="far fa-star"
+                    type="normal"
+                  />
+                </div>
+              }
+            }
+          }
+        } @else {
+          @for (item of [] | range: 14; track $index; let i = $index) {
+            <div class="col-12 md:col-4 p-4">
+              <p-skeleton widt="100%" height="50px" />
+            </div>
+          }
+        }
+      </div>
+    </p-tabPanel>
+    <p-tabPanel>
+      <ng-template pTemplate="header">
+        <i class="pi pi-calendar"></i>
+        <span class="ml-1">Calls</span>
+      </ng-template>
+    </p-tabPanel>
+    <p-tabPanel>
+      <ng-template pTemplate="header">
+        <i class="pi pi-calendar"></i>
+        <span class="ml-1">Data</span>
+      </ng-template>
+    </p-tabPanel>
+    <p-tabPanel>
+      <ng-template pTemplate="header">
+        <i class="pi pi-calendar"></i>
+        <span class="ml-1">Conversions</span>
+      </ng-template>
+    </p-tabPanel>
+  </p-tabView>
+</p-card>

@@ -1,0 +1,60 @@
+<p-table
+  [value]="records()"
+  #primengTable
+  [rows]="10"
+  [paginator]="true"
+  [alwaysShowPaginator]="false"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [rowsPerPageOptions]="[5, 10, 20, 30, 50, 100]"
+  [globalFilterFields]="['full_name', 'status', 'assigness']"
+  styleClass="p-datatable-sm p-datatable-striped"
+>
+  <ng-template pTemplate="caption">
+    <div class="flex">
+      <p-iconField iconPosition="left" class="ml-auto">
+        <p-inputIcon>
+          <i class="pi pi-search absolute top-50"></i>
+        </p-inputIcon>
+        <input
+          #filterInput
+          pInputText
+          class="p-inputtext-sm field-height"
+          type="text"
+          (input)="primengTable.filterGlobal(filterInput.value, 'contains')"
+          placeholder="Search keyword"
+        />
+      </p-iconField>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th>{{ "id" | translate }}</th>
+      <th class="capitalize">{{ "full_name" | translate }}</th>
+      <th class="capitalize">{{ "status" | translate }}</th>
+      <th class="capitalize">{{ "assignees" | translate }}</th>
+      <th class="capitalize">{{ "created_at" | translate }}</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-lead>
+    <tr>
+      <td>{{ lead.id }}</td>
+      <td>{{ lead.full_name }}</td>
+      <td>{{ getStatuses(lead.status_id) }}</td>
+      <td>
+        <app-comma-separated-labels
+          [items]="getAssignments(lead.assignees_ids)"
+          tooltip="Assignees"
+        />
+      </td>
+      <td>{{ lead.created_at | dateFormatter: "absolute" : constants.DATE_FORMAT }}</td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="5">{{ "no_campaigns_found" | translate }}.</td>
+    </tr>
+  </ng-template>
+</p-table>

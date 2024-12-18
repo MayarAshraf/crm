@@ -1,0 +1,86 @@
+<div class="infinite-scroll-container">
+  @if (paginator$ | async; as paginator) {
+    <div
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="50"
+      [infiniteScrollContainer]="'.infinite-scroll-container'"
+      [fromRoot]="true"
+      [scrollWindow]="false"
+      (scrolled)="loadMoreTimelines(paginator)"
+    >
+      @if (leadTimeline().length) {
+        <p-timeline [value]="leadTimeline()" [align]="currentLang() === 'ar' ? 'right' : 'left'">
+          <ng-template pTemplate="marker" let-timeline>
+            <span
+              class="custom-timline-marker"
+              [style.background-color]="'' | randomColor"
+              [pTooltip]="getLabelById('assignments:all_users_info', timeline.object.created_by)"
+              tooltipPosition="top"
+            >
+              @if (timeline.object.is_automated) {
+                <i class="fas fa-robot text-2xl"></i>
+              } @else {
+                {{
+                  getLabelById("assignments:all_users_info", timeline.object.created_by) | initials
+                }}
+              }
+            </span>
+          </ng-template>
+
+          <ng-template pTemplate="content" let-timeline>
+            @switch (timeline.class) {
+              @case (ITEM_CLASS_ACTIVITY) {
+                <app-activity-card
+                  [(activity)]="timeline.object"
+                  [endpoint]="constants.API_ENDPOINTS.deleteLeadActivity"
+                  (onDelete)="deleteTimeline($event)"
+                />
+              }
+              @case (ITEM_CLASS_EVENT) {
+                <app-event-card
+                  [(event)]="timeline.object"
+                  [endpoint]="constants.API_ENDPOINTS.deleteLeadEvent"
+                  (onDelete)="deleteTimeline($event)"
+                />
+              }
+              @case (ITEM_CLASS_OPPORTUNITY) {
+                <app-opportunity-card
+                  [(opportunity)]="timeline.object"
+                  [endpoint]="constants.API_ENDPOINTS.deleteLeadOpportunity"
+                  (onDelete)="deleteTimeline($event)"
+                />
+              }
+              @case (ITEM_CLASS_NOTE) {
+                <app-note-card
+                  [(note)]="timeline.object"
+                  [endpoint]="constants.API_ENDPOINTS.deleteLeadNote"
+                  (onDelete)="deleteTimeline($event)"
+                />
+              }
+              @case (ITEM_CLASS_TASK) {
+                <app-task-card
+                  [(task)]="timeline.object"
+                  [endpoint]="constants.API_ENDPOINTS.deleteLeadTask"
+                  (onDelete)="deleteTimeline($event)"
+                />
+              }
+            }
+          </ng-template>
+        </p-timeline>
+      }
+
+      @if (!paginator.hasMorePages) {
+        <p class="text-center my-6 text-sm text-400">
+          {{ "end_of_timeline_message" | translate }}.
+        </p>
+      }
+    </div>
+  }
+
+  @if (loading()) {
+    <p class="text-center text-primary my-3">
+      <i class="pi pi-spin pi-spinner text-2xl"></i>
+    </p>
+  }
+</div>

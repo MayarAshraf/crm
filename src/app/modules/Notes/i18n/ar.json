@@ -1,0 +1,23 @@
+{
+	"enter_subject": "إدخل العنوان",
+	"edit_subject": "تعديل العنوان",
+	"delete": "حذف",
+	"new_note": "ملحوظة جديدة",
+	"write_note": "اكتب ملاحظة",
+	"enter_description": "ادخل الوصف",
+	"subject": "العنوان",
+	"subject_max_is_191_characters_long": "اقصى عدد لحروف العنوان هو 191 حرف",
+	"subject_is_required": "العنوان مطلوب",
+	"edit_description": "تعديل الوصف",
+	"description_max_is_16777215_characters_long": "اقصى عدد لحروف الوصف هو 16777215 حرف",
+	"cancel": "إلغاء",
+	"edit": "تعديل",
+	"log_it": "حفظ",
+	"note": "ملحوظة",
+	"notes": "ملحوظات",
+	"store_note_documentation": "وثائق تسجيل ملحوظة",
+	"new_note_desc": "إنشاء ملحوظة جديدة",
+	"save": "حفظ",
+	"add_note": "إضافة ملاحظة",
+	"no_notes_yet": "لايوجد ملاحظات حتى الان"
+}

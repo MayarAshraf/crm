@@ -1,0 +1,306 @@
+$left: 49.5%;
+
+.login-splash {
+  position: fixed;
+  z-index: 1100;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  overflow: hidden;
+
+  &__circles {
+    position: relative;
+    z-index: 4;
+
+    @for $i from 1 through 10 {
+      .fall--#{$i} {
+        position: fixed;
+        left: $left;
+        opacity: 0.1 * $i;
+        animation-duration: 3s - calc($i / 8);
+        animation-fill-mode: both;
+        animation-name: falling--#{$i};
+
+        @keyframes falling--#{$i} {
+          0% {
+            top: -10%;
+          }
+
+          100% {
+            top: 70% + random($i);
+          }
+        }
+      }
+    }
+
+    @for $i from 0 through 10 {
+      .up--#{$i} {
+        position: relative;
+        animation-delay: 3s;
+        animation-duration: 0.5s + calc($i / 20);
+        animation-fill-mode: both;
+        animation-name: goup--#{$i};
+
+        @keyframes goup--#{$i} {
+          0% {
+            top: 0;
+          }
+
+          100% {
+            top: -120vh;
+          }
+        }
+      }
+    }
+
+    @for $i from 0 through 10 {
+      .down--#{$i} {
+        position: relative;
+        animation-delay: 5s;
+        animation-duration: 1s - calc($i / 10);
+        animation-fill-mode: both;
+        animation-name: goDown--#{$i};
+
+        @keyframes goDown--#{$i} {
+          0% {
+            top: 0;
+          }
+
+          100% {
+            top: 150vh;
+          }
+        }
+      }
+    }
+
+    .tremble {
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      animation: tremble 0.1s infinite;
+
+      @keyframes tremble {
+        0% {
+          margin-left: 0;
+        }
+
+        50% {
+          margin-left: 5px;
+        }
+
+        100% {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  &__screens {
+    .screen {
+      position: absolute;
+      border: 2px solid var(--primary-color);
+      overflow: hidden;
+
+      &.circle {
+        border-radius: 50%;
+      }
+
+      &.diamond {
+        transform: rotate(-45deg);
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    @for $i from 1 through 15 {
+      .circle:nth-child(#{$i}),
+      .square:nth-child(#{$i}),
+      .diamond:nth-child(#{$i}) {
+        $temp: random(350);
+        width: $temp + px;
+        height: $temp + px;
+        left: 1% * random(90);
+      }
+
+      .screen:nth-child(#{$i}) {
+        animation-duration: 1400ms - ($i * 50);
+        animation-fill-mode: both;
+        animation-iteration-count: 5;
+        animation-name: flyUp--#{$i};
+        opacity: 0.08 * $i;
+      }
+
+      @keyframes flyUp--#{$i} {
+        0% {
+          top: -50%;
+        }
+
+        100% {
+          top: 120%;
+        }
+      }
+    }
+  }
+
+  &__bg {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: fullRising 1s 6.5s both;
+
+    @keyframes fullRising {
+      0% {
+        bottom: 0;
+      }
+
+      100% {
+        bottom: 80%;
+      }
+    }
+
+    .water {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--primary-color);
+      animation: rising 1.5s 4s both;
+
+      @keyframes rising {
+        0% {
+          bottom: -200%;
+        }
+
+        100% {
+          bottom: -80%;
+        }
+      }
+
+      .splash {
+        position: absolute;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+      }
+
+      @for $i from 1 through 10 {
+        .splash--#{$i} {
+          $temp: random(20);
+          width: $temp + px;
+          height: $temp + px;
+          left: $left - 5 + random(5);
+          animation-delay: 5.3s;
+          animation-duration: 1.5s - calc($i / 15);
+          animation-fill-mode: both;
+          animation-name: splash--#{$i};
+        }
+
+        @keyframes splash--#{$i} {
+          0% {
+            margin: 0;
+            opacity: 1;
+            padding: 1px * random(25);
+            top: 0;
+          }
+
+          100% {
+            margin: 1px * random(25);
+            opacity: 0;
+            padding: -1px * random(25);
+            top: -45px - random(70);
+          }
+        }
+      }
+
+      .wobble {
+        position: absolute;
+        width: 100%;
+        margin-top: -40px;
+
+        @media (max-width: 575px) {
+          margin-top: -30px;
+        }
+
+        #trampoline {
+          fill: var(--primary-color);
+        }
+      }
+    }
+  }
+
+  &__welcome {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    padding: 1rem;
+
+    p {
+      font-size: 3rem;
+      margin: 0;
+      padding: 0;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 12px;
+
+      span {
+        display: inline-block;
+        opacity: 0;
+        visibility: hidden;
+        animation: appear 0.5s forwards var(--delay);
+      }
+    }
+
+    .mask {
+      $mask-width: 350px;
+      $img-width: 50px;
+      width: $mask-width;
+      max-height: 250px;
+      overflow: hidden;
+      mask-image: url("/assets/media/icons/mask.svg");
+      mask-size: 100%;
+      mask-repeat: no-repeat;
+      mask-position: center center;
+      opacity: 0;
+      visibility: hidden;
+      animation: appear 0.5s 7.3s forwards;
+
+      .imgs {
+        display: grid;
+        grid-template-columns: repeat(calc($mask-width / $img-width), $img-width);
+        gap: 1px;
+        background-color: #fff;
+      }
+    }
+
+    @keyframes appear {
+      to {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  &__loader {
+    svg circle {
+      animation: fill-clr 1s linear 4.5s forwards;
+
+      @keyframes fill-clr {
+        to {
+          fill: #fff;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+<div class="p-3" #scrollRef>
+  <p-steps [model]="tabs()" [activeIndex]="activeIndex()" [readonly]="true" />
+
+  <div class="mt-3 p-3 border-1 border-200 border-round">
+    @if (fileName() && isImportTabActive()) {
+      <h2 class="mt-0 font-semibold text-base">{{ fileName() }}</h2>
+    }
+    <form [formGroup]="form">
+      <formly-form
+        [model]="model"
+        [fields]="isImportTabActive() ? importFields : selectFields"
+        [form]="form"
+      />
+    </form>
+
+    @if (!isImportTabActive()) {
+      <div class="flex flex-wrap gap-2">
+        <a
+          pButton
+          [href]="downloadUrl()"
+          download
+          role="button"
+          class="text-sm py-2 p-button-outlined border-round-3xl"
+          icon="fas fa-file-excel"
+          [label]="downloadLabel()"
+        ></a>
+
+        <button
+          pButton
+          class="text-sm py-2 p-button-outlined p-button-success border-round-3xl"
+          icon="fas fa-info-circle"
+          label="Example Sheet Documentation"
+          (click)="showExampleDialog.set(true)"
+        ></button>
+      </div>
+    }
+
+    <div class="flex align-items-center justify-content-end gap-2 mt-2">
+      @if (isImportTabActive()) {
+        <button
+          pButton
+          type="button"
+          label="Back"
+          class="py-2 p-button-outlined p-button-secondary"
+          (click)="activeIndex.set(0)"
+        ></button>
+      }
+      <button
+        pButton
+        type="button"
+        class="py-2 p-button-success"
+        [label]="isImportTabActive() ? 'Import' : 'Upload'"
+        (click)="isImportTabActive() ? submitSecondStep() : submitFirstStep()"
+        [loading]="isLoading()"
+        [disabled]="isImportTabActive() ? false : !(model.file_type && model.file)"
+      ></button>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <app-imported-records-table
+      [(filtersData)]="filtersData"
+      [leadTypeId]="model.lead_type_id"
+      [importModel]="importModel()"
+      (onImportClicked)="onImportClicked($event); scrollRef?.scrollIntoView({ behavior: 'smooth' })"
+    />
+  </div>
+</div>
+
+<app-example-docs [(visible)]="showExampleDialog" [docsType]="docsType()" />

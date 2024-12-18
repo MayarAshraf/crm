@@ -1,0 +1,57 @@
+<app-table-wrapper
+  [moduleName]="moduleName"
+  [headerTitle]="indexMeta.indexTitle"
+  [titleIcon]="indexMeta.indexIcon"
+  [headerBtnLabel]="indexMeta.createBtnLabel"
+  [columns]="indexMeta.columns"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  [totalRecords]="totalRecords()"
+  [recordsFiltered]="recordsFiltered()"
+  paginatorPosition="both"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterValue]="globalFilterValue"
+  (createBtnClicked)="openCreateRecordDialog()"
+  (updateBtnClicked)="openUpdateRecordDialog($event)"
+  (deleteBtnClicked)="deleteRecord($event)"
+  (onLoadData)="loadRecords($event)"
+>
+  <div moreActions>
+    <ul class="list-none m-0 p-0 flex flex-wrap gap-3 align-items-center">
+      <li>
+        <a
+          pButton
+          class="p-button-text text-xs py-2 shadow-none"
+          [label]="'inventory' | translate"
+          icon="fas fa-city"
+          routerLink="/broker-inventory"
+        >
+        </a>
+      </li>
+      <li>
+        <a
+          pButton
+          class="p-button-text text-xs py-2 shadow-none"
+          [label]="'projects' | translate"
+          icon="fas fa-city"
+          routerLink="/broker-inventory/projects/index"
+        >
+        </a>
+      </li>
+      <li>
+        <a
+          pButton
+          class="text-xs py-2 shadow-none"
+          [label]="'developers' | translate"
+          icon="fas fa-list"
+          routerLink="/broker-inventory/developers"
+        >
+        </a>
+      </li>
+    </ul>
+  </div>
+</app-table-wrapper>

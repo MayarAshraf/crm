@@ -1,0 +1,103 @@
+<div class="p-field">
+  @if (props.label) {
+    <label>
+      {{ props.label }}
+      @if (props.required && props.hideRequiredMarker !== true) {
+        <span class="text-red-500">*</span>
+      }
+    </label>
+  }
+
+  <!-- Display old media files in update mode -->
+  @if (props.mode === "update" && mediaFiles().length > 0) {
+    <div class="mb-3">
+      <ul class="list-none p-0 m-0">
+        @for (file of mediaFiles(); track $index; let i = $index) {
+          <li class="flex align-items-center justify-content-between gap-2" [class.mb-2]="!$last">
+            <p-image
+              [src]="file.file"
+              [alt]="file.file_name"
+              imageClass="w-3rem h-3rem img-cover"
+              [preview]="true"
+            />
+            <span class="text-sm file-name" title="{{ file.file_name }}">
+              {{ file.file_name }}
+            </span>
+            <span class="text-sm">{{ formatSize(file.size) }}</span>
+            <p-button styleClass="w-2rem h-2rem p-0" icon="pi pi-times" (click)="removeFile(i)" />
+          </li>
+        }
+      </ul>
+    </div>
+  }
+
+  <dropzone
+    [config]="config"
+    [message]="''"
+    (success)="onUploadSuccess($event)"
+    (removedFile)="onRemovedFile($event)"
+    (processing)="props.isUploading?.set(true)"
+    (queueComplete)="props.isUploading?.set(false)"
+  >
+    <div class="flex align-items-center gap-1 pointer-events-none py-2">
+      <svg width="3rem" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="#1B84FF"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+        >
+          <path
+            fill="#ABD1FF"
+            fill-opacity="0"
+            stroke-dasharray="20"
+            stroke-dashoffset="20"
+            d="M12 15h2v-6h2.5l-4.5 -4.5M12 15h-2v-6h-2.5l4.5 -4.5"
+          >
+            <animate
+              attributeName="d"
+              begin="0.5s"
+              dur="1.5s"
+              repeatCount="indefinite"
+              values="M12 15h2v-6h2.5l-4.5 -4.5M12 15h-2v-6h-2.5l4.5 -4.5;M12 15h2v-3h2.5l-4.5 -4.5M12 15h-2v-3h-2.5l4.5 -4.5;M12 15h2v-6h2.5l-4.5 -4.5M12 15h-2v-6h-2.5l4.5 -4.5"
+            />
+            <animate
+              fill="freeze"
+              attributeName="fill-opacity"
+              begin="0.7s"
+              dur="0.5s"
+              values="0;1"
+            />
+            <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="20;0" />
+          </path>
+          <path stroke-dasharray="14" stroke-dashoffset="14" d="M6 19h12">
+            <animate
+              fill="freeze"
+              attributeName="stroke-dashoffset"
+              begin="0.5s"
+              dur="0.2s"
+              values="14;0"
+            />
+          </path>
+        </g>
+      </svg>
+      <div>
+        <span class="block font-medium">{{ "drop_to_upload" | translate }}</span>
+        <span class="block text-primary text-xs font-medium">Upload up to 10 files</span>
+      </div>
+    </div>
+  </dropzone>
+
+  @if (props.description) {
+    <p class="mb-0 mt-1 text-xs text-primary font-medium">
+      {{ props.description | translate }}
+    </p>
+  }
+
+  @if (showError && formControl.errors) {
+    <small class="p-error" role="alert">
+      <formly-validation-message [field]="field"></formly-validation-message>
+    </small>
+  }
+</div>

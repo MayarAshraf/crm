@@ -1,0 +1,11 @@
+{
+	"google_accounts": "Google Accounts",
+	"filter": "Filter",
+	"apply": "Apply",
+	"reset": "Reset",
+	"add_account": "Add Account",
+	"delete_account": "Delete Account",
+	"no_google_accounts": "No google accounts.",
+	"subscribed": "Subscribed",
+	"not_subscribed": "Not Subscribed"
+}

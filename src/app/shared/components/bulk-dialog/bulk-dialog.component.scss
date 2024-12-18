@@ -1,0 +1,39 @@
+::ng-deep {
+  .bulk-dialog {
+    position: fixed;
+    bottom: 4rem;
+    border-radius: 0;
+    margin: 0;
+    box-shadow: none;
+
+    .p-dialog-header {
+      padding-inline: 1.5rem;
+      padding-block: 1rem;
+      border-radius: 22px 22px 0 0;
+      border-bottom: 1px solid var(--gray-300);
+    }
+
+    .p-dialog-content {
+      padding: 1.5rem;
+      padding-bottom: 0;
+    }
+
+    .p-dialog-footer {
+      padding: 0;
+      border-radius: 0;
+      background-color: transparent;
+      text-align: start;
+
+      .inner-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        background-color: var(--primary-color);
+        border-radius: 0 0 22px 22px;
+        padding-inline: 1.5rem;
+        height: 50px;
+      }
+    }
+  }
+}

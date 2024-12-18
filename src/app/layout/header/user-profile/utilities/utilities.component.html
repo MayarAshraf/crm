@@ -1,0 +1,12 @@
+<ul class="list-none p-0 m-0">
+  @for (item of utilitiesItems(); track $index; let l = $last) {
+    <li [ngClass]="{ 'border-bottom-1 border-300': !l }">
+      @if (item?.id === "clear-DB") {
+        <app-profile-item [item]="item" (onClick)="clearDB()"></app-profile-item>
+      }
+      @if (item?.id === "update-permissions") {
+        <app-profile-item [item]="item" (onClick)="updatePermissions()"></app-profile-item>
+      }
+    </li>
+  }
+</ul>

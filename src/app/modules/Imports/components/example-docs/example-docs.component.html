@@ -1,0 +1,1336 @@
+<p-dialog
+  [(visible)]="visible"
+  appendTo="body"
+  [modal]="true"
+  position="center"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '95%' }"
+>
+  <ng-template pTemplate="header">
+    <h2 class="m-0 font-semibold text-lg flex align-items-center gap-2">
+      <i class="fas fa-info-circle"></i>
+      Example Sheet Documentation
+    </h2>
+  </ng-template>
+
+  <div class="text-sm">
+    @switch (docsType()) {
+      @case ("leads") {
+        <div>
+          <dl>
+            <dt>Sample Sheets</dt>
+            <ul>
+              <li>
+                <dt>
+                  8X Data File: (<a
+                    href="assets/files/8WORXCRM-ImportDataTemplate.xlsx"
+                    download
+                    target="_blank"
+                  >
+                    Download Template </a
+                  >)
+                </dt>
+              </li>
+            </ul>
+          </dl>
+
+          <dt>Sample Sheets</dt>
+          <ul>
+            <li>
+              <dt>
+                Facebook Data File: (<a
+                  href="assets/files/FBLG-ImportDataTemplate.xlsx"
+                  download
+                  target="_blank"
+                >
+                  Download Template </a
+                >)
+              </dt>
+            </li>
+          </ul>
+
+          <dt>Important Notes</dt>
+          <ul>
+            <li>
+              <dt>Dot In Fields</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    Excel treats any column that contains dot '.' as a number and so any string that
+                    contains a dot '.' will evaluated by Excel to empty string.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+          </ul>
+
+          <dt>Required Fields</dt>
+          <ul>
+            <li>
+              <dt>full_name</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>phone_numbers</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>List of mobile numbers separated by comma; i.e., 123456,123123,456456.</li>
+                </ul>
+              </dd>
+            </li>
+          </ul>
+
+          <dt>Optional Fields</dt>
+          <ul>
+            <li>
+              <dt>note</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. Will be created as a note when the
+                    record is imported.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>note_description</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 16777215 characters long. Will be added as a description
+                    of the note if the note is provided.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>lead_type</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    One of the following [Lead, Contact, Customer, Account], it overrides the
+                    selected type in import form.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>title</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>suffix</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>first_name</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>middle_name</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>last_name</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>description</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>company</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>address</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>zip_code</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>country</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Country from the list of countries.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>region</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    Country must be provided and must be correct and the region must be a valid
+                    region from the list of regions of the selected country.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>city</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    City must be provided and must be correct and the city must be a valid city from
+                    the list of cities of the selected city
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>area_place</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    Area place must be provided and must be correct and the city must be a valid
+                    area place from the list of area places of the selected area place
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>industry</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the industries in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>company_size</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the company sizes in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>contact_method</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the contact methods in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>job</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the jobs in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>department</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the departments in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>account_type</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the account types in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>status</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the statuses in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>salutation</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the salutations in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>rating</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the ratings in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>source</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the sources in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>wallet</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the wallets in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>organization</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    Must be one of the organizations in 8WORX CRM. If not found, it will be created.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>campaign</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    Must be one of the campaigns in 8WORX CRM and must provide the campaign_status.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>campaign_status</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    Must be one of the campaign statuses in 8WORX CRM and must provide the campaign.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>created_at</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be date time format Year-Month-Day Hour:Minute:Second.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>updated_at</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be date time format Year-Month-Day Hour:Minute:Second.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>date_of_birth</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be date time format Year-Month-Day.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>interests</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    List of interests separated by comma; i.e., interest_i,interest_ii,interest_iii.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>tags</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>List of tags separated by comma; i.e., tag_i,tag_ii,tag_iii.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>emails</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    List of emails separated by comma; i.e.,
+                    mail_1&#64;domain.com,mail_2&#64;domain.com,mail_3&#64;domain.com.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>whatsapp_numbers</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>List of whatsapp numbers separated by comma; i.e., 123456,123123,456456.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>landline_numbers</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>List of landline numbers separated by comma; i.e., 123456,123123,456456.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>gender</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>male or female.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>facebook_profile_url</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Facebook profile URL.</li>
+                </ul>
+              </dd>
+            </li>
+          </ul>
+
+          <dt>Optional Fields</dt>
+          <ul>
+            <li>
+              <dt>assignees_emails</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    List of assignees emails separated by comma; i.e.,
+                    assignee_1&#64;8worx.com,assignee_2&#64;8worx.com,assignee_3&#64;8worx.com. If
+                    valid assignee(s) found based on given emails, it will override the assignees
+                    provided in import selection.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+          </ul>
+        </div>
+      }
+      @case ("units") {
+        <div>
+          <dl>
+            <dt>Sample Sheets</dt>
+            <ul>
+              <li>
+                <dt>
+                  8X Data File: (<a href="assets/files/8WORXCRM-Inventory-ImportDataTemplate.xlsx"
+                    >Download Template</a
+                  >)
+                </dt>
+              </li>
+            </ul>
+          </dl>
+
+          <dt>Important Notes</dt>
+          <ul>
+            <li>
+              <dt>Dot In Fields</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    Excel treats any column that contains dot '.' as a number and so any string that
+                    contains a dot '.' will evaluated by Excel to empty string.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+          </ul>
+
+          <dt>Required Fields</dt>
+          <ul>
+            <li>
+              <dt>unit_code</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+          </ul>
+          <dt>Optional Unit Fields</dt>
+          <ul>
+            <li>
+              <dt>unit_number</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>facilities</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    List of facilities separated by comma; i.e., Parking Space,Power
+                    Generator,Satellite Connection. A new facility will be created if not exists.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>amenities</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    List of amenities separated by comma; i.e., Shared Pool,Air Conditioner,Garages.
+                    A new amenity will be created if not exists.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>unit_title</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>project_name</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. A new project will be created if not
+                    exists.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>building_number</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>position</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. A new position will be created if
+                    not exists.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>view</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. A new view will be created if not
+                    exists.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>area</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Integer number.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>garden_area</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Integer number.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>roof_area</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Integer number.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>basement_area</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Integer number.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>plot_area</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Integer number.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>build_up_area</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Integer number.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>bedroom</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. bedroom must be exists in the list
+                    of bedrooms.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>bathroom</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. bathroom must be exists in the list
+                    of bathrooms.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>floor_number</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. floor number must be exists in the
+                    list of floor numbers.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>purpose</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. A new purpose will be created if not
+                    exists.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>purpose_type</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. A new purpose type will be created
+                    if not exists, purpose must be provided.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>unit_country</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. Country must be exists in the
+                    countries list.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>unit_region</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. Region must be exists in the regions
+                    list of the selected country.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>unit_city</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. City must be exists in the cities
+                    list of the selected region.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>unit_area_place</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. Area place must be exists in the
+                    area places list of the selected cities.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>unit_sub_area_place</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. Sub Area place must be exists in the
+                    sub area places list of the selected area place.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+
+            <li>
+              <dt>latitude</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Valid latitude value, longitude must be provided and valid.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>longitude</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Valid longitude value, latitude must be provided and valid.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>unit_address</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 16777215 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>offering_type</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. A new offering type will be created
+                    if not exists.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>price</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Integer number.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>price_per_meter</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Integer number.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>description</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 33554430 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>video_embed_url</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 255 characters long. Must be valid embed url.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>virtual_tour_360</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 255 characters long. Must be valid 360 virtual tour url.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>payment_method</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. A new payment method will be created
+                    if not exists, purpose must be provided.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>buyer_full_name</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>buyer_phone_numbers</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>List of mobile numbers separated by comma; i.e., 123456,123123,456456.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>down_payment</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Integer number.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>number_of_installments</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Integer number.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>currency_code</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be a valid currency code.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>area_unit</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. A new area unit will be created if
+                    not exists.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>garden_area_unit</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. A new area unit will be created if
+                    not exists.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>roof_area_unit</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. A new area unit will be created if
+                    not exists.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>basement_area_unit</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. A new area unit will be created if
+                    not exists.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>furnishing_status</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. A new furnishing status will be
+                    created if not exists.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>finishing_type</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. A new finishing type will be created
+                    if not exists.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>unit_created_at</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be date time format Day/Month/Year.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>unit_updated_at</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be date time format Day/Month/Year.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>whatsapp_numbers</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>List of whatsapp numbers separated by comma; i.e., 123456,123123,456456.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>landline_numbers</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>List of landline numbers separated by comma; i.e., 123456,123123,456456.</li>
+                </ul>
+              </dd>
+            </li>
+          </ul>
+          <dt>Optional Owner Fields</dt>
+          <ul>
+            <li>
+              <dt>full_name</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>phone_numbers</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>List of mobile numbers separated by comma; i.e., 123456,123123,456456.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>note</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 191 characters long. Will be created as a note when the
+                    record is imported.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>note_description</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    String with maximum of 16777215 characters long. Will be added as a description
+                    of the note if the note is provided.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>lead_type</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    One of the following [Lead, Contact, Customer, Account], it overrides the
+                    selected type in import form.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>title</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>suffix</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>first_name</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>middle_name</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>last_name</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>seller_description</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>company</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>address</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>zip_code</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>String with maximum of 191 characters long.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>country</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Country from the list of countries.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>region</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    Country must be provided and must be correct and the region must be a valid
+                    region from the list of regions of the selected country.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>city</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    Region must be provided and must be correct and the city must be a valid city
+                    from the list of cities of the selected region
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>area_place</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    Country must be provided and must be correct and the area place must be a valid
+                    area place from the list of area places of the selected country.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>industry</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the industries in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>company_size</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the company sizes in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>contact_method</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the contact mtehods in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>job</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the jobs in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>department</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the departments in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>account_type</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the account types in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>status</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the statuses in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>salutation</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the salutations in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>rating</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the ratings in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>source</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the sources in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>wallet</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be one of the wallets in 8WORX CRM.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>organization</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    Must be one of the organizations in 8WORX CRM. If not found, it will be created.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>campaign</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    Must be one of the campaigns in 8WORX CRM and must provide the campaign_status.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>campaign_status</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    Must be one of the campaign statuses in 8WORX CRM and must provide the campaign.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>created_at</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be date time format Day/Month/Year.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>updated_at</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be date time format Day/Month/Year.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>date_of_birth</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>Must be date time format Day/Month/Year.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>interests</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    List of interests separated by comma; i.e., interest_i,interest_ii,interest_iii.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>tags</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>List of tags separated by comma; i.e., tag_i,tag_ii,tag_iii.</li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>emails</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    List of emails separated by comma; i.e.,
+                    mail_1&#64;domain.com,mail_2&#64;domain.com,mail_3&#64;domain.com.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+          </ul>
+          <dt>Optional Fields</dt>
+          <ul>
+            <li>
+              <dt>assignees_emails</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    List of assignees emails separated by comma; i.e.,
+                    assignee_1&#64;8worx.com,assignee_2&#64;8worx.com,assignee_3&#64;8worx.com. If
+                    valid assignee(s) found based on given emails, it will override the assignees
+                    provided in import selection.
+                  </li>
+                </ul>
+              </dd>
+            </li>
+            <li>
+              <dt>unit_assignees_emails</dt>
+              <dd>
+                <ul class="list-inline">
+                  <li>
+                    List of unit assignees emails separated by comma; i.e.,
+                    unit_assignee_1&#64;8worx.com,unit_assignee_2&#64;8worx.com,unit_assignee_3&#64;8worx.com.
+                    If valid assignee(s) found based on given emails, it will override the assignees
+                    provided in import selection, else it will consider the seller assignee(s).
+                  </li>
+                </ul>
+              </dd>
+            </li>
+          </ul>
+        </div>
+      }
+    }
+  </div>
+</p-dialog>

@@ -1,0 +1,23 @@
+:host ::ng-deep {
+  .p-progressbar {
+    height: .5rem;
+    border-radius: 6px;
+    font-weight: bold;
+
+    &.successful-calls {
+      .p-progressbar-value {
+        background-color: var(--green-400);
+      }
+    }
+    &.unsuccessful-calls {
+      .p-progressbar-value {
+        background-color: var(--yellow-400);
+      }
+    }
+    &.rejected-missed-calls {
+      .p-progressbar-value {
+        background-color: var(--red-400);
+      }
+    }
+  }
+}

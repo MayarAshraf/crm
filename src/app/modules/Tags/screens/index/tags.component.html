@@ -1,0 +1,49 @@
+<app-table-wrapper
+  [moduleName]="moduleName"
+  [headerTitle]="indexMeta.indexTitle"
+  [titleIcon]="indexMeta.indexIcon"
+  [headerBtnLabel]="indexMeta.createBtnLabel"
+  [columns]="indexMeta.columns"
+  [dataSource]="records()"
+  [loading]="isLoading()"
+  [indexPermissions]="permissions().index"
+  [updateBtnPermissions]="permissions().update"
+  [createBtnPermissions]="permissions().create"
+  [deleteBtnPermissions]="permissions().delete"
+  [totalRecords]="totalRecords()"
+  [recordsFiltered]="recordsFiltered()"
+  paginatorPosition="both"
+  [stateKey]="indexMeta.indexTableKey"
+  [globalFilterValue]="globalFilterValue"
+  (createBtnClicked)="openCreateRecordDialog()"
+  (updateBtnClicked)="openUpdateRecordDialog($event)"
+  (deleteBtnClicked)="deleteRecord($event)"
+  (onLoadData)="loadRecords($event)"
+>
+  <button
+    moreActions
+    pButton
+    type="button"
+    (click)="menu.toggle($event)"
+    icon="fas fa-ellipsis-vertical"
+    [pTooltip]="'more' | translate"
+    tooltipPosition="top"
+    class="flex-order-6 w-auto text-sm px-3 py-2"
+  ></button>
+  <p-menu #menu appendTo="body" [model]="moreActions()" [popup]="true"></p-menu>
+</app-table-wrapper>
+
+<app-simple-bulk-dialog
+  [(visible)]="showBulkDialog"
+  dataKey="tags"
+  description="write_each_tag_in_new_line"
+  placeholder="tags"
+  endpoint="tags/bulk-creation"
+  (onBulkCreated)="updateUi($event)"
+/>
+
+<app-simple-import-dialog
+  [(visible)]="showImportDialog"
+  dialogTitle="import_tags"
+  template="assets/files/8WORXCRM-TAGS-TEMPLATE.xlsx"
+/>

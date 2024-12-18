@@ -1,0 +1,77 @@
+<p-table
+  #primengTable
+  [value]="assigness()"
+  [rows]="10"
+  [paginator]="true"
+  [alwaysShowPaginator]="false"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [rowsPerPageOptions]="[5, 10, 20, 30, 50, 100]"
+  [globalFilterFields]="['name']"
+  styleClass="p-datatable-sm p-datatable-striped"
+>
+  <ng-template pTemplate="caption">
+    <div class="flex">
+      <p-iconField iconPosition="left" class="ml-auto">
+        <p-inputIcon>
+          <i class="pi pi-search absolute top-50"></i>
+        </p-inputIcon>
+        <input
+          #filterInput
+          pInputText
+          class="p-inputtext-sm field-height"
+          type="text"
+          (input)="primengTable.filterGlobal(filterInput.value, 'contains')"
+          placeholder="Search keyword"
+        />
+      </p-iconField>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="capitalize" pSortableColumn="name">
+        {{ "name" | translate }} <p-sortIcon field="name" />
+      </th>
+      <th class="capitalize" pSortableColumn="leads_count">
+        {{ "leads" | translate }} <p-sortIcon field="leads_count" />
+      </th>
+      <th class="capitalize" pSortableColumn="won_deals_amounts">
+        {{ "revenues" | translate }} <p-sortIcon field="won_deals_amounts" />
+      </th>
+      <th class="capitalize" pSortableColumn="deals_count">
+        {{ "deals" | translate }} <p-sortIcon field="deals_count" />
+      </th>
+      <th class="capitalize" pSortableColumn="won_deals_count">
+        {{ "won_deals" | translate }} <p-sortIcon field="won_deals_count" />
+      </th>
+      <th class="capitalize" pSortableColumn="open_deals_count">
+        {{ "open_deals" | translate }} <p-sortIcon field="open_deals_count" />
+      </th>
+      <th class="capitalize" pSortableColumn="lost_deals_count">
+        {{ "lost_deals" | translate }} <p-sortIcon field="lost_deals_count" />
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-assignes>
+    <tr>
+      <td>{{ assignes.name }}</td>
+      <td>{{ assignes.leads_count }}</td>
+      <td>
+        @for (item of assignes.won_deals_amounts; track $index) {
+          <span> {{ item.formatted }}</span>
+        }
+      </td>
+      <td>{{ assignes.deals_count }}</td>
+      <td>{{ assignes.won_deals_count }}</td>
+      <td>{{ assignes.open_deals_count }}</td>
+      <td>{{ assignes.lost_deals_count }}</td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="5">{{ "no_campaigns_found" | translate }}.</td>
+    </tr>
+  </ng-template>
+</p-table>

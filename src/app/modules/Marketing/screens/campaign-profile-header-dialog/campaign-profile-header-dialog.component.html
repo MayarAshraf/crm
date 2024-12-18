@@ -1,0 +1,54 @@
+<div class="pt-3 pb-2 px-3">
+  <div class="flex flex-wrap align-items-center justify-content-between gap-3">
+    <div>
+      <h2 class="font-semibold capitalize text-lg line-height-2 my-0">
+        {{ campaign().campaign_name }}
+      </h2>
+      <div class="mt-2 flex gap-2 align-items-center">
+        <div class="bg-highlight-success px-2 border-round-md">
+          <span [pTooltip]="'campaign_status' | translate" tooltipPosition="top">
+            {{ campaignStatus() }}
+          </span>
+        </div>
+        <div class="bg-highlight px-2 border-round-md">
+          <span [pTooltip]="'campaign_type' | translate" tooltipPosition="top">
+            {{ campaignsTypes() }}
+          </span>
+        </div>
+        <div class="text-sm text-gray-400">
+          <span>{{ campaign().start_date }}</span> - <span> {{ campaign().end_date }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <button
+        pButton
+        type="button"
+        (click)="updateCmpaign()"
+        [icon]="constants.icons.pencil"
+        *appHasPermission="permissions().update"
+        [pTooltip]="'edit_campaign' | translate"
+        tooltipPosition="top"
+        class="p-2 p-button-outlined p-button-rounded text-sm w-2rem h-2rem"
+      ></button>
+
+      <button
+        pButton
+        icon="pi pi pi-print"
+        [pTooltip]="'print_campaign' | translate"
+        tooltipPosition="top"
+        class="p-2 p-button-outlined p-button-rounded text-sm w-2rem h-2rem"
+        severity="secondary"
+        (click)="print()"
+      ></button>
+
+      <button
+        pButton
+        class="text-sm px-3 py-2"
+        class="p-button-text p-button-plain p-button-rounded w-2rem h-2rem"
+        (click)="closeDialog.emit()"
+        icon="pi pi-times"
+      ></button>
+    </div>
+  </div>
+</div>

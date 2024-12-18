@@ -1,0 +1,108 @@
+<div class="p-field">
+  @if (props.label) {
+    <label>
+      {{ props.label }}
+      @if (props.required && props.hideRequiredMarker !== true) {
+        <span class="text-red-500">*</span>
+      }
+    </label>
+  }
+
+  <p-fileUpload
+    #fileUploader
+    name="files[]"
+    [auto]="true"
+    [url]="url"
+    mode="advanced"
+    [multiple]="false"
+    [disabled]="props.disabled ?? false"
+    [accept]="props.accept ?? '.jpeg,.jpg,.png'"
+    [maxFileSize]="props.maxFileSize ?? constants.MAX_FILE_SIZE"
+    [showUploadButton]="false"
+    [showCancelButton]="false"
+    (onUpload)="onUpload($event)"
+    (onSelect)="onSelect($event)"
+  >
+    <ng-template pTemplate="header" let-chooseCallback="chooseCallback">
+      <div class="choose-holder" [class.is-selected]="selectedFile() || mediaFile()">
+        <button
+          type="button"
+          class="choose-btn"
+          (click)="chooseCallback()"
+          [class.pointer-events-none]="props.isUploading()"
+        ></button>
+
+        @if ((selectedFile() || mediaFile()) && !props.isUploading()) {
+          <div class="overlay"></div>
+        }
+
+        @if (props.isUploading()) {
+          <div class="loading-icon">
+            <i class="pi pi-spin pi-spinner text-2xl text-white"></i>
+          </div>
+        }
+
+        @if (!props.isUploading()) {
+          <div class="choose-icon" [class.text-white]="selectedFile() || mediaFile()">
+            <svg width="35" viewBox="0 0 24 24">
+              <path
+                fill="currentColor"
+                d="M11.5 8C14 8 16 10 16 12.5S14 17 11.5 17S7 15 7 12.5S9 8 11.5 8m0 1A3.5 3.5 0 0 0 8 12.5a3.5 3.5 0 0 0 3.5 3.5a3.5 3.5 0 0 0 3.5-3.5A3.5 3.5 0 0 0 11.5 9M5 5h2l2-2h5l2 2h2a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3m4.41-1l-2 2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-2.41l-2-2z"
+              />
+            </svg>
+          </div>
+        }
+
+        @if (selectedFile() && !props.isUploading()) {
+          <div class="success-mark">
+            <svg
+              width="35px"
+              viewBox="0 0 54 54"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <path
+                  d="M23.5,31.8431458 L17.5852419,25.9283877 C16.0248253,24.3679711 13.4910294,24.366835 11.9289322,25.9289322 C10.3700136,27.4878508 10.3665912,30.0234455 11.9283877,31.5852419 L20.4147581,40.0716123 C20.5133999,40.1702541 20.6159315,40.2626649 20.7218615,40.3488435 C22.2835669,41.8725651 24.794234,41.8626202 26.3461564,40.3106978 L43.3106978,23.3461564 C44.8771021,21.7797521 44.8758057,19.2483887 43.3137085,17.6862915 C41.7547899,16.1273729 39.2176035,16.1255422 37.6538436,17.6893022 L23.5,31.8431458 Z M27,53 C41.3594035,53 53,41.3594035 53,27 C53,12.6405965 41.3594035,1 27,1 C12.6405965,1 1,12.6405965 1,27 C1,41.3594035 12.6405965,53 27,53 Z"
+                  stroke-opacity="0.198794158"
+                  stroke="#747474"
+                  fill-opacity="0.816519475"
+                  fill="#FFFFFF"
+                ></path>
+              </g>
+            </svg>
+          </div>
+        }
+
+        @if (selectedFile() || mediaFile()) {
+          <img
+            [src]="selectedFile() ? selectedFile().objectURL : mediaFile()"
+            [alt]="selectedFile()?.name || 'Uploaded Image'"
+            class="uploaded-image"
+          />
+        }
+      </div>
+      @if (!props.isUploading() && (selectedFile() || mediaFile()) && !props.required) {
+        <button
+          type="button"
+          class="remove-btn"
+          (click)="selectedFile.set(null); mediaFile.set(null); formControl.setValue(null)"
+        >
+          <i class="pi pi-times text-xs"></i>
+        </button>
+      }
+    </ng-template>
+  </p-fileUpload>
+
+  @if (props.description) {
+    <p class="mb-0 mt-1 text-xs text-primary font-medium">
+      {{ props.description | translate }}
+    </p>
+  }
+
+  @if (showError && formControl.errors) {
+    <small class="p-error" role="alert">
+      <formly-validation-message [field]="field"></formly-validation-message>
+    </small>
+  }
+</div>
